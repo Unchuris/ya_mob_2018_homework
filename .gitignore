@@ -1,0 +1,16 @@
+## Build files
+build
+
+## Local configuration
+local.properties
+
+## Android studio project
+.idea
+#.idea/workspace.xml
+*.iml
+
+## Gradle
+gradle
+gradlew
+gradlew.bat
+.gradle
