@@ -23,6 +23,9 @@ class MainActivity : AppCompatActivity() {
             R.id.menuitem_about -> startActivity(
                     Intent(this, AboutActivity::class.java)
             )
+            R.id.menuitem_settings -> startActivity(
+                    Intent(this, SettingsActivity::class.java)
+            )
         }
 
         return true
