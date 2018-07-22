@@ -1,5 +1,7 @@
 package com.kissedcode.finance
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -9,6 +11,10 @@ import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    val viewModel by lazy {
+        ViewModelProviders.of(this).get(MainViewModel::class.java)
+    }
 
     // options menu ////////////////////////////////////////////////////////////////////////////
 
@@ -39,6 +45,9 @@ class MainActivity : AppCompatActivity() {
 
         // ui
         setupUi()
+
+        // livedata
+        bindLiveData()
     }
 
     private fun setupUi() {
@@ -51,5 +60,12 @@ class MainActivity : AppCompatActivity() {
 
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         currencySpinner.adapter = spinnerAdapter
+    }
+
+    private fun bindLiveData() {
+
+        viewModel.balance.observe(
+                this, Observer { value: Double? -> balanceTv.text = "${value?:0.0}" }
+        )
     }
 }
