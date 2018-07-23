@@ -1,4 +1,4 @@
-package com.kissedcode.finance
+package com.kissedcode.finance.model
 
 class Calculator {
 

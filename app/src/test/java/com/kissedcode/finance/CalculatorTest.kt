@@ -1,7 +1,9 @@
 package com.kissedcode.finance
 
-import com.kissedcode.finance.MoneyOperation.Type.*
-import com.kissedcode.finance.Currency.*
+import com.kissedcode.finance.model.Calculator
+import com.kissedcode.finance.model.MoneyOperation.Type.*
+import com.kissedcode.finance.model.Currency.*
+import com.kissedcode.finance.model.MoneyOperation
 
 import org.junit.Assert.*
 import org.junit.Test

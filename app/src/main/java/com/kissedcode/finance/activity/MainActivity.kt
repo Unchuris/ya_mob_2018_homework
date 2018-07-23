@@ -1,4 +1,4 @@
-package com.kissedcode.finance
+package com.kissedcode.finance.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import com.kissedcode.finance.viewmodel.MainViewModel
+import com.kissedcode.finance.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

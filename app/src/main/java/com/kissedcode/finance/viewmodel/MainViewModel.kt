@@ -1,9 +1,9 @@
-package com.kissedcode.finance
+package com.kissedcode.finance.viewmodel
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.kissedcode.finance.model.Currency
 
 class MainViewModel : ViewModel() {
 

@@ -1,4 +1,4 @@
-package com.kissedcode.finance
+package com.kissedcode.finance.model
 
 enum class Currency(val cost: Double = 1.0) {
     USD,
