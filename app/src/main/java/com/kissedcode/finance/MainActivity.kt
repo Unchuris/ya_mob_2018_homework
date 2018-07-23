@@ -12,6 +12,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    val spinnerAdapter by lazy {
+        val adapter = ArrayAdapter<String>(this, R.layout.spinner_item)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        currencySpinner.adapter = adapter
+        adapter
+    }
+
     val viewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel::class.java)
     }
@@ -44,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // ui
-        setupUi()
+        //setupUi()
 
         // livedata
         bindLiveData()
@@ -56,9 +63,12 @@ class MainActivity : AppCompatActivity() {
         val spinnerAdapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.currencies,
-                R.layout.spinner_item)
+                //R.layout.spinner_item)
+                android.R.layout.simple_spinner_item)
 
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+
+        //spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         currencySpinner.adapter = spinnerAdapter
     }
 
@@ -67,5 +77,13 @@ class MainActivity : AppCompatActivity() {
         viewModel.balance.observe(
                 this, Observer { value: Double? -> balanceTv.text = "${value?:0.0}" }
         )
+
+        viewModel.currencies.observe(
+                this, Observer { values: Array<String>? -> if (values != null) { spinnerAdapter.addAll(*values); spinnerAdapter.notifyDataSetChanged() } }
+        )
+
+//        viewModel.currency.observe(
+//                this, Observer { value: Currency? -> balanceTv.text = "${value?:0.0}" }
+//        )
     }
 }
