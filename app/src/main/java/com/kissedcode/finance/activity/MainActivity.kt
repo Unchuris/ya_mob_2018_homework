@@ -7,9 +7,13 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.kissedcode.finance.viewmodel.MainViewModel
 import com.kissedcode.finance.R
+import com.kissedcode.finance.model.Currency
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -53,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // ui
-        //setupUi()
+        setupUi()
 
         // livedata
         bindLiveData()
@@ -62,16 +66,14 @@ class MainActivity : AppCompatActivity() {
     private fun setupUi() {
 
         // currency spinner
-        val spinnerAdapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.currencies,
-                //R.layout.spinner_item)
-                android.R.layout.simple_spinner_item)
+        currencySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
 
-
-        //spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        currencySpinner.adapter = spinnerAdapter
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                currencySelected(p2)
+            }
+        }
     }
 
     private fun bindLiveData() {
@@ -81,11 +83,21 @@ class MainActivity : AppCompatActivity() {
         )
 
         viewModel.currencies.observe(
-                this, Observer { values: Array<String>? -> if (values != null) { spinnerAdapter.addAll(*values); spinnerAdapter.notifyDataSetChanged() } }
+                this,
+                Observer { values: Array<Currency>? ->
+                        spinnerAdapter.addAll(values?.map { currency -> currency.toString() })
+                        spinnerAdapter.notifyDataSetChanged() }
         )
 
 //        viewModel.currency.observe(
 //                this, Observer { value: Currency? -> balanceTv.text = "${value?:0.0}" }
 //        )
     }
+
+    // controller //////////////////////////////////////////////////////////////////////////////
+
+    private fun currencySelected(index: Int) {
+        viewModel.onCurrencySelected(index)
+    }
+
 }

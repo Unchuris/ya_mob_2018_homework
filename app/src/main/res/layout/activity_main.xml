@@ -14,7 +14,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="32dp"
         android:gravity="end"
-        android:text="1000"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"

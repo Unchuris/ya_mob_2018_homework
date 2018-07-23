@@ -13,7 +13,7 @@ class MainViewModel : ViewModel() {
 
     val balanceUsd = MutableLiveData<Double>()
 
-    val currencies = MutableLiveData<Array<String>>()
+    val currencies = MutableLiveData<Array<Currency>>()
 
     val currency = MutableLiveData<Currency>()
 
@@ -43,8 +43,15 @@ class MainViewModel : ViewModel() {
 
         balanceUsd.value = 100.5
 
-        currencies.value = arrayOf(Currency.USD.toString(), Currency.RUB.toString())
+        currencies.value = arrayOf(Currency.USD, Currency.RUB)
 
         currency.value = Currency.RUB
+    }
+
+    // controller //////////////////////////////////////////////////////////////////////////////
+
+    fun onCurrencySelected(index: Int) {
+
+        currency.value = currencies.value?.get(index)
     }
 }
