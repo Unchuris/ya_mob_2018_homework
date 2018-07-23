@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">finance</string>
+    <string name="activity_main">Финансы</string>
+    <string name="activity_about">О приложении</string>
+    <string name="activity_settings">Настройки</string>
+    <string name="main_options_menuitem_settings">Настройки</string>
+    <string name="main_options_menuitem_about">О приложении</string>
+</resources>
