@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">finance</string>
+
+    <!--activity names-->
+    <string name="activity_main">Finance</string>
+    <string name="activity_about">About</string>
+    <string name="activity_settings">Settings</string>
+
+    <!--main options menu-->
+    <string name="main_options_menuitem_about">About</string>
+    <string name="main_options_menuitem_settings">Settings</string>
+
 </resources>
