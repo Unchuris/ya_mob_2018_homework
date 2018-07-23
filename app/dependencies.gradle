@@ -16,4 +16,8 @@ dependencies {
 
     // architecture components
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    testImplementation "android.arch.core:core-testing:$lifecycle_version"
+
+    //junit
+    testImplementation "junit:junit:4.12"
 }
