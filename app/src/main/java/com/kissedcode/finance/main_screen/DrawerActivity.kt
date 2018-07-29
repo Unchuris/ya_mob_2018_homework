@@ -14,6 +14,10 @@ import kotlinx.android.synthetic.main.activity_drawer.*
 
 abstract class DrawerActivity : AppCompatActivity() {
 
+    val STATE_SCREEN_ID = "screen_id"
+
+    var screenId = 0
+
     // menu ////////////////////////////////////////////////////////////////////////////////////
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -33,11 +37,20 @@ abstract class DrawerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drawer)
 
+        // restore state
+        savedInstanceState?.apply {
+            screenId = savedInstanceState[STATE_SCREEN_ID] as Int? ?: 0
+
+        }
+
         // ui
         setupUi()
 
         // initial fragment
-        changeScreenFragment(getScreenFragment(getInitialScreenId()))
+        if (screenId == 0)
+            screenId = getInitialScreenId()
+
+        changeScreenFragment(getScreenFragment(screenId))
     }
 
     private fun setupUi() {
@@ -55,6 +68,8 @@ abstract class DrawerActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawers()
 
+            screenId = it.itemId
+
             val fragment = getScreenFragment(it.itemId)
             changeScreenFragment(fragment)
 
@@ -66,6 +81,12 @@ abstract class DrawerActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, fragment)
                 .commit()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt(STATE_SCREEN_ID, screenId)
     }
 
     // abstract ////////////////////////////////////////////////////////////////////////////////

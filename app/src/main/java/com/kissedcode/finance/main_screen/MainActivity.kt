@@ -14,7 +14,7 @@ class MainActivity : DrawerActivity() {
 
     override fun getDrawerMenuRes() = R.menu.drawer
 
-    override fun getInitialScreenId() = R.id.menuitem_drawer_settings
+    override fun getInitialScreenId() = R.id.menuitem_drawer_accounts
 
     override fun getScreenFragment(drawerItemId: Int): Fragment {
 
