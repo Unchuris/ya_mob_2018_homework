@@ -10,4 +10,9 @@
     <string name="main_options_menuitem_about">About</string>
     <string name="main_options_menuitem_settings">Settings</string>
 
+    <!--navigation drawer menu-->
+    <string name="drawer_menu_main">Account</string>
+    <string name="drawer_menu_stat">Statistics</string>
+    <string name="drawer_menu_settings">Settings</string>
+
 </resources>
