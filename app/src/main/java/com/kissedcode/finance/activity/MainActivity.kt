@@ -10,8 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import com.kissedcode.finance.viewmodel.MainViewModel
 import com.kissedcode.finance.R
 import com.kissedcode.finance.model.Currency
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,27 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     val viewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel::class.java)
-    }
-
-    // options menu ////////////////////////////////////////////////////////////////////////////
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_options, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
-        when (item?.itemId) {
-            R.id.menuitem_about -> startActivity(
-                    Intent(this, AboutActivity::class.java)
-            )
-            R.id.menuitem_settings -> startActivity(
-                    Intent(this, SettingsActivity::class.java)
-            )
-        }
-
-        return true
     }
 
     // lifecycle ///////////////////////////////////////////////////////////////////////////////

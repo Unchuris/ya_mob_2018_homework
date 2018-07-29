@@ -1,4 +1,4 @@
-package com.kissedcode.finance.viewmodel
+package com.kissedcode.finance.activity
 
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
