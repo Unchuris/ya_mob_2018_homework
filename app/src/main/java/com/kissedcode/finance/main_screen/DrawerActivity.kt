@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.MenuCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
 import com.kissedcode.finance.R
 import kotlinx.android.synthetic.main.activity_drawer.*

@@ -8,7 +8,7 @@ import com.kissedcode.finance.statistics.StatisticsFragment
 
 class MainActivity : DrawerActivity() {
 
-    // override attributes /////////////////////////////////////////////////////////////////////
+    // required overrides //////////////////////////////////////////////////////////////////////
 
     override fun getDrawerHeaderRes() = R.layout.drawer_header
 
