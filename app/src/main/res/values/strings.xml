@@ -16,4 +16,14 @@
     <string name="screen_title_settings">Settings</string>
     <string name="screen_title_about">About</string>
 
+    <!--new operation dialog-->
+    <string name="dialog_new_operation_title">New operation</string>
+    <string name="dialog_new_operation_category_label">Category</string>
+
+    <string-array name="categories">
+        <item>Fastfood</item>
+        <item>Sport</item>
+        <item>Flowers</item>
+    </string-array>
+
 </resources>
