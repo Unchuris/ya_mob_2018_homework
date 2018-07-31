@@ -10,10 +10,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.kissedcode.finance.R
 import com.kissedcode.finance.main_screen.DrawerFragment
-import com.kissedcode.finance.operation.OperationDialog
 import kotlinx.android.synthetic.main.fragment_accounts.*
 
 

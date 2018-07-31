@@ -1,4 +1,4 @@
-package com.kissedcode.finance.activity
+package com.kissedcode.finance.about
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
