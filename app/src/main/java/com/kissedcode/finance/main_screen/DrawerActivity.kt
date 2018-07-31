@@ -1,5 +1,6 @@
 package com.kissedcode.finance.main_screen
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import com.kissedcode.finance.R
+import com.kissedcode.finance.about.AboutActivity
 import kotlinx.android.synthetic.main.activity_drawer.*
 
 abstract class DrawerActivity : AppCompatActivity() {
@@ -41,7 +43,6 @@ abstract class DrawerActivity : AppCompatActivity() {
         // restore state
         savedInstanceState?.apply {
             screenId = savedInstanceState[STATE_SCREEN_ID] as Int? ?: 0
-
         }
 
         // ui
@@ -71,8 +72,14 @@ abstract class DrawerActivity : AppCompatActivity() {
 
             screenId = it.itemId
 
-            val fragment = getScreenFragment(it.itemId)
-            changeScreenFragment(fragment)
+            if (screenId == R.id.menuitem_drawer_about) {
+                val intent = Intent(applicationContext, AboutActivity::class.java)
+                startActivity(intent)
+            }
+            else {
+                val fragment = getScreenFragment(it.itemId)
+                changeScreenFragment(fragment)
+            }
 
             true
         }

@@ -5,4 +5,10 @@
     <string name="activity_settings">Настройки</string>
     <string name="main_options_menuitem_settings">Настройки</string>
     <string name="main_options_menuitem_about">О приложении</string>
+    <string name="screen_title_accounts">Счета</string>
+    <string name="screen_title_statistics">Статистика</string>
+    <string name="screen_title_settings">Настройки</string>
+    <string name="screen_title_about">О приложении</string>
+    <string name="dialog_new_operation_title">Новая операция</string>
+    <string name="dialog_new_operation_category_label">Категория</string>
 </resources>

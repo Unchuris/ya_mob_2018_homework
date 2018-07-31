@@ -2,6 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
-    android:text="About text will be here">
+    android:textSize="30sp"
+    android:gravity="center"
+    android:text="About text">
 
 </TextView>

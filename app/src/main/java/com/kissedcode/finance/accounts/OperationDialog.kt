@@ -1,4 +1,4 @@
-package com.kissedcode.finance.operation
+package com.kissedcode.finance.accounts
 
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.kissedcode.finance.R
 import com.kissedcode.finance.model.MoneyOperation
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_operation.*
 
 class OperationDialog : DialogFragment() {
