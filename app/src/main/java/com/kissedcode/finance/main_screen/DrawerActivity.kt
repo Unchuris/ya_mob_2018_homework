@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.MenuItem
 import com.kissedcode.finance.R
 import com.kissedcode.finance.about.AboutActivity
+import com.kissedcode.finance.model.database.AppDatabase.Companion.getDataBase
 import kotlinx.android.synthetic.main.activity_drawer.*
 
 abstract class DrawerActivity : AppCompatActivity() {
@@ -39,7 +40,6 @@ abstract class DrawerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drawer)
-
         // restore state
         savedInstanceState?.apply {
             screenId = savedInstanceState[STATE_SCREEN_ID] as Int? ?: 0

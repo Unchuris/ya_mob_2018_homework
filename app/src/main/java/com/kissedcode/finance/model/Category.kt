@@ -4,9 +4,8 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity
-data class Category constructor(
-        @field:PrimaryKey
-        val ID_category: Int,
+data class Category (
+        @PrimaryKey(autoGenerate = true) var id: Int? = null,
         val name: String,
         val type: OperationType
 )

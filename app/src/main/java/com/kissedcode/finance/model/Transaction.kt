@@ -4,20 +4,19 @@ import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import java.util.Date
 
-@Entity(foreignKeys = arrayOf(ForeignKey(entity = Wallet::class,
-        parentColumns = arrayOf("ID_wallet"),
+@Entity(foreignKeys = [
+    (ForeignKey(entity = Wallet::class,
+        parentColumns = arrayOf("id"),
         childColumns = arrayOf("walletID"),
-        onDelete = ForeignKey.CASCADE),
-        ForeignKey(entity = Currency::class,
-        parentColumns = arrayOf("ID_currency"),
-        childColumns = arrayOf("currencyID")),
-        ForeignKey(entity = Category::class,
-        parentColumns = arrayOf("ID_category"),
-        childColumns = arrayOf("categoryID"))))
-
+        onDelete = ForeignKey.CASCADE)),
+    (ForeignKey(entity = Currency::class,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("currencyID"))),
+    (ForeignKey(entity = Category::class,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("categoryID")))])
 data class Transaction(
-        @field:PrimaryKey
-        val ID_transaction: Int,
+        @PrimaryKey(autoGenerate = true) var id: Int? = null,
         val date: Date,
         val amount: Double,
         val categoryID: Int,

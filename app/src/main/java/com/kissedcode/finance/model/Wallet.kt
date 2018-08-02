@@ -4,11 +4,11 @@ import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(foreignKeys = [(ForeignKey(entity = Currency::class,
-        parentColumns = arrayOf("ID_currency"),
+        parentColumns = arrayOf("id"),
         childColumns = arrayOf("currencyID")))])
 data class Wallet(
-        @field:PrimaryKey
-        val ID_wallet: Int,
+        @PrimaryKey(autoGenerate = true) var id: Int? = null,
         val name: String,
         var value: Double,
-        val currencyID: Int)
+        val currencyID: Int
+)

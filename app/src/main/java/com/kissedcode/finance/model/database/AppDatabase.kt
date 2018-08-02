@@ -2,12 +2,12 @@ package com.kissedcode.finance.model.database
 
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.*
-import android.arch.persistence.room.Transaction
 import android.content.Context
 import com.kissedcode.finance.model.*
+import com.kissedcode.finance.model.Transaction
 import java.util.concurrent.Executors
 
-@Database(entities = [(Wallet::class), (Currency::class), (Category::class), (Transaction::class)], version = 1)
+@Database(entities = [Wallet::class, Currency::class, Category::class, Transaction::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -25,7 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDataBase(context: Context): AppDatabase {
             if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "tracker.db")
+                INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "tracker")
                         .allowMainThreadQueries()
                         .addCallback(object : RoomDatabase.Callback() {
                             override fun onCreate(db: SupportSQLiteDatabase) {

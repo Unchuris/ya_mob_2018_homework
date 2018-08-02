@@ -2,6 +2,7 @@ package com.kissedcode.finance.accounts
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.kissedcode.finance.R
+import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.main_screen.DrawerFragment
 import com.kissedcode.finance.model.Wallet
 import kotlinx.android.synthetic.main.fragment_accounts.*
@@ -19,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_accounts.*
 class AccountsFragment : DrawerFragment() {
 
     val viewModel by lazy {
-        ViewModelProviders.of(this).get(AccountsViewModel::class.java)
+        ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(AccountsViewModel::class.java)
     }
 
     lateinit var accountsAdapter: AccountsAdapter
