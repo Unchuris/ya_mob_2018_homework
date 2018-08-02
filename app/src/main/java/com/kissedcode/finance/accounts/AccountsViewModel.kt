@@ -12,11 +12,7 @@ class AccountsViewModel : ViewModel() {
 
     init {
         (accounts as MutableLiveData).value = listOf(
-                //Account("Cash"),
                 Account("Cash", R.drawable.cash),
-                //Account("Credit card"))
                 Account("Credit card", R.drawable.credit_card))
     }
-
-
 }

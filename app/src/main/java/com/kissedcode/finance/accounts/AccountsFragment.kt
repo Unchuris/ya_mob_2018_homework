@@ -1,6 +1,7 @@
 package com.kissedcode.finance.accounts
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.ClipData
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -63,7 +64,6 @@ class AccountsFragment : DrawerFragment() {
         val balanceTv = itemView.findViewById<TextView>(R.id.accountBalanceTv)
         val iconIv = itemView.findViewById<ImageView>(R.id.accountIconIv)
         val newOperationBtn = itemView.findViewById<ImageButton>(R.id.accountNewOperationIb)
-
         lateinit var accountsFragment: AccountsFragment
     }
 
@@ -76,6 +76,14 @@ class AccountsFragment : DrawerFragment() {
                     .inflate(R.layout.viewholder_account, parent, false))
 
             viewHolder.accountsFragment = accountsFragment
+
+            viewHolder.newOperationBtn.setOnClickListener {
+                val position = viewHolder.adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    accountsFragment.onNewOperationRequested(data[position])
+                }
+            }
+
             return viewHolder
         }
 
@@ -87,10 +95,6 @@ class AccountsFragment : DrawerFragment() {
             viewHolder.nameTv.text = account.name
             viewHolder.balanceTv.text = account.balance.toString()
             viewHolder.iconIv.setImageResource(account.iconRes)
-
-            viewHolder.newOperationBtn.setOnClickListener {
-                accountsFragment.onNewOperationRequested(account)
-            }
         }
     }
 }

@@ -40,9 +40,6 @@ object CacheRepository {
     // interface ///////////////////////////////////////////////////////////////////////////////
 
     fun getValute(): Observable<Valute?> {
-        if (cache != null)
-            return Observable.just(cache)
-        else
-            return remote.getValute().doAfterNext { cache = it }
+        return if (cache != null) Observable.just(cache) else remote.getValute().doAfterNext { cache = it }
     }
 }
