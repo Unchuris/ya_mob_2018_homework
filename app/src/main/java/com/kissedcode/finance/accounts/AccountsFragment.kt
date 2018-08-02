@@ -1,7 +1,6 @@
 package com.kissedcode.finance.accounts
 
 import android.arch.lifecycle.ViewModelProviders
-import android.content.ClipData
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.kissedcode.finance.R
 import com.kissedcode.finance.main_screen.DrawerFragment
+import com.kissedcode.finance.model.Wallet
 import kotlinx.android.synthetic.main.fragment_accounts.*
 
 
@@ -49,7 +49,7 @@ class AccountsFragment : DrawerFragment() {
 
     // controller //////////////////////////////////////////////////////////////////////////////
 
-    fun onNewOperationRequested(account: Account) {
+    fun onNewOperationRequested(account: Wallet) {
         //Toast.makeText(context, account.name, Toast.LENGTH_SHORT).show()
         fragmentManager!!.beginTransaction()
                 .add(OperationDialog.newInstance(account.name), null)
@@ -69,7 +69,7 @@ class AccountsFragment : DrawerFragment() {
 
     class AccountsAdapter(val accountsFragment: AccountsFragment) : RecyclerView.Adapter<AccountVH>() {
 
-        var data: List<Account> = listOf()
+        var data: List<Wallet> = listOf()
 
         override fun onCreateViewHolder(parent: ViewGroup, type: Int): AccountVH {
             val viewHolder =  AccountVH(LayoutInflater.from(parent.context)
@@ -93,8 +93,7 @@ class AccountsFragment : DrawerFragment() {
             val account = data[position]
 
             viewHolder.nameTv.text = account.name
-            viewHolder.balanceTv.text = account.balance.toString()
-            viewHolder.iconIv.setImageResource(account.iconRes)
+            viewHolder.balanceTv.text = account.value.toString()
         }
     }
 }

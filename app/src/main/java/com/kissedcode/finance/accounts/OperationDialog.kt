@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.kissedcode.finance.R
-import com.kissedcode.finance.model.MoneyOperation
 import kotlinx.android.synthetic.main.dialog_operation.*
 
 class OperationDialog : DialogFragment() {
@@ -44,9 +43,9 @@ class OperationDialog : DialogFragment() {
 
     // support classes /////////////////////////////////////////////////////////////////////////
 
-    interface Callback {
-        fun onNewOperation(operation: MoneyOperation)
-    }
+//    interface Callback {
+//        fun onNewOperation(operation: MoneyOperation)
+//    }
 
     companion object {
 
