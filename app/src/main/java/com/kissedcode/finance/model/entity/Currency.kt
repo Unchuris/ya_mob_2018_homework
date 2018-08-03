@@ -1,4 +1,4 @@
-package com.kissedcode.finance.model
+package com.kissedcode.finance.model.entity
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey

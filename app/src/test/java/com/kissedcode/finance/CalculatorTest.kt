@@ -2,7 +2,7 @@
 //
 //import com.kissedcode.finance.model.Calculator
 //import com.kissedcode.finance.model.MoneyOperation.Type.*
-//import com.kissedcode.finance.model.Currency.*
+//import com.kissedcode.finance.model.Entity.Currency.*
 //import com.kissedcode.finance.model.MoneyOperation
 //
 //import org.junit.Assert.*

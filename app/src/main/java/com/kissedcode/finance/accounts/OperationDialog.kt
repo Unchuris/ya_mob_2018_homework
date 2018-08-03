@@ -15,11 +15,8 @@ class OperationDialog : DialogFragment() {
 
     lateinit var spinnerAdapter: ArrayAdapter<String>
 
-    // lifecycle ///////////////////////////////////////////////////////////////////////////////
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         title = arguments!!.getString(ARG_ACCOUNT_NAME)!!
     }
 
@@ -27,7 +24,6 @@ class OperationDialog : DialogFragment() {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
-
         return inflater.inflate(R.layout.dialog_operation, container, false)
     }
 

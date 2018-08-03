@@ -14,25 +14,21 @@ import android.widget.TextView
 import com.kissedcode.finance.R
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.main_screen.DrawerFragment
-import com.kissedcode.finance.model.Wallet
+import com.kissedcode.finance.model.entity.Wallet
 import kotlinx.android.synthetic.main.fragment_accounts.*
 
 
 class AccountsFragment : DrawerFragment() {
 
-    val viewModel by lazy {
+    private val viewModel by lazy {
         ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(AccountsViewModel::class.java)
     }
 
     lateinit var accountsAdapter: AccountsAdapter
 
-    // required overrides //////////////////////////////////////////////////////////////////////
-
     override fun getLayoutRes() = R.layout.fragment_accounts
 
     override fun getTitleRes() = R.string.screen_title_accounts
-
-    // lifecycle ///////////////////////////////////////////////////////////////////////////////
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -46,13 +42,14 @@ class AccountsFragment : DrawerFragment() {
                 false)
 
         // observe viewmodel
-        viewModel.accounts.observe({ lifecycle }) { accountsAdapter.data = it!! }
+        viewModel.accounts.observe({ lifecycle }) {
+            accountsAdapter.data = it!!
+        }
     }
 
     // controller //////////////////////////////////////////////////////////////////////////////
 
     fun onNewOperationRequested(account: Wallet) {
-        //Toast.makeText(context, account.name, Toast.LENGTH_SHORT).show()
         fragmentManager!!.beginTransaction()
                 .add(OperationDialog.newInstance(account.name), null)
                 .addToBackStack(null)
@@ -69,7 +66,7 @@ class AccountsFragment : DrawerFragment() {
         lateinit var accountsFragment: AccountsFragment
     }
 
-    class AccountsAdapter(val accountsFragment: AccountsFragment) : RecyclerView.Adapter<AccountVH>() {
+    class AccountsAdapter(private val accountsFragment: AccountsFragment) : RecyclerView.Adapter<AccountVH>() {
 
         var data: List<Wallet> = listOf()
 

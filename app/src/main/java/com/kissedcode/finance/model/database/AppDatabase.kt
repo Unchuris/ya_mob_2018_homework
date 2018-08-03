@@ -4,7 +4,11 @@ import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.*
 import android.content.Context
 import com.kissedcode.finance.model.*
-import com.kissedcode.finance.model.Transaction
+import com.kissedcode.finance.model.entity.Category
+import com.kissedcode.finance.model.Converters
+import com.kissedcode.finance.model.entity.Currency
+import com.kissedcode.finance.model.entity.Transaction
+import com.kissedcode.finance.model.entity.Wallet
 import java.util.concurrent.Executors
 
 @Database(entities = [Wallet::class, Currency::class, Category::class, Transaction::class], version = 1)
@@ -14,6 +18,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun walletDao(): WalletDao
 
     abstract fun currencyDao(): CurrencyDao
+
+    abstract fun categoryDao(): CategoryDao
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null
@@ -31,8 +37,9 @@ abstract class AppDatabase : RoomDatabase() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
                                 Executors.newSingleThreadScheduledExecutor().execute {
-                                    getInstance(context).currencyDao().insertAll(initCurrency())
-                                    getInstance(context).walletDao().insertAll(initWallet())
+                                    getInstance(context).currencyDao().insertAll(*initCurrency().toTypedArray())
+                                    getInstance(context).walletDao().insertAll(*initWallet().toTypedArray())
+                                    getInstance(context).categoryDao().insertAll(*initCategory().toTypedArray())
                                 }
                             }
                         })

@@ -7,13 +7,10 @@ import android.support.annotation.LayoutRes
 import android.support.annotation.MenuRes
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
-import android.support.v4.view.MenuCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
 import com.kissedcode.finance.R
 import com.kissedcode.finance.about.AboutActivity
-import com.kissedcode.finance.model.database.AppDatabase.Companion.getDataBase
 import kotlinx.android.synthetic.main.activity_drawer.*
 
 abstract class DrawerActivity : AppCompatActivity() {

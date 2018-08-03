@@ -1,6 +1,7 @@
 package com.kissedcode.finance.model
 
 import android.arch.persistence.room.TypeConverter
+import com.kissedcode.finance.model.OperationType
 import java.util.*
 
 class Converters {
