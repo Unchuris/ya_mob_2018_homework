@@ -25,6 +25,6 @@ fun initCategory(): List<Category> = arrayListOf(
         Category(7, "Utilities", OperationType.SPEND),
         Category(8, "Other expenses", OperationType.SPEND),
         Category(9, "Salary", OperationType.INCOME),
-        Category(10, "Refund),", OperationType.INCOME),
+        Category(10, "Refund", OperationType.INCOME),
         Category(11, "Other income", OperationType.INCOME)
 )

@@ -11,4 +11,12 @@
     <string name="screen_title_about">О приложении</string>
     <string name="dialog_new_operation_title">Новая операция</string>
     <string name="dialog_new_operation_category_label">Категория</string>
+
+    <string name="transaction_title_add">Добавить транзакцию</string>
+    <string name="transaction_amount">Сколько</string>
+    <string name="transaction_category">Категория</string>
+    <string name="transaction_currency">Валюта</string>
+    <string name="transaction_wallet">Кошелек</string>
+    <string name="operation_type">Тип операции</string>
+    <string name="add">Добавить</string>
 </resources>

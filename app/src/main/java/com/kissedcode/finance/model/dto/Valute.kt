@@ -8,10 +8,4 @@ class Valute {
     @SerializedName("USD")
     @Expose
     var usd: USD? = null
-    @SerializedName("EUR")
-    @Expose
-    var eur: EUR? = null
-    @SerializedName("CNY")
-    @Expose
-    var cny: CNY? = null
 }

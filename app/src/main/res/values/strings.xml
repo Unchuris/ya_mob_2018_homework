@@ -20,9 +20,11 @@
     <string name="dialog_new_operation_title">New operation</string>
     <string name="dialog_new_operation_category_label">Category</string>
 
-    <string-array name="categories">
-        <item>Fastfood</item>
-        <item>Sport</item>
-        <item>Flowers</item>
-    </string-array>
+    <string name="transaction_title_add">Add transaction</string>
+    <string name="transaction_amount">Amount</string>
+    <string name="transaction_category">Category</string>
+    <string name="transaction_currency">Currency</string>
+    <string name="transaction_wallet">Wallet</string>
+    <string name="operation_type">Operation type</string>
+    <string name="add">add</string>
 </resources>
