@@ -9,12 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.kissedcode.finance.R
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.model.OperationType
 import com.kissedcode.finance.model.entity.Category
 import com.kissedcode.finance.model.entity.Currency
 import android.arch.lifecycle.Observer
+import com.kissedcode.finance.R
+import com.kissedcode.finance.model.entity.MyTransaction
+import com.kissedcode.finance.model.entity.Wallet
 import kotlinx.android.synthetic.main.dialog_operation.*
 import java.util.Calendar
 
@@ -22,23 +24,25 @@ class OperationDialog : DialogFragment() {
 
     lateinit var title: String
 
-    lateinit var spinnerAdapter: ArrayAdapter<String>
-
     private lateinit var operationViewModel: OperationViewModel
 
     private lateinit var currencyViewModel: CurrencyViewModel
 
+    private lateinit var transactionViewModel: TransactionViewModel
+
     private var dateTime = Calendar.getInstance()
+
+    private lateinit var wallet: Wallet
 
     private val categoryList: Observer<List<Category>> = Observer { res ->
         if(res != null) {
-            spinnerTransactionCategory.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, res.map { l -> l.name })
+            spinnerTransactionCategory.adapter = CategorySpinnerAdapter(context, res)
         }
     }
 
-    private val currencyList: android.arch.lifecycle.Observer<List<Currency>> = Observer { res ->
+    private val currencyList: Observer<List<Currency>> = Observer { res ->
         if(res != null) {
-            spinnerTransactionCurrency.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, res.map { l -> l.name })
+            spinnerTransactionCurrency.adapter = CurrencySpinnerAdapter(context, res)
         }
     }
 
@@ -57,7 +61,8 @@ class OperationDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = arguments!!.getString(ARG_ACCOUNT_NAME)!!
+        wallet = arguments?.getSerializable(WALLET_KEY) as Wallet
+        title = wallet.name
     }
 
     override fun onCreateView(
@@ -71,8 +76,10 @@ class OperationDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         accountNameTv.text = title
 
+
         operationViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(OperationViewModel::class.java)
         currencyViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(CurrencyViewModel::class.java)
+        transactionViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(TransactionViewModel::class.java)
 
         operationViewModel.type.value = OperationType.SPEND
         spinnerOperationType.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, enumValues<OperationType>() )
@@ -87,21 +94,35 @@ class OperationDialog : DialogFragment() {
             }
         }
 
-        //initSaveButton()
+        btnCreateTransaction.setOnClickListener {
+            buildTransaction()
+        }
+
+    }
+
+    private fun buildTransaction() {
+        spinnerOperationType
+        val c = spinnerTransactionCategory.selectedItem as Category
+        val sTC = spinnerTransactionCurrency.selectedItem as Currency
+        val transaction = MyTransaction(null,
+                date = Calendar.getInstance().time,
+                amount = etTransactionSum.text.toString().toDouble(),
+                categoryID = c.id!!,
+                currencyID = sTC.id!!,
+                walletID = wallet.id!!)
+        transactionViewModel.addTransaction(transaction)
+        dialog.dismiss()
     }
 
     companion object {
+        private const val WALLET_KEY = "walletKey"
 
-        val ARG_ACCOUNT_NAME = "arg_account_name"
-
-        fun newInstance(accountName: String): OperationDialog {
-            val fragment = OperationDialog()
-
-            val args = Bundle()
-            args.putString(ARG_ACCOUNT_NAME, accountName)
-            fragment.arguments = args
-
-            return fragment
+        fun newInstance(wallet: Wallet): OperationDialog {
+            val bundle = Bundle()
+            bundle.putSerializable(WALLET_KEY, wallet)
+            val operationDialog = OperationDialog()
+            operationDialog.arguments = bundle
+            return operationDialog
         }
     }
 }

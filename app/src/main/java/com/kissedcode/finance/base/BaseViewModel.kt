@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel
 import com.kissedcode.finance.accounts.AccountsViewModel
 import com.kissedcode.finance.accounts.operation.CurrencyViewModel
 import com.kissedcode.finance.accounts.operation.OperationViewModel
+import com.kissedcode.finance.accounts.operation.TransactionViewModel
 import com.kissedcode.finance.injection.component.DaggerViewModelInjector
 import com.kissedcode.finance.injection.component.ViewModelInjector
 import com.kissedcode.finance.injection.module.NetworkModule
@@ -23,6 +24,7 @@ abstract class BaseViewModel: ViewModel() {
             is AccountsViewModel -> injector.inject(this)
             is OperationViewModel -> injector.inject(this)
             is CurrencyViewModel -> injector.inject(this)
+            is TransactionViewModel -> injector.inject(this)
         }
     }
 }

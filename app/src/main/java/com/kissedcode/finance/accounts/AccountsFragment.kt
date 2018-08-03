@@ -51,7 +51,7 @@ class AccountsFragment : DrawerFragment() {
 
     fun onNewOperationRequested(account: Wallet) {
         fragmentManager!!.beginTransaction()
-                .add(OperationDialog.newInstance(account.name), null)
+                .add(OperationDialog.newInstance(account), null)
                 .addToBackStack(null)
                 .commit()
     }

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import com.kissedcode.finance.accounts.AccountsViewModel
 import com.kissedcode.finance.accounts.operation.CurrencyViewModel
 import com.kissedcode.finance.accounts.operation.OperationViewModel
+import com.kissedcode.finance.accounts.operation.TransactionViewModel
 import com.kissedcode.finance.model.database.AppDatabase.Companion.getInstance
 
 class ViewModelFactory(private val activity: AppCompatActivity): ViewModelProvider.Factory{
@@ -24,6 +25,11 @@ class ViewModelFactory(private val activity: AppCompatActivity): ViewModelProvid
             val db = getInstance(activity)
             @Suppress("UNCHECKED_CAST")
             return CurrencyViewModel(db.currencyDao()) as T
+        }
+        if (modelClass.isAssignableFrom(TransactionViewModel::class.java)) {
+            val db = getInstance(activity)
+            @Suppress("UNCHECKED_CAST")
+            return TransactionViewModel(db.transactionDao()) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

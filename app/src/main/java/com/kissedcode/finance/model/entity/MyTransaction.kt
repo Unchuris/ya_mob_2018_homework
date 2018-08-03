@@ -15,7 +15,7 @@ import java.util.Date
     (ForeignKey(entity = Category::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("categoryID")))])
-data class Transaction(
+data class MyTransaction(
         @PrimaryKey(autoGenerate = true) var id: Int? = null,
         val date: Date,
         val amount: Double,

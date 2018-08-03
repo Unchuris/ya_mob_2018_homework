@@ -136,7 +136,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvTransactionCurrency" />
 
         <Button
-            android:id="@+id/btn_create_transaction"
+            android:id="@+id/btnCreateTransaction"
             style="@android:style/Widget.Material.Button.Borderless.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
