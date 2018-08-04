@@ -82,7 +82,7 @@ class OperationDialog : DialogFragment() {
         spinnerOperationType.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, enumValues<OperationType>() )
 
         spinnerOperationType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
+            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long) {
                 operationViewModel.type.value = spinnerOperationType.selectedItem as OperationType?
             }
 
@@ -98,7 +98,6 @@ class OperationDialog : DialogFragment() {
     }
 
     private fun buildTransaction() {
-        spinnerOperationType
         val c = spinnerTransactionCategory.selectedItem as Category
         val sTC = spinnerTransactionCurrency.selectedItem as Currency
         val transaction = MyTransaction(null,
@@ -107,7 +106,7 @@ class OperationDialog : DialogFragment() {
                 categoryID = c.id!!,
                 currencyID = sTC.id!!,
                 walletID = wallet.id!!)
-        transactionViewModel.addTransaction(transaction, wallet)
+        transactionViewModel.addTransaction(transaction, wallet, currencyViewModel.currency.value!!, c.type)
         dialog.dismiss()
     }
 
