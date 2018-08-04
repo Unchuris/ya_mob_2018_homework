@@ -37,7 +37,7 @@ class OperationViewModel(private val categoryDao: CategoryDao) : BaseViewModel()
 
     private fun filterByType(type : OperationType) : LiveData<List<Category>> {
         val c = MutableLiveData<List<Category>>()
-        c.value = category.filter { f -> f.type == type }
+        c.value = category.filter { f -> f.categoryType == type }
         return c
     }
 

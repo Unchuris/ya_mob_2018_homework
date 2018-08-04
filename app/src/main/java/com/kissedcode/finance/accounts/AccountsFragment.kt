@@ -20,6 +20,13 @@ import kotlinx.android.synthetic.main.fragment_accounts.*
 
 class AccountsFragment : DrawerFragment() {
 
+    companion object {
+        fun newInstance(): AccountsFragment {
+            return AccountsFragment()
+        }
+    }
+
+
     private val viewModel by lazy {
         ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(AccountsViewModel::class.java)
     }
@@ -88,8 +95,8 @@ class AccountsFragment : DrawerFragment() {
         override fun onBindViewHolder(viewHolder: AccountVH, position: Int) {
             val account = data[position]
 
-            viewHolder.nameTv.text = account.name
-            viewHolder.balanceTv.text = account.value.toString()
+            viewHolder.nameTv.text = account.walletName
+            viewHolder.balanceTv.text = account.walletValue.toString()
         }
     }
 }

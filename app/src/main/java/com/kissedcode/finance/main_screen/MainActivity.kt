@@ -19,10 +19,10 @@ class MainActivity : DrawerActivity() {
     override fun getScreenFragment(drawerItemId: Int): Fragment {
 
         return when (drawerItemId) {
-            R.id.menuitem_drawer_accounts -> AccountsFragment()
+            R.id.menuitem_drawer_accounts -> FragmentMainScreen.newInstance()
             R.id.menuitem_drawer_statistics -> StatisticsFragment()
             R.id.menuitem_drawer_settings -> SettingsFragment()
-            else -> Fragment()
+            else -> FragmentMainScreen.newInstance()
         }
     }
 }

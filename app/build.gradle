@@ -2,10 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply from: 'dependencies.gradle'
 
 android {
     compileSdkVersion 27
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId 'com.kissedcode.finance'
         minSdkVersion 21
@@ -34,3 +36,4 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+apply from: 'dependencies.gradle'

@@ -60,7 +60,7 @@ class OperationDialog : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         wallet = arguments?.getSerializable(WALLET_KEY) as Wallet
-        title = wallet.name
+        title = wallet.walletName
     }
 
     override fun onCreateView(
@@ -101,12 +101,12 @@ class OperationDialog : DialogFragment() {
         val c = spinnerTransactionCategory.selectedItem as Category
         val sTC = spinnerTransactionCurrency.selectedItem as Currency
         val transaction = MyTransaction(null,
-                date = Calendar.getInstance().time,
-                amount = etTransactionSum.text.toString().toDouble(),
-                categoryID = c.id!!,
-                currencyID = sTC.id!!,
-                walletID = wallet.id!!)
-        transactionViewModel.addTransaction(transaction, wallet, currencyViewModel.currency.value!!, c.type)
+                myTransactionDate = Calendar.getInstance().time,
+                myTransactionAmount = etTransactionSum.text.toString().toDouble(),
+                categoryID = c.categoryId!!,
+                currencyID = sTC.currencyId!!,
+                walletID = wallet.walletId!!)
+        transactionViewModel.addTransaction(transaction, wallet, currencyViewModel.currency.value!!, c.categoryType)
         dialog.dismiss()
     }
 

@@ -27,4 +27,8 @@
     <string name="transaction_wallet">Wallet</string>
     <string name="operation_type">Operation type</string>
     <string name="add">add</string>
+
+    <string name="main_screen_tab_main">Wallets</string>
+    <string name="main_screen_tab_operations">Transactions</string>
+    <string name="icon">Icon</string>
 </resources>

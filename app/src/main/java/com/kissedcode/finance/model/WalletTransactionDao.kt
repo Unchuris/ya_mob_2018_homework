@@ -12,7 +12,7 @@ abstract class WalletTransactionDao {
     @Insert
     abstract fun insertFinanceOperation(transaction: MyTransaction)
 
-    @Query("UPDATE wallet SET value = value + :value WHERE id = :id")
+    @Query("UPDATE wallet SET walletValue = walletValue + :value WHERE walletId = :id")
     abstract fun updateWallets(id: Int, value: Double)
 
     @Transaction

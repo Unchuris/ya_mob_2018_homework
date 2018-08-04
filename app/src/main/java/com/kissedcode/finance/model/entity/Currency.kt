@@ -5,8 +5,8 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity
 data class Currency (
-        @PrimaryKey(autoGenerate = true) var id: Int? = null,
-        val name: String,
+        @PrimaryKey(autoGenerate = true) var currencyId: Int? = null,
+        val currencyName: String,
         val symbol: String,
         val standardName: String
 )

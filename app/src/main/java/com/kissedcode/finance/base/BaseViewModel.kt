@@ -8,6 +8,7 @@ import com.kissedcode.finance.accounts.operation.WalletTransactionViewModel
 import com.kissedcode.finance.injection.component.DaggerViewModelInjector
 import com.kissedcode.finance.injection.component.ViewModelInjector
 import com.kissedcode.finance.injection.module.NetworkModule
+import com.kissedcode.finance.transaction.TransactionListViewModel
 
 abstract class BaseViewModel: ViewModel() {
     private val injector: ViewModelInjector = DaggerViewModelInjector
@@ -25,6 +26,7 @@ abstract class BaseViewModel: ViewModel() {
             is OperationViewModel -> injector.inject(this)
             is CurrencyViewModel -> injector.inject(this)
             is WalletTransactionViewModel -> injector.inject(this)
+            is TransactionListViewModel -> injector.inject(this)
         }
     }
 }

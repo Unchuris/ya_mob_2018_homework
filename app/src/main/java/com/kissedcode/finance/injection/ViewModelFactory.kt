@@ -8,6 +8,7 @@ import com.kissedcode.finance.accounts.operation.CurrencyViewModel
 import com.kissedcode.finance.accounts.operation.OperationViewModel
 import com.kissedcode.finance.accounts.operation.WalletTransactionViewModel
 import com.kissedcode.finance.model.database.AppDatabase.Companion.getInstance
+import com.kissedcode.finance.transaction.TransactionListViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(private val activity: AppCompatActivity): ViewModelProvider.Factory{
@@ -23,6 +24,9 @@ class ViewModelFactory(private val activity: AppCompatActivity): ViewModelProvid
         }
         if (modelClass.isAssignableFrom(WalletTransactionViewModel::class.java)) {
             return WalletTransactionViewModel(getInstance(activity).walletTransactionDao()) as T
+        }
+        if (modelClass.isAssignableFrom(TransactionListViewModel::class.java)) {
+            return TransactionListViewModel(getInstance(activity).getIdleTransactionDao()) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -6,19 +6,19 @@ import java.util.Date
 
 @Entity(foreignKeys = [
     (ForeignKey(entity = Wallet::class,
-        parentColumns = arrayOf("id"),
+        parentColumns = arrayOf("walletId"),
         childColumns = arrayOf("walletID"),
         onDelete = ForeignKey.CASCADE)),
     (ForeignKey(entity = Currency::class,
-        parentColumns = arrayOf("id"),
+        parentColumns = arrayOf("currencyId"),
         childColumns = arrayOf("currencyID"))),
     (ForeignKey(entity = Category::class,
-        parentColumns = arrayOf("id"),
+        parentColumns = arrayOf("categoryId"),
         childColumns = arrayOf("categoryID")))])
 data class MyTransaction(
-        @PrimaryKey(autoGenerate = true) var id: Int? = null,
-        val date: Date,
-        val amount: Double,
+        @PrimaryKey(autoGenerate = true) var myTransactionId: Int? = null,
+        val myTransactionDate: Date,
+        val myTransactionAmount: Double,
         val categoryID: Int,
         val currencyID: Int,
         val walletID: Int

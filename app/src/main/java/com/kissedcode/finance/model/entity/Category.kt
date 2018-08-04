@@ -6,7 +6,7 @@ import com.kissedcode.finance.model.OperationType
 
 @Entity
 data class Category (
-        @PrimaryKey(autoGenerate = true) var id: Int? = null,
-        val name: String,
-        val type: OperationType
+        @PrimaryKey(autoGenerate = true) var categoryId: Int? = null,
+        val categoryName: String,
+        val categoryType: OperationType
 )

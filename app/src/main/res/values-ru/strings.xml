@@ -5,7 +5,7 @@
     <string name="activity_settings">Настройки</string>
     <string name="main_options_menuitem_settings">Настройки</string>
     <string name="main_options_menuitem_about">О приложении</string>
-    <string name="screen_title_accounts">Счета</string>
+    <string name="screen_title_accounts">Главная</string>
     <string name="screen_title_statistics">Статистика</string>
     <string name="screen_title_settings">Настройки</string>
     <string name="screen_title_about">О приложении</string>
@@ -19,4 +19,8 @@
     <string name="transaction_wallet">Кошелек</string>
     <string name="operation_type">Тип операции</string>
     <string name="add">Добавить</string>
+
+    <string name="main_screen_tab_main">Кошельки</string>
+    <string name="main_screen_tab_operations">Операции</string>
+    <string name="icon">Иконка</string>
 </resources>

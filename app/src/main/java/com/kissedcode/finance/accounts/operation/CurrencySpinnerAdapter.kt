@@ -16,7 +16,7 @@ class CurrencySpinnerAdapter(context: Context?, private val items: List<Currency
         if (view == null)
             view = View.inflate(context, android.R.layout.simple_spinner_dropdown_item, null)
 
-        (view as TextView).text = items[position].name
+        (view as TextView).text = items[position].currencyName
         return view
     }
 
