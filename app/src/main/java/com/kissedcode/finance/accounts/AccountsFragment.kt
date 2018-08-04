@@ -24,7 +24,7 @@ class AccountsFragment : DrawerFragment() {
         ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(AccountsViewModel::class.java)
     }
 
-    lateinit var accountsAdapter: AccountsAdapter
+    private lateinit var accountsAdapter: AccountsAdapter
 
     override fun getLayoutRes() = R.layout.fragment_accounts
 
@@ -44,10 +44,9 @@ class AccountsFragment : DrawerFragment() {
         // observe viewmodel
         viewModel.accounts.observe({ lifecycle }) {
             accountsAdapter.data = it!!
+            accountsAdapter.notifyDataSetChanged()
         }
     }
-
-    // controller //////////////////////////////////////////////////////////////////////////////
 
     fun onNewOperationRequested(account: Wallet) {
         fragmentManager!!.beginTransaction()
@@ -55,8 +54,6 @@ class AccountsFragment : DrawerFragment() {
                 .addToBackStack(null)
                 .commit()
     }
-
-    // support classes /////////////////////////////////////////////////////////////////////////
 
     class AccountVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTv = itemView.findViewById<TextView>(R.id.accountNameTv)

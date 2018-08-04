@@ -6,30 +6,23 @@ import android.support.v7.app.AppCompatActivity
 import com.kissedcode.finance.accounts.AccountsViewModel
 import com.kissedcode.finance.accounts.operation.CurrencyViewModel
 import com.kissedcode.finance.accounts.operation.OperationViewModel
-import com.kissedcode.finance.accounts.operation.TransactionViewModel
+import com.kissedcode.finance.accounts.operation.WalletTransactionViewModel
 import com.kissedcode.finance.model.database.AppDatabase.Companion.getInstance
 
+@Suppress("UNCHECKED_CAST")
 class ViewModelFactory(private val activity: AppCompatActivity): ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AccountsViewModel::class.java)) {
-            val db = getInstance(activity)
-            @Suppress("UNCHECKED_CAST")
-            return AccountsViewModel(db.walletDao()) as T
+            return AccountsViewModel(getInstance(activity).walletDao()) as T
         }
         if (modelClass.isAssignableFrom(OperationViewModel::class.java)) {
-            val db = getInstance(activity)
-            @Suppress("UNCHECKED_CAST")
-            return OperationViewModel(db.categoryDao()) as T
+            return OperationViewModel(getInstance(activity).categoryDao()) as T
         }
         if (modelClass.isAssignableFrom(CurrencyViewModel::class.java)) {
-            val db = getInstance(activity)
-            @Suppress("UNCHECKED_CAST")
-            return CurrencyViewModel(db.currencyDao()) as T
+            return CurrencyViewModel(getInstance(activity).currencyDao()) as T
         }
-        if (modelClass.isAssignableFrom(TransactionViewModel::class.java)) {
-            val db = getInstance(activity)
-            @Suppress("UNCHECKED_CAST")
-            return TransactionViewModel(db.transactionDao()) as T
+        if (modelClass.isAssignableFrom(WalletTransactionViewModel::class.java)) {
+            return WalletTransactionViewModel(getInstance(activity).walletTransactionDao()) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

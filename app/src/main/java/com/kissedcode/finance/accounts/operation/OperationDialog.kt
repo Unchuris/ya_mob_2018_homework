@@ -28,9 +28,7 @@ class OperationDialog : DialogFragment() {
 
     private lateinit var currencyViewModel: CurrencyViewModel
 
-    private lateinit var transactionViewModel: TransactionViewModel
-
-    private var dateTime = Calendar.getInstance()
+    private lateinit var transactionViewModel: WalletTransactionViewModel
 
     private lateinit var wallet: Wallet
 
@@ -76,10 +74,9 @@ class OperationDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         accountNameTv.text = title
 
-
         operationViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(OperationViewModel::class.java)
         currencyViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(CurrencyViewModel::class.java)
-        transactionViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(TransactionViewModel::class.java)
+        transactionViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(WalletTransactionViewModel::class.java)
 
         operationViewModel.type.value = OperationType.SPEND
         spinnerOperationType.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, enumValues<OperationType>() )
@@ -110,7 +107,7 @@ class OperationDialog : DialogFragment() {
                 categoryID = c.id!!,
                 currencyID = sTC.id!!,
                 walletID = wallet.id!!)
-        transactionViewModel.addTransaction(transaction)
+        transactionViewModel.addTransaction(transaction, wallet)
         dialog.dismiss()
     }
 
