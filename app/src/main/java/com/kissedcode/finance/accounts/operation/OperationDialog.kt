@@ -11,12 +11,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.model.OperationType
-import com.kissedcode.finance.model.entity.Category
-import com.kissedcode.finance.model.entity.Currency
 import android.arch.lifecycle.Observer
 import com.kissedcode.finance.R
-import com.kissedcode.finance.model.entity.MyTransaction
-import com.kissedcode.finance.model.entity.Wallet
+import com.kissedcode.finance.model.database.AppDatabase
+import com.kissedcode.finance.model.entity.*
 import kotlinx.android.synthetic.main.dialog_operation.*
 import java.util.Calendar
 
@@ -30,7 +28,7 @@ class OperationDialog : DialogFragment() {
 
     private lateinit var transactionViewModel: WalletTransactionViewModel
 
-    private lateinit var wallet: Wallet
+    private lateinit var wallet: IdleWallet
 
     private val categoryList: Observer<List<Category>> = Observer { res ->
         if(res != null) {
@@ -56,10 +54,11 @@ class OperationDialog : DialogFragment() {
         currencyViewModel.currency.removeObservers(this)
     }
 
+    lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        wallet = arguments?.getSerializable(WALLET_KEY) as Wallet
+        wallet = arguments?.getSerializable(WALLET_KEY) as IdleWallet
         title = wallet.walletName
     }
 
@@ -67,6 +66,7 @@ class OperationDialog : DialogFragment() {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
+        db = AppDatabase.getInstance(activity as AppCompatActivity)
         return inflater.inflate(R.layout.dialog_operation, container, false)
     }
 
@@ -100,20 +100,38 @@ class OperationDialog : DialogFragment() {
     private fun buildTransaction() {
         val c = spinnerTransactionCategory.selectedItem as Category
         val sTC = spinnerTransactionCurrency.selectedItem as Currency
+
         val transaction = MyTransaction(null,
                 myTransactionDate = Calendar.getInstance().time,
                 myTransactionAmount = etTransactionSum.text.toString().toDouble(),
                 categoryID = c.categoryId!!,
                 currencyID = sTC.currencyId!!,
-                walletID = wallet.walletId!!)
+                walletID = wallet.IdleWalletId!!)
         transactionViewModel.addTransaction(transaction, wallet, currencyViewModel.currency.value!!, c.categoryType)
+        if (etTransactionRepeat.text.toString() != "") {
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_MONTH, etTransactionRepeat.text.toString().toInt())
+            val t = IdleDeferTransaction(
+                    null,
+                    idleDeferTransactionDate = Calendar.getInstance().time,
+                    idleDeferTransactionAmount = etTransactionSum.text.toString().toDouble(),
+                    currencyID = sTC.currencyId!!,
+                    categoryID = c.categoryId!!,
+                    walletID = wallet.IdleWalletId!!,
+                    repeatDays = etTransactionRepeat.text.toString().toInt(),
+                    nextRepeatDay = calendar.get(Calendar.DAY_OF_MONTH),
+                    nextRepeatMonth = calendar.get(Calendar.MONTH),
+                    nextRepeatYear = calendar.get(Calendar.YEAR)
+            )
+            db.getDeferTransactionDao().insert(t)
+        }
         dialog.dismiss()
     }
 
     companion object {
         private const val WALLET_KEY = "walletKey"
 
-        fun newInstance(wallet: Wallet): OperationDialog {
+        fun newInstance(wallet: IdleWallet): OperationDialog {
             val bundle = Bundle()
             bundle.putSerializable(WALLET_KEY, wallet)
             val operationDialog = OperationDialog()

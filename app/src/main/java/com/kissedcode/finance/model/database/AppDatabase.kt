@@ -4,18 +4,17 @@ import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.*
 import android.content.Context
 import com.kissedcode.finance.model.*
-import com.kissedcode.finance.model.entity.Category
 import com.kissedcode.finance.model.Converters
-import com.kissedcode.finance.model.entity.Currency
-import com.kissedcode.finance.model.entity.MyTransaction
-import com.kissedcode.finance.model.entity.Wallet
+import com.kissedcode.finance.model.entity.*
 import java.util.concurrent.Executors
 
-@Database(entities = [Wallet::class, Currency::class, Category::class, MyTransaction::class], version = 1)
+@Database(entities = [Wallet::class, Currency::class, Category::class, MyTransaction::class, IdleDeferTransaction::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun walletDao(): WalletDao
+
+    abstract fun idleWalletDao(): IdleWalletDao
 
     abstract fun currencyDao(): CurrencyDao
 
@@ -24,6 +23,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getIdleTransactionDao(): IdleTransactionDao
 
     abstract fun walletTransactionDao(): WalletTransactionDao
+
+    abstract fun getDeferTransactionDao(): DeferTransactionDao
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null

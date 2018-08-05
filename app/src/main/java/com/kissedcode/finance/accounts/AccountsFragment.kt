@@ -15,7 +15,7 @@ import com.kissedcode.finance.R
 import com.kissedcode.finance.accounts.operation.OperationDialog
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.main_screen.DrawerFragment
-import com.kissedcode.finance.model.entity.Wallet
+import com.kissedcode.finance.model.entity.IdleWallet
 import kotlinx.android.synthetic.main.fragment_accounts.*
 
 class AccountsFragment : DrawerFragment() {
@@ -25,7 +25,6 @@ class AccountsFragment : DrawerFragment() {
             return AccountsFragment()
         }
     }
-
 
     private val viewModel by lazy {
         ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(AccountsViewModel::class.java)
@@ -55,7 +54,7 @@ class AccountsFragment : DrawerFragment() {
         }
     }
 
-    fun onNewOperationRequested(account: Wallet) {
+    fun onNewOperationRequested(account: IdleWallet) {
         fragmentManager!!.beginTransaction()
                 .add(OperationDialog.newInstance(account), null)
                 .addToBackStack(null)
@@ -72,7 +71,7 @@ class AccountsFragment : DrawerFragment() {
 
     class AccountsAdapter(private val accountsFragment: AccountsFragment) : RecyclerView.Adapter<AccountVH>() {
 
-        var data: List<Wallet> = listOf()
+        var data: List<IdleWallet> = listOf()
 
         override fun onCreateViewHolder(parent: ViewGroup, type: Int): AccountVH {
             val viewHolder =  AccountVH(LayoutInflater.from(parent.context)
@@ -96,7 +95,7 @@ class AccountsFragment : DrawerFragment() {
             val account = data[position]
 
             viewHolder.nameTv.text = account.walletName
-            viewHolder.balanceTv.text = account.walletValue.toString()
+            viewHolder.balanceTv.text = String.format("%.2f", account.walletValue) + " " +  account.currency.symbol
         }
     }
 }

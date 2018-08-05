@@ -14,7 +14,7 @@ import com.kissedcode.finance.transaction.TransactionListViewModel
 class ViewModelFactory(private val activity: AppCompatActivity): ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AccountsViewModel::class.java)) {
-            return AccountsViewModel(getInstance(activity).walletDao()) as T
+            return AccountsViewModel(getInstance(activity).idleWalletDao()) as T
         }
         if (modelClass.isAssignableFrom(OperationViewModel::class.java)) {
             return OperationViewModel(getInstance(activity).categoryDao()) as T

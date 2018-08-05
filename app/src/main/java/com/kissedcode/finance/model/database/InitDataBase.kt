@@ -1,9 +1,8 @@
 package com.kissedcode.finance.model.database
 
-import com.kissedcode.finance.model.entity.Category
-import com.kissedcode.finance.model.entity.Currency
 import com.kissedcode.finance.model.OperationType
-import com.kissedcode.finance.model.entity.Wallet
+import com.kissedcode.finance.model.entity.*
+import com.kissedcode.finance.model.entity.Currency
 
 fun initWallet(): List<Wallet> = arrayListOf(
         Wallet(1, "Card", 00.00, 2),

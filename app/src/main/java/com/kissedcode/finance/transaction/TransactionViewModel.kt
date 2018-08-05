@@ -14,7 +14,7 @@ class TransactionViewModel : BaseViewModel() {
     private val amount = MutableLiveData<String>()
     private val operationType = MutableLiveData<Int>()
     private val currency = MutableLiveData<String>()
-    private val imgCategory = MutableLiveData<Int>()
+    private val imgCategory = MutableLiveData<String>()
     private val income = MutableLiveData<Boolean>()
 
     fun bind(post: IdleTransaction) {
@@ -31,17 +31,8 @@ class TransactionViewModel : BaseViewModel() {
             }
         }
         currency.value = post.currency.currencyName
-        imgCategory.value = R.drawable.ic_clothes
+        imgCategory.value = post.category.categoryName
 
-//        imgCategory.value = when (post.category.type) {
-//            TransactionType.HOUSE -> R.drawable.ic_home_black_24dp
-//            TransactionType.RELAXATION -> R.drawable.ic_relax
-//            TransactionType.SERVICE -> R.drawable.ic_service
-//            TransactionType.SPORT -> R.drawable.ic_gym
-//            TransactionType.FOOD -> R.drawable.ic_food
-//            TransactionType.OTHER -> R.drawable.ic_other
-//            TransactionType.CLOTHES -> R.drawable.ic_clothes
-//        }
     }
 
     fun getDate(): MutableLiveData<String> = date
@@ -52,7 +43,7 @@ class TransactionViewModel : BaseViewModel() {
 
     fun getCurrency(): MutableLiveData<String> = currency
 
-    fun getImageCategory(): MutableLiveData<Int> = imgCategory
+    fun getImageCategory(): MutableLiveData<String> = imgCategory
 
     fun getIncome(): MutableLiveData<Boolean> = income
 }

@@ -3,17 +3,16 @@ package com.kissedcode.finance.accounts
 import android.arch.lifecycle.MutableLiveData
 import com.kissedcode.finance.base.BaseViewModel
 import com.kissedcode.finance.model.CbrApi
-import com.kissedcode.finance.model.entity.Wallet
-import com.kissedcode.finance.model.WalletDao
+import com.kissedcode.finance.model.IdleWalletDao
 import com.kissedcode.finance.model.dto.CbrResponse
-import com.kissedcode.finance.model.dto.Valute
+import com.kissedcode.finance.model.entity.IdleWallet
 import com.kissedcode.finance.repository.Rate
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class AccountsViewModel(private val walletDao: WalletDao) : BaseViewModel() {
+class AccountsViewModel(private val walletDao: IdleWalletDao) : BaseViewModel() {
 
     private var subscription: Disposable
 
@@ -22,12 +21,12 @@ class AccountsViewModel(private val walletDao: WalletDao) : BaseViewModel() {
     @Inject
     lateinit var cbrApi: CbrApi
 
-    var accounts: MutableLiveData<List<Wallet>> = MutableLiveData()
+    var accounts: MutableLiveData<List<IdleWallet>> = MutableLiveData()
         private set
 
     init {
         initRate()
-        subscription = walletDao.all
+        subscription = walletDao.getAll()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
@@ -36,7 +35,7 @@ class AccountsViewModel(private val walletDao: WalletDao) : BaseViewModel() {
 
     }
 
-    private fun onRetrievePostListSuccess(postList:List<Wallet>){
+    private fun onRetrievePostListSuccess(postList:List<IdleWallet>){
         accounts.value = postList
     }
 

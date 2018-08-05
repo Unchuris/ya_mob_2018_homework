@@ -31,4 +31,6 @@
     <string name="main_screen_tab_main">Wallets</string>
     <string name="main_screen_tab_operations">Transactions</string>
     <string name="icon">Icon</string>
+
+    <string name="transaction_repeat">Repeat days: </string>
 </resources>

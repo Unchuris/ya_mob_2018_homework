@@ -12,4 +12,4 @@ data class Wallet(
         val walletName: String,
         var walletValue: Double,
         val currencyID: Int
-) : Serializable
+)
