@@ -19,7 +19,6 @@ class CategorySpinnerAdapter(context: Context?, private val items: List<Category
         return view
     }
 
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         return getCustomView(position, convertView)
     }
@@ -27,5 +26,4 @@ class CategorySpinnerAdapter(context: Context?, private val items: List<Category
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         return getCustomView(position, convertView)
     }
-
 }

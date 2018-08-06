@@ -5,9 +5,9 @@ import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
 
 data class IdleWallet(
-        @PrimaryKey(autoGenerate = true) var IdleWalletId: Int? = null,
-        val walletName: String,
-        var walletValue: Double,
-        @Embedded
-        val currency: Currency
+    @PrimaryKey(autoGenerate = true) var IdleWalletId: Int? = null,
+    val walletName: String,
+    var walletValue: Double,
+    @Embedded
+    val currency: Currency
 ) : Serializable

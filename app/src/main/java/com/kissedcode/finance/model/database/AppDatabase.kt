@@ -1,11 +1,24 @@
 package com.kissedcode.finance.model.database
 
 import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.room.*
+import android.arch.persistence.room.Database
+import android.arch.persistence.room.Room
+import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.TypeConverters
 import android.content.Context
-import com.kissedcode.finance.model.*
+import com.kissedcode.finance.model.CategoryDao
 import com.kissedcode.finance.model.Converters
-import com.kissedcode.finance.model.entity.*
+import com.kissedcode.finance.model.CurrencyDao
+import com.kissedcode.finance.model.DeferTransactionDao
+import com.kissedcode.finance.model.IdleTransactionDao
+import com.kissedcode.finance.model.IdleWalletDao
+import com.kissedcode.finance.model.WalletDao
+import com.kissedcode.finance.model.WalletTransactionDao
+import com.kissedcode.finance.model.entity.Category
+import com.kissedcode.finance.model.entity.Currency
+import com.kissedcode.finance.model.entity.IdleDeferTransaction
+import com.kissedcode.finance.model.entity.MyTransaction
+import com.kissedcode.finance.model.entity.Wallet
 import java.util.concurrent.Executors
 
 @Database(entities = [Wallet::class, Currency::class, Category::class, MyTransaction::class, IdleDeferTransaction::class], version = 1)
@@ -34,7 +47,7 @@ abstract class AppDatabase : RoomDatabase() {
                     INSTANCE ?: getDataBase(context).also { INSTANCE = it }
                 }
 
-        fun getDataBase(context: Context): AppDatabase {
+        private fun getDataBase(context: Context): AppDatabase {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "tracker")
                         .allowMainThreadQueries()

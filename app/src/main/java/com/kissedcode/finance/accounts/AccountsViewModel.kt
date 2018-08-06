@@ -32,10 +32,9 @@ class AccountsViewModel(private val walletDao: IdleWalletDao) : BaseViewModel() 
                     .subscribe {
                         result -> onRetrievePostListSuccess(result)
                     }
-
     }
 
-    private fun onRetrievePostListSuccess(postList:List<IdleWallet>){
+    private fun onRetrievePostListSuccess(postList: List<IdleWallet>) {
         accounts.value = postList
     }
 
@@ -47,7 +46,7 @@ class AccountsViewModel(private val walletDao: IdleWalletDao) : BaseViewModel() 
                 .doOnTerminate { }
                 .subscribe(
                         { result -> rateSuccess(result) },
-                        { error()}
+                        { error() }
                 )
     }
 

@@ -3,7 +3,7 @@ package com.kissedcode.finance.model.entity
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
-import java.util.*
+import java.util.Date
 
 @Entity(foreignKeys = [
     (ForeignKey(entity = Wallet::class,
@@ -17,14 +17,14 @@ import java.util.*
             parentColumns = arrayOf("categoryId"),
             childColumns = arrayOf("categoryID")))])
 data class IdleDeferTransaction(
-        @PrimaryKey(autoGenerate = true) var idleDeferTransactionId: Int? = null,
-        val idleDeferTransactionDate: Date,
-        val idleDeferTransactionAmount: Double,
-        val categoryID: Int,
-        val currencyID: Int,
-        val walletID: Int,
-        var nextRepeatDay: Int,
-        var nextRepeatMonth: Int,
-        var nextRepeatYear: Int,
-        var repeatDays: Int
+    @PrimaryKey(autoGenerate = true) var idleDeferTransactionId: Int? = null,
+    val idleDeferTransactionDate: Date,
+    val idleDeferTransactionAmount: Double,
+    val categoryID: Int,
+    val currencyID: Int,
+    val walletID: Int,
+    var nextRepeatDay: Int,
+    var nextRepeatMonth: Int,
+    var nextRepeatYear: Int,
+    var repeatDays: Int
 )

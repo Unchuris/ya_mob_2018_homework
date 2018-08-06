@@ -16,10 +16,10 @@ import java.util.Date
         parentColumns = arrayOf("categoryId"),
         childColumns = arrayOf("categoryID")))])
 data class MyTransaction(
-        @PrimaryKey(autoGenerate = true) var myTransactionId: Int? = null,
-        val myTransactionDate: Date,
-        val myTransactionAmount: Double,
-        val categoryID: Int,
-        val currencyID: Int,
-        val walletID: Int
+    @PrimaryKey(autoGenerate = true) var myTransactionId: Int? = null,
+    val myTransactionDate: Date,
+    val myTransactionAmount: Double,
+    val categoryID: Int,
+    val currencyID: Int,
+    val walletID: Int
 )

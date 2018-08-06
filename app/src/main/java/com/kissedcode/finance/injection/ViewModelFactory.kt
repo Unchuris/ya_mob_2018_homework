@@ -11,7 +11,7 @@ import com.kissedcode.finance.model.database.AppDatabase.Companion.getInstance
 import com.kissedcode.finance.transaction.TransactionListViewModel
 
 @Suppress("UNCHECKED_CAST")
-class ViewModelFactory(private val activity: AppCompatActivity): ViewModelProvider.Factory{
+class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AccountsViewModel::class.java)) {
             return AccountsViewModel(getInstance(activity).idleWalletDao()) as T

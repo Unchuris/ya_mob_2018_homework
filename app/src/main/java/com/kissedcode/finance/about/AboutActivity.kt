@@ -6,8 +6,6 @@ import com.kissedcode.finance.R
 
 class AboutActivity : AppCompatActivity() {
 
-    // lifecycle ///////////////////////////////////////////////////////////////////////////////
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)

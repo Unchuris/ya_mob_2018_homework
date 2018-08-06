@@ -1,8 +1,7 @@
 package com.kissedcode.finance.model
 
 import android.arch.persistence.room.TypeConverter
-import com.kissedcode.finance.model.OperationType
-import java.util.*
+import java.util.Date
 
 class Converters {
 
@@ -25,5 +24,4 @@ class Converters {
     fun operationTypeToOrdinal(operationType: OperationType?): Int? {
         return operationType?.ordinal
     }
-
 }

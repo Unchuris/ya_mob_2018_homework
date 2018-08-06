@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class USD {
-
     @SerializedName("ID")
     @Expose
     var id: String? = null
@@ -26,5 +25,4 @@ class USD {
     @SerializedName("Previous")
     @Expose
     var previous: Double? = null
-
 }

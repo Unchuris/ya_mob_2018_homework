@@ -1,10 +1,10 @@
 package com.kissedcode.finance.main_screen
 
-import android.support.v4.app.FragmentPagerAdapter
-import com.kissedcode.finance.R
-import android.content.Context;
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
+import com.kissedcode.finance.R
 import com.kissedcode.finance.accounts.AccountsFragment
 import com.kissedcode.finance.transaction.TransactionFragment
 

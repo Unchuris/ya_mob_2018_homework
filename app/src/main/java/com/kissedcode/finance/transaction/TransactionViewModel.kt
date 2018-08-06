@@ -6,10 +6,11 @@ import com.kissedcode.finance.base.BaseViewModel
 import com.kissedcode.finance.model.OperationType
 import com.kissedcode.finance.model.entity.IdleTransaction
 import java.text.SimpleDateFormat
+import java.util.Locale
 
 class TransactionViewModel : BaseViewModel() {
 
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
+    private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.ENGLISH)
     private val date = MutableLiveData<String>()
     private val amount = MutableLiveData<String>()
     private val operationType = MutableLiveData<Int>()
@@ -32,7 +33,6 @@ class TransactionViewModel : BaseViewModel() {
         }
         currency.value = post.currency.currencyName
         imgCategory.value = post.category.categoryName
-
     }
 
     fun getDate(): MutableLiveData<String> = date

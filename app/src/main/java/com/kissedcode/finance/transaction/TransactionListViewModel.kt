@@ -20,10 +20,9 @@ class TransactionListViewModel(idleTransactionDao: IdleTransactionDao) : BaseVie
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { result -> onRetrievePostListSuccess(result) }
-
     }
 
-    private fun onRetrievePostListSuccess(postList:List<IdleTransaction>) {
+    private fun onRetrievePostListSuccess(postList: List<IdleTransaction>) {
         transactionListAdapter.updatePostList(postList as MutableList<IdleTransaction>)
     }
 

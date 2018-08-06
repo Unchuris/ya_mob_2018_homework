@@ -3,28 +3,30 @@ package com.kissedcode.finance.model.worker
 import androidx.work.Worker
 import com.kissedcode.finance.model.OperationType
 import com.kissedcode.finance.model.database.AppDatabase
-import com.kissedcode.finance.model.entity.*
 import com.kissedcode.finance.model.entity.Currency
+import com.kissedcode.finance.model.entity.DeferTransaction
+import com.kissedcode.finance.model.entity.IdleDeferTransaction
+import com.kissedcode.finance.model.entity.MyTransaction
+import com.kissedcode.finance.model.entity.Wallet
 import com.kissedcode.finance.utils.convert
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import java.util.*
+import java.util.Calendar
 
-class PeriodicTransactionWorker: Worker() {
+class PeriodicTransactionWorker : Worker() {
 
     companion object {
         internal val TAG = "PeriodicOperationsWorker"
     }
 
     lateinit var db: AppDatabase
-
     private val day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
     private val month = Calendar.getInstance().get(Calendar.MONTH)
     private val year = Calendar.getInstance().get(Calendar.YEAR)
 
     override fun doWork(): Result {
         db = AppDatabase.getInstance(applicationContext)
-        Observable.fromCallable{db.getDeferTransactionDao().getByDate(day, month, year)}
+        Observable.fromCallable { db.getDeferTransactionDao().getByDate(day, month, year) }
                 .subscribeOn(Schedulers.io())
                 .subscribe {
                     result -> deferTransactionSuccess(result)
@@ -34,9 +36,9 @@ class PeriodicTransactionWorker: Worker() {
     }
 
     private fun deferTransactionSuccess(transactions: List<DeferTransaction>) {
-        Observable.fromCallable{db.currencyDao().all}
+        Observable.fromCallable { db.currencyDao().all }
                 .subscribeOn(Schedulers.io())
-                .subscribe{ result ->
+                .subscribe { result ->
                     currencySuccess(result, transactions)
                 }
     }
@@ -85,5 +87,4 @@ class PeriodicTransactionWorker: Worker() {
         else convert(transactionAmount, transactionCurrency!!, walletCurrency!!)
         db.walletTransactionDao().insertTransactionAndUpdateWallet(transaction, transaction.walletID, amount)
     }
-
 }

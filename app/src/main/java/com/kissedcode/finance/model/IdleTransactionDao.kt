@@ -15,5 +15,4 @@ interface IdleTransactionDao {
 
     @Query("SELECT MyTransaction.myTransactionId as IdleTransactionId, MyTransaction.myTransactionDate as idleTransactionDate, MyTransaction.myTransactionAmount as idleTransactionAmount, Category.*, Wallet.*, Currency.*FROM MyTransaction INNER JOIN Category ON MyTransaction.categoryID = Category.categoryId INNER JOIN WALLET ON MyTransaction.walletID = Wallet.walletId INNER JOIN CURRENCY ON MyTransaction.currencyID = Currency.currencyId")
     fun getAll(): Flowable<List<IdleTransaction>>
-
 }

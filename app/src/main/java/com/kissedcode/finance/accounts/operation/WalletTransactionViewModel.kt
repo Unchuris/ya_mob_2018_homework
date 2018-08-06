@@ -18,5 +18,4 @@ class WalletTransactionViewModel(private val walletTransactionDao: WalletTransac
                 else convert(transactionAmount, transactionCurrency!!, walletCurrency)
         walletTransactionDao.insertTransactionAndUpdateWallet(transaction, transaction.walletID, amount)
     }
-
 }

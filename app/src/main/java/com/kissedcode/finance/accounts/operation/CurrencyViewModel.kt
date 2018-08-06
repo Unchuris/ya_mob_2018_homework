@@ -24,7 +24,7 @@ class CurrencyViewModel(private val currencyDao: CurrencyDao) : BaseViewModel() 
                 .subscribe { result -> currencyDaoSuccess(result) }
     }
 
-    private fun currencyDaoSuccess(postList:List<Currency>) {
+    private fun currencyDaoSuccess(postList: List<Currency>) {
         currency.value = postList
     }
 

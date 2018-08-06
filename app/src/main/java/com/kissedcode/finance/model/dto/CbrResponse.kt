@@ -20,5 +20,4 @@ class CbrResponse {
     @SerializedName("Valute")
     @Expose
     var valute: Valute? = null
-
 }

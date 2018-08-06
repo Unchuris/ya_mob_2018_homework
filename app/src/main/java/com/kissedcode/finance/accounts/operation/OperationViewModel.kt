@@ -25,7 +25,7 @@ class OperationViewModel(private val categoryDao: CategoryDao) : BaseViewModel()
 
     val categories = Transformations.switchMap(type) { t ->
         filterByType(t)
-    }?: getAll()
+    } ?: getAll()
 
     init {
         subscriptionCategory = Observable.fromCallable { categoryDao.all }
@@ -35,19 +35,19 @@ class OperationViewModel(private val categoryDao: CategoryDao) : BaseViewModel()
                 .subscribe { result -> categoryDaoSuccess(result) }
     }
 
-    private fun filterByType(type : OperationType) : LiveData<List<Category>> {
+    private fun filterByType(type: OperationType): LiveData<List<Category>> {
         val c = MutableLiveData<List<Category>>()
         c.value = category.filter { f -> f.categoryType == type }
         return c
     }
 
-    private fun getAll() : LiveData<List<Category>> {
+    private fun getAll(): LiveData<List<Category>> {
         val c = MutableLiveData<List<Category>>()
         c.value = category
         return c
     }
 
-    private fun categoryDaoSuccess(postList:List<Category>) {
+    private fun categoryDaoSuccess(postList: List<Category>) {
         val c = MutableLiveData<List<Category>>()
         c.value = postList
         category = postList

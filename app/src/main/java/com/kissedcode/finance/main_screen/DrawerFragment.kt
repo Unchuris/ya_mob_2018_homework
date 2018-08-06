@@ -11,12 +11,11 @@ import android.view.ViewGroup
 
 abstract class DrawerFragment : Fragment() {
 
-    // lifecycle ///////////////////////////////////////////////////////////////////////////////
-
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         return inflater.inflate(getLayoutRes(), container, false)
     }
@@ -26,8 +25,6 @@ abstract class DrawerFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar?.title = getString(getTitleRes())
     }
-
-    // abstract ////////////////////////////////////////////////////////////////////////////////
 
     @LayoutRes
     abstract fun getLayoutRes(): Int

@@ -10,5 +10,4 @@ interface IdleWalletDao {
 
     @Query("SELECT wallet.walletId as IdleWalletId, walletName, walletValue, Currency.*FROM wallet INNER JOIN CURRENCY ON wallet.currencyID = Currency.currencyId")
     fun getAll(): Flowable<List<IdleWallet>>
-
 }

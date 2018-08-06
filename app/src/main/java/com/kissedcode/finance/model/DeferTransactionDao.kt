@@ -18,5 +18,4 @@ interface DeferTransactionDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg deferOperation: IdleDeferTransaction)
-
 }

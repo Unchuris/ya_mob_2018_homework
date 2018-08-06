@@ -1,5 +1,6 @@
 package com.kissedcode.finance.accounts.operation
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
@@ -9,13 +10,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.kissedcode.finance.R
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.model.OperationType
-import android.arch.lifecycle.Observer
-import com.kissedcode.finance.R
 import com.kissedcode.finance.model.database.AppDatabase
-import com.kissedcode.finance.model.entity.*
-import kotlinx.android.synthetic.main.dialog_operation.*
+import com.kissedcode.finance.model.entity.Category
+import com.kissedcode.finance.model.entity.Currency
+import com.kissedcode.finance.model.entity.IdleDeferTransaction
+import com.kissedcode.finance.model.entity.IdleWallet
+import com.kissedcode.finance.model.entity.MyTransaction
+import kotlinx.android.synthetic.main.dialog_operation.accountNameTv
+import kotlinx.android.synthetic.main.dialog_operation.btnCreateTransaction
+import kotlinx.android.synthetic.main.dialog_operation.etTransactionRepeat
+import kotlinx.android.synthetic.main.dialog_operation.etTransactionSum
+import kotlinx.android.synthetic.main.dialog_operation.spinnerOperationType
+import kotlinx.android.synthetic.main.dialog_operation.spinnerTransactionCategory
+import kotlinx.android.synthetic.main.dialog_operation.spinnerTransactionCurrency
 import java.util.Calendar
 
 class OperationDialog : DialogFragment() {
@@ -31,13 +41,13 @@ class OperationDialog : DialogFragment() {
     private lateinit var wallet: IdleWallet
 
     private val categoryList: Observer<List<Category>> = Observer { res ->
-        if(res != null) {
+        if (res != null) {
             spinnerTransactionCategory.adapter = CategorySpinnerAdapter(context, res)
         }
     }
 
     private val currencyList: Observer<List<Currency>> = Observer { res ->
-        if(res != null) {
+        if (res != null) {
             spinnerTransactionCurrency.adapter = CurrencySpinnerAdapter(context, res)
         }
     }
@@ -63,9 +73,10 @@ class OperationDialog : DialogFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         db = AppDatabase.getInstance(activity as AppCompatActivity)
         return inflater.inflate(R.layout.dialog_operation, container, false)
     }
@@ -73,34 +84,28 @@ class OperationDialog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         accountNameTv.text = title
-
         operationViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(OperationViewModel::class.java)
         currencyViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(CurrencyViewModel::class.java)
         transactionViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(WalletTransactionViewModel::class.java)
-
         operationViewModel.type.value = OperationType.SPEND
         spinnerOperationType.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, enumValues<OperationType>() )
-
         spinnerOperationType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long) {
                 operationViewModel.type.value = spinnerOperationType.selectedItem as OperationType?
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>) {
-
             }
         }
 
         btnCreateTransaction.setOnClickListener {
             buildTransaction()
         }
-
     }
 
     private fun buildTransaction() {
         val c = spinnerTransactionCategory.selectedItem as Category
         val sTC = spinnerTransactionCurrency.selectedItem as Currency
-
         val transaction = MyTransaction(null,
                 myTransactionDate = Calendar.getInstance().time,
                 myTransactionAmount = etTransactionSum.text.toString().toDouble(),

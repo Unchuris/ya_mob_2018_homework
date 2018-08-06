@@ -74,7 +74,7 @@ class AccountsFragment : DrawerFragment() {
         var data: List<IdleWallet> = listOf()
 
         override fun onCreateViewHolder(parent: ViewGroup, type: Int): AccountVH {
-            val viewHolder =  AccountVH(LayoutInflater.from(parent.context)
+            val viewHolder = AccountVH(LayoutInflater.from(parent.context)
                     .inflate(R.layout.viewholder_account, parent, false))
 
             viewHolder.accountsFragment = accountsFragment
@@ -95,7 +95,7 @@ class AccountsFragment : DrawerFragment() {
             val account = data[position]
 
             viewHolder.nameTv.text = account.walletName
-            viewHolder.balanceTv.text = String.format("%.2f", account.walletValue) + " " +  account.currency.symbol
+            viewHolder.balanceTv.text = String.format("%.2f", account.walletValue) + " " + account.currency.symbol
         }
     }
 }
