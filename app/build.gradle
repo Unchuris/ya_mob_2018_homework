@@ -2,8 +2,18 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key'
+            keyPassword '123456'
+            storeFile file('D:/1/new_jks_key.jks')
+            storePassword '123456'
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+    }
     compileSdkVersion 27
     dataBinding {
         enabled = true
@@ -17,18 +27,27 @@ android {
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
-
-        debug {
-            debuggable true
-            applicationIdSuffix '.debug'
+        buildTypes {
+            release {
+                minifyEnabled true
+                multiDexEnabled false
+                shrinkResources true
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+            debug {
+                minifyEnabled false
+                multiDexEnabled true
+                useProguard false
+            }
         }
-
         release {
-            minifyEnabled true
-            shrinkResources true
-            useProguard true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
         }
     }
 }
 apply from: 'dependencies.gradle'
+
+dependencies {
+}
