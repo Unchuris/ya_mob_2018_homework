@@ -15,10 +15,15 @@ import com.kissedcode.finance.R
 import com.kissedcode.finance.accounts.operation.OperationDialog
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.main_screen.DrawerFragment
+import com.kissedcode.finance.main_screen.MainActivity
 import com.kissedcode.finance.model.entity.IdleWallet
 import kotlinx.android.synthetic.main.fragment_accounts.*
 
 class AccountsFragment : DrawerFragment() {
+
+    override fun setUpToolbarTitle(resId: Int) {
+        (activity as MainActivity).updateToolBar(resId)
+    }
 
     companion object {
         fun newInstance(): AccountsFragment {
@@ -55,8 +60,8 @@ class AccountsFragment : DrawerFragment() {
     }
 
     fun onNewOperationRequested(account: IdleWallet) {
-        fragmentManager!!.beginTransaction()
-                .add(OperationDialog.newInstance(account), null)
+        activity!!.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, OperationDialog.newInstance(account))
                 .addToBackStack(null)
                 .commit()
     }

@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.MenuRes
+import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import androidx.work.PeriodicWorkRequest
@@ -54,7 +57,7 @@ abstract class DrawerActivity : AppCompatActivity() {
         if (screenId == 0)
             screenId = getInitialScreenId()
 
-        changeScreenFragment(getScreenFragment(screenId))
+        changeScreenFragment(screenId)
 
         initPeriodicTransactionManager()
     }
@@ -78,10 +81,6 @@ abstract class DrawerActivity : AppCompatActivity() {
 
     private fun setupUi() {
         setSupportActionBar(toolbar)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.burger_menu)
-        }
 
         navigationView.inflateHeaderView(getDrawerHeaderRes())
         navigationView.inflateMenu(getDrawerMenuRes())
@@ -92,23 +91,81 @@ abstract class DrawerActivity : AppCompatActivity() {
                 val intent = Intent(applicationContext, AboutActivity::class.java)
                 startActivity(intent)
             } else {
-                val fragment = getScreenFragment(it.itemId)
-                changeScreenFragment(fragment)
+                changeScreenFragment(screenId)
             }
             true
         }
+        initToggle()
     }
 
-    private fun changeScreenFragment(fragment: Fragment) {
+    private fun main(fragment: Fragment){
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, fragment)
                 .commit()
+    }
+
+    private fun changeScreenFragment(id: Int) {
+        val fragment = getScreenFragment(id)
+        if (id == R.id.menuitem_drawer_accounts) {
+            main(fragment)
+        } else {
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
+                    .addToBackStack(null)
+                    .commit()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
         outState.putInt(STATE_SCREEN_ID, screenId)
+    }
+
+    fun updateToolBar(titleResId: Int) {
+        toolbar.title = getString(titleResId)
+        toolbar.setNavigationOnClickListener { onBackPressed() }
+        if (supportFragmentManager.backStackEntryCount == 0) {
+            onShowMenuItem(R.id.graphics)
+            initToggle()
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        } else {
+            onHideMenuItem(R.id.graphics)
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            setBackArrow(true)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                supportFragmentManager.popBackStack()
+            } else {
+                super.onBackPressed()
+            }
+        }
+    }
+
+    private fun onShowMenuItem(resId: Int) {
+        toolbar.menu.findItem(resId)?.isVisible = true
+    }
+
+    private fun onHideMenuItem(resId: Int) {
+        toolbar.menu.findItem(resId)?.isVisible = false
+    }
+
+    private fun setBackArrow(state: Boolean) {
+        supportActionBar?.setDisplayHomeAsUpEnabled(state)
+    }
+
+    private fun initToggle() {
+        setBackArrow(false)
+        val toggle = ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
     }
 
     @LayoutRes

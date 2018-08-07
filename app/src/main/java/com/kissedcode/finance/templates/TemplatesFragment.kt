@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.kissedcode.finance.R
 import com.kissedcode.finance.databinding.FragmentTemplatesBinding
 import com.kissedcode.finance.injection.ViewModelFactory
+import com.kissedcode.finance.main_screen.MainActivity
 import com.kissedcode.finance.utils.autoCleared
 
 class TemplatesFragment: Fragment() {
@@ -36,6 +37,7 @@ class TemplatesFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        (activity as MainActivity).updateToolBar(R.string.screen_title_templates)
         binding.templatesList.layoutManager = LinearLayoutManager(context)
         viewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(TemplatesListViewModel::class.java)
         binding.viewModel = viewModel

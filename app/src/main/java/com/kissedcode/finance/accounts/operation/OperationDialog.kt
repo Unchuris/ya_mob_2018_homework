@@ -3,18 +3,18 @@ package com.kissedcode.finance.accounts.operation
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.kissedcode.finance.R
 import com.kissedcode.finance.injection.ViewModelFactory
+import com.kissedcode.finance.main_screen.DrawerFragment
+import com.kissedcode.finance.main_screen.MainActivity
 import com.kissedcode.finance.model.OperationType
-import com.kissedcode.finance.model.database.AppDatabase
 import com.kissedcode.finance.model.entity.Category
 import com.kissedcode.finance.model.entity.Currency
 import com.kissedcode.finance.model.entity.IdleDeferTransaction
@@ -30,7 +30,15 @@ import kotlinx.android.synthetic.main.dialog_operation.spinnerTransactionCategor
 import kotlinx.android.synthetic.main.dialog_operation.spinnerTransactionCurrency
 import java.util.Calendar
 
-class OperationDialog : DialogFragment() {
+class OperationDialog : DrawerFragment() {
+
+    override fun setUpToolbarTitle(resId: Int) {
+        (activity as MainActivity).updateToolBar(resId)
+    }
+
+    override fun getLayoutRes(): Int = R.layout.dialog_operation
+
+    override fun getTitleRes(): Int = R.string.transaction_title_add
 
     lateinit var title: String
 
@@ -62,21 +70,12 @@ class OperationDialog : DialogFragment() {
         operationViewModel.currency.removeObservers(this)
     }
 
-    lateinit var db: AppDatabase
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         wallet = arguments?.getSerializable(WALLET_KEY) as IdleWallet
         title = wallet.walletName
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        db = AppDatabase.getInstance(activity as AppCompatActivity)
-        return inflater.inflate(R.layout.dialog_operation, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -129,9 +128,9 @@ class OperationDialog : DialogFragment() {
                     nextRepeatMonth = calendar.get(Calendar.MONTH),
                     nextRepeatYear = calendar.get(Calendar.YEAR)
             )
-            db.getDeferTransactionDao().insert(t)
+            //db.getDeferTransactionDao().insert(t)
         }
-        dialog.dismiss()
+        fragmentManager!!.popBackStack()
     }
 
     private fun createTransaction(c: Category, sTC: Currency, template: Boolean = false): MyTransaction {

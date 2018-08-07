@@ -1,6 +1,7 @@
 package com.kissedcode.finance.main_screen
 
 import android.os.Bundle
+import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
@@ -22,9 +23,10 @@ abstract class DrawerFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        (activity as AppCompatActivity).supportActionBar?.title = getString(getTitleRes())
+        setUpToolbarTitle(getTitleRes())
     }
+
+    abstract fun setUpToolbarTitle(resId : Int)
 
     @LayoutRes
     abstract fun getLayoutRes(): Int
