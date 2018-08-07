@@ -5,16 +5,29 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import com.kissedcode.finance.base.BaseViewModel
 import com.kissedcode.finance.model.CategoryDao
+import com.kissedcode.finance.model.CurrencyDao
 import com.kissedcode.finance.model.OperationType
+import com.kissedcode.finance.model.TransactionDao
+import com.kissedcode.finance.model.WalletTransactionDao
 import com.kissedcode.finance.model.entity.Category
+import com.kissedcode.finance.model.entity.Currency
+import com.kissedcode.finance.model.entity.IdleWallet
+import com.kissedcode.finance.model.entity.MyTransaction
+import com.kissedcode.finance.utils.convert
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.disposables.CompositeDisposable
 
-class OperationViewModel(private val categoryDao: CategoryDao) : BaseViewModel() {
+class OperationViewModel(private val categoryDao: CategoryDao,
+                         private val currencyDao: CurrencyDao,
+                         private val walletTransactionDao: WalletTransactionDao,
+                         private val transactionDao: TransactionDao) : BaseViewModel() {
 
-    private var subscriptionCategory: Disposable
+    private var disposables = CompositeDisposable()
+
+    var currency: MutableLiveData<List<Currency>> = MutableLiveData()
+        private set
 
     var category: List<Category> = emptyList()
 
@@ -28,11 +41,28 @@ class OperationViewModel(private val categoryDao: CategoryDao) : BaseViewModel()
     } ?: getAll()
 
     init {
-        subscriptionCategory = Observable.fromCallable { categoryDao.all }
+        initCurrency()
+        initCategory()
+    }
+
+    private fun initCategory() {
+        disposables.add(Observable.fromCallable { categoryDao.all }
                 .concatMap { dbPostList -> Observable.just(dbPostList) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { result -> categoryDaoSuccess(result) }
+                .subscribe { result -> categoryDaoSuccess(result) })
+    }
+
+    private fun initCurrency() {
+        disposables.add(Observable.fromCallable { currencyDao.all }
+                .concatMap { dbPostList -> Observable.just(dbPostList) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { result -> currencyDaoSuccess(result) })
+    }
+
+    private fun currencyDaoSuccess(postList: List<Currency>) {
+        currency.value = postList
     }
 
     private fun filterByType(type: OperationType): LiveData<List<Category>> {
@@ -53,8 +83,21 @@ class OperationViewModel(private val categoryDao: CategoryDao) : BaseViewModel()
         category = postList
     }
 
+    fun addToTemplate(transaction: MyTransaction) {
+        transactionDao.insertAll(transaction)
+    }
+
+    fun addTransaction(transaction: MyTransaction, wallet: IdleWallet, currency: List<Currency>, type: OperationType) {
+        val transactionCurrency = currency.find { t -> t.currencyId == transaction.currencyID }
+        val walletCurrency = wallet.currency
+        val transactionAmount = if (type == OperationType.SPEND) -transaction.myTransactionAmount else transaction.myTransactionAmount
+        val amount = if (transactionCurrency == walletCurrency) transactionAmount
+        else convert(transactionAmount, transactionCurrency!!, walletCurrency)
+        walletTransactionDao.insertTransactionAndUpdateWallet(transaction, amount)
+    }
+
     override fun onCleared() {
         super.onCleared()
-        subscriptionCategory.dispose()
+        disposables.dispose()
     }
 }

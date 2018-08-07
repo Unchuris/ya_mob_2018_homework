@@ -9,6 +9,7 @@
     <string name="screen_title_statistics">Статистика</string>
     <string name="screen_title_settings">Настройки</string>
     <string name="screen_title_about">О приложении</string>
+    <string name="screen_title_templates">Шаблоны</string>
     <string name="dialog_new_operation_title">Новая операция</string>
     <string name="dialog_new_operation_category_label">Категория</string>
 
@@ -18,10 +19,12 @@
     <string name="transaction_currency">Валюта</string>
     <string name="transaction_wallet">Кошелек</string>
     <string name="operation_type">Тип операции</string>
-    <string name="add">Добавить</string>
+    <string name="add">Добавить транзакцию</string>
 
     <string name="main_screen_tab_main">Кошельки</string>
     <string name="main_screen_tab_operations">Операции</string>
     <string name="icon">Иконка</string>
     <string name="transaction_repeat">Повторять дней: </string>
+    <string name="add_template">Добавить в шаблон</string>
+    <string name="template_apply">Применить</string>
 </resources>

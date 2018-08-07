@@ -12,6 +12,7 @@ import com.kissedcode.finance.model.CurrencyDao
 import com.kissedcode.finance.model.DeferTransactionDao
 import com.kissedcode.finance.model.IdleTransactionDao
 import com.kissedcode.finance.model.IdleWalletDao
+import com.kissedcode.finance.model.TransactionDao
 import com.kissedcode.finance.model.WalletDao
 import com.kissedcode.finance.model.WalletTransactionDao
 import com.kissedcode.finance.model.entity.Category
@@ -38,6 +39,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun walletTransactionDao(): WalletTransactionDao
 
     abstract fun getDeferTransactionDao(): DeferTransactionDao
+
+    abstract fun transactionDao(): TransactionDao
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null

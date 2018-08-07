@@ -29,11 +29,6 @@ class TransactionListAdapter : RecyclerView.Adapter<TransactionListAdapter.ViewH
         notifyDataSetChanged()
     }
 
-    fun addTransaction(transaction: IdleTransaction) {
-        list.add(transaction)
-        notifyDataSetChanged()
-    }
-
     class ViewHolder(private val binding: TransactionItemBinding) : RecyclerView.ViewHolder(binding.root) {
         private val viewModel = TransactionViewModel()
 

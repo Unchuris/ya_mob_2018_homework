@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import com.facebook.stetho.Stetho
 import com.kissedcode.finance.R
 import com.kissedcode.finance.about.AboutActivity
 import com.kissedcode.finance.model.worker.PeriodicTransactionWorker
@@ -36,6 +37,11 @@ abstract class DrawerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Stetho.initialize(Stetho.newInitializerBuilder(this)
+                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                .build())
 
         setContentView(R.layout.activity_drawer)
 

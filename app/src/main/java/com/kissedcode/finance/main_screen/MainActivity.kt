@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment
 import com.kissedcode.finance.R
 import com.kissedcode.finance.settings.SettingsFragment
 import com.kissedcode.finance.statistics.StatisticsFragment
+import com.kissedcode.finance.templates.TemplatesFragment
 
 class MainActivity : DrawerActivity() {
 
@@ -19,6 +20,7 @@ class MainActivity : DrawerActivity() {
             R.id.menuitem_drawer_accounts -> FragmentMainScreen.newInstance()
             R.id.menuitem_drawer_statistics -> StatisticsFragment()
             R.id.menuitem_drawer_settings -> SettingsFragment()
+            R.id.menuitem_drawer_templates -> TemplatesFragment.newInstance()
             else -> FragmentMainScreen.newInstance()
         }
     }

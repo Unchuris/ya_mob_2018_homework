@@ -1,6 +1,7 @@
 package com.kissedcode.finance.model
 
 import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import com.kissedcode.finance.model.entity.MyTransaction
@@ -12,4 +13,10 @@ interface TransactionDao {
 
     @Insert
     fun insertAll(vararg users: MyTransaction)
+
+    @Delete
+    fun delete(vararg users: MyTransaction)
+
+    @Query("DELETE FROM myTransaction WHERE myTransactionId = :id")
+    fun deleteById(id: Int)
 }

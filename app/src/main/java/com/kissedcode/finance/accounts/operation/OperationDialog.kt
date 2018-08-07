@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.kissedcode.finance.R
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.model.OperationType
@@ -20,6 +21,7 @@ import com.kissedcode.finance.model.entity.IdleDeferTransaction
 import com.kissedcode.finance.model.entity.IdleWallet
 import com.kissedcode.finance.model.entity.MyTransaction
 import kotlinx.android.synthetic.main.dialog_operation.accountNameTv
+import kotlinx.android.synthetic.main.dialog_operation.btnCreateTemplate
 import kotlinx.android.synthetic.main.dialog_operation.btnCreateTransaction
 import kotlinx.android.synthetic.main.dialog_operation.etTransactionRepeat
 import kotlinx.android.synthetic.main.dialog_operation.etTransactionSum
@@ -33,10 +35,6 @@ class OperationDialog : DialogFragment() {
     lateinit var title: String
 
     private lateinit var operationViewModel: OperationViewModel
-
-    private lateinit var currencyViewModel: CurrencyViewModel
-
-    private lateinit var transactionViewModel: WalletTransactionViewModel
 
     private lateinit var wallet: IdleWallet
 
@@ -55,13 +53,13 @@ class OperationDialog : DialogFragment() {
     override fun onStart() {
         super.onStart()
         operationViewModel.categories.observe(this, categoryList)
-        currencyViewModel.currency.observe(this, currencyList)
+        operationViewModel.currency.observe(this, currencyList)
     }
 
     override fun onStop() {
         super.onStop()
         operationViewModel.categories.removeObservers(this)
-        currencyViewModel.currency.removeObservers(this)
+        operationViewModel.currency.removeObservers(this)
     }
 
     lateinit var db: AppDatabase
@@ -85,8 +83,6 @@ class OperationDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         accountNameTv.text = title
         operationViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(OperationViewModel::class.java)
-        currencyViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(CurrencyViewModel::class.java)
-        transactionViewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(WalletTransactionViewModel::class.java)
         operationViewModel.type.value = OperationType.SPEND
         spinnerOperationType.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, enumValues<OperationType>() )
         spinnerOperationType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -101,18 +97,23 @@ class OperationDialog : DialogFragment() {
         btnCreateTransaction.setOnClickListener {
             buildTransaction()
         }
+        btnCreateTemplate.setOnClickListener{
+            buildTemplate()
+        }
+    }
+
+    private fun buildTemplate() {
+        val c = spinnerTransactionCategory.selectedItem as Category
+        val sTC = spinnerTransactionCurrency.selectedItem as Currency
+        val transaction = createTransaction(c, sTC, template = true)
+        operationViewModel.addToTemplate(transaction)
     }
 
     private fun buildTransaction() {
         val c = spinnerTransactionCategory.selectedItem as Category
         val sTC = spinnerTransactionCurrency.selectedItem as Currency
-        val transaction = MyTransaction(null,
-                myTransactionDate = Calendar.getInstance().time,
-                myTransactionAmount = etTransactionSum.text.toString().toDouble(),
-                categoryID = c.categoryId!!,
-                currencyID = sTC.currencyId!!,
-                walletID = wallet.IdleWalletId!!)
-        transactionViewModel.addTransaction(transaction, wallet, currencyViewModel.currency.value!!, c.categoryType)
+        val transaction = createTransaction(c, sTC)
+        operationViewModel.addTransaction(transaction, wallet, operationViewModel.currency.value!!, c.categoryType)
         if (etTransactionRepeat.text.toString() != "") {
             val calendar = Calendar.getInstance()
             calendar.add(Calendar.DAY_OF_MONTH, etTransactionRepeat.text.toString().toInt())
@@ -131,6 +132,16 @@ class OperationDialog : DialogFragment() {
             db.getDeferTransactionDao().insert(t)
         }
         dialog.dismiss()
+    }
+
+    private fun createTransaction(c: Category, sTC: Currency, template: Boolean = false): MyTransaction {
+        return MyTransaction(null,
+                myTransactionDate = Calendar.getInstance().time,
+                myTransactionAmount = etTransactionSum.text.toString().toDouble(),
+                categoryID = c.categoryId!!,
+                currencyID = sTC.currencyId!!,
+                walletID = wallet.IdleWalletId!!,
+                template = template)
     }
 
     companion object {

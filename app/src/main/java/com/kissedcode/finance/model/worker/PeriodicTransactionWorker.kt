@@ -79,12 +79,12 @@ class PeriodicTransactionWorker : Worker() {
         addTransaction(transaction, t.wallet, currency, t.category.categoryType)
     }
 
-    fun addTransaction(transaction: MyTransaction, wallet: Wallet, currency: List<Currency>, type: OperationType) {
+    private fun addTransaction(transaction: MyTransaction, wallet: Wallet, currency: List<Currency>, type: OperationType) {
         val transactionCurrency = currency.find { t -> t.currencyId == transaction.currencyID }
         val walletCurrency = currency.find { t -> t.currencyId == wallet.currencyID }
         val transactionAmount = if (type == OperationType.SPEND) -transaction.myTransactionAmount else transaction.myTransactionAmount
         val amount = if (transactionCurrency == walletCurrency) transactionAmount
         else convert(transactionAmount, transactionCurrency!!, walletCurrency!!)
-        db.walletTransactionDao().insertTransactionAndUpdateWallet(transaction, transaction.walletID, amount)
+        db.walletTransactionDao().insertTransactionAndUpdateWallet(transaction, amount)
     }
 }

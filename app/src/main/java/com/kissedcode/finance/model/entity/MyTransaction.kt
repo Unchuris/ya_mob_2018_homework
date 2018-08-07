@@ -21,5 +21,6 @@ data class MyTransaction(
     val myTransactionAmount: Double,
     val categoryID: Int,
     val currencyID: Int,
-    val walletID: Int
+    val walletID: Int,
+    val template: Boolean = false
 )
