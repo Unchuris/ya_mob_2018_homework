@@ -21,11 +21,11 @@ class FragmentMainScreen : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val v = inflater.inflate(R.layout.fragment_main_screen, container, false)
-        adapter = SampleFragmentPagerAdapter(childFragmentManager, context!!)
-        val viewPager = v.findViewById<ViewPager>(R.id.viewPager)
-        val tabLayout = v.findViewById<TabLayout>(R.id.tabLayout)
-        viewPager.adapter = adapter
-        tabLayout.setupWithViewPager(viewPager)
+            adapter = SampleFragmentPagerAdapter(childFragmentManager, context!!)
+            val viewPager = v.findViewById<ViewPager>(R.id.viewPager)
+            val tabLayout = v.findViewById<TabLayout>(R.id.tabLayout)
+            viewPager.adapter = adapter
+            tabLayout.setupWithViewPager(viewPager)
         return v
     }
 }

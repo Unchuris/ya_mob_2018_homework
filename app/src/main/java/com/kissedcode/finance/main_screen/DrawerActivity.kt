@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.MenuRes
-import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -27,6 +27,8 @@ abstract class DrawerActivity : AppCompatActivity() {
 
     private var screenId = 0
 
+    private var isTablet: Boolean = false
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -40,7 +42,7 @@ abstract class DrawerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        isTablet = resources.getBoolean(R.bool.is_tablet)
         Stetho.initialize(Stetho.newInitializerBuilder(this)
                 .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                 .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
@@ -57,7 +59,7 @@ abstract class DrawerActivity : AppCompatActivity() {
         if (screenId == 0)
             screenId = getInitialScreenId()
 
-        changeScreenFragment(screenId)
+        openScreen(screenId, true)
 
         initPeriodicTransactionManager()
     }
@@ -91,26 +93,49 @@ abstract class DrawerActivity : AppCompatActivity() {
                 val intent = Intent(applicationContext, AboutActivity::class.java)
                 startActivity(intent)
             } else {
-                changeScreenFragment(screenId)
+                openScreen(screenId, true)
             }
             true
         }
         initToggle()
     }
 
-    private fun main(fragment: Fragment){
+    private fun main(id: Int, fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, fragment)
+                .replace(id, fragment)
                 .commit()
     }
 
+    fun openScreen(id: Int, isParent: Boolean) {
+        val fragment: Fragment = getScreenFragment(id)
+        val containerId: Int = if (isTablet) {
+            if (isParent) R.id.fragmentContainer
+            else R.id.fragmentContainer_child
+        } else {
+            if (isParent) {
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            }
+            R.id.fragmentContainer
+        }
+        if (id == R.id.menuitem_drawer_accounts || id == R.id.transition_current_scene) {
+            main(containerId, fragment)
+        } else {
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(containerId, fragment)
+                    .addToBackStack(fragment.tag)
+                    .commit()
+        }
+    }
+
     private fun changeScreenFragment(id: Int) {
+        val containerId: Int = R.id.fragmentContainer
         val fragment = getScreenFragment(id)
         if (id == R.id.menuitem_drawer_accounts) {
-            main(fragment)
+            //main(1, fragment)
         } else {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, fragment)
+                    .replace(containerId, fragment)
                     .addToBackStack(null)
                     .commit()
         }

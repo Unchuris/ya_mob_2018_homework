@@ -21,6 +21,10 @@ import kotlinx.android.synthetic.main.fragment_accounts.*
 
 class AccountsFragment : DrawerFragment() {
 
+    override fun getLayoutRes() = R.layout.fragment_accounts
+
+    override fun getTitleRes() = R.string.screen_title_accounts
+
     override fun setUpToolbarTitle(resId: Int) {
         (activity as MainActivity).updateToolBar(resId)
     }
@@ -37,13 +41,10 @@ class AccountsFragment : DrawerFragment() {
 
     private lateinit var accountsAdapter: AccountsAdapter
 
-    override fun getLayoutRes() = R.layout.fragment_accounts
-
-    override fun getTitleRes() = R.string.screen_title_accounts
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        // recycler view
+        if (resources.getBoolean(R.bool.is_tablet)) {
+            (activity as MainActivity).openScreen(R.id.transition_current_scene, false)
+        }
         accountsRv.setHasFixedSize(false)
         accountsAdapter = AccountsAdapter(this)
         accountsRv.adapter = accountsAdapter
@@ -52,7 +53,6 @@ class AccountsFragment : DrawerFragment() {
                 LinearLayoutManager.VERTICAL,
                 false)
 
-        // observe viewmodel
         viewModel.accounts.observe({ lifecycle }) {
             accountsAdapter.data = it!!
             accountsAdapter.notifyDataSetChanged()
