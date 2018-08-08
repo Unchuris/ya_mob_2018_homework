@@ -39,4 +39,11 @@
     <string name="template_apply">Apply</string>
 
     <string name="transaction_repeat">Repeat days: </string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_wallet">Do you want to delete the account?</string>
+    <string name="wallet_name">Wallet name</string>
+    <string name="wallet_title_edit">Wallet editing</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -29,4 +29,11 @@
     <string name="transaction_repeat">Повторять дней: </string>
     <string name="add_template">Добавить в шаблон</string>
     <string name="template_apply">Применить</string>
+    <string name="ok">Да</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete_wallet">Вы действительно хотите удалить кошелёк?</string>
+    <string name="wallet_name">Имя кошелька</string>
+    <string name="wallet_title_edit">Редактирование кошелька</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
 </resources>

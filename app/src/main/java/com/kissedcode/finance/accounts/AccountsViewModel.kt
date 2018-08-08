@@ -6,13 +6,17 @@ import com.kissedcode.finance.model.CbrApi
 import com.kissedcode.finance.model.IdleWalletDao
 import com.kissedcode.finance.model.dto.CbrResponse
 import com.kissedcode.finance.model.entity.IdleWallet
+import com.kissedcode.finance.model.entity.Wallet
 import com.kissedcode.finance.repository.Rate
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class AccountsViewModel(private val walletDao: IdleWalletDao) : BaseViewModel() {
+
+    private lateinit var wallets: List<IdleWallet>
 
     private var disposables = CompositeDisposable()
 
@@ -33,7 +37,8 @@ class AccountsViewModel(private val walletDao: IdleWalletDao) : BaseViewModel() 
     }
 
     private fun onRetrievePostListSuccess(postList: List<IdleWallet>) {
-        accounts.value = postList
+        wallets = postList
+        accounts.value = wallets
     }
 
     private fun initRate() {
@@ -55,6 +60,26 @@ class AccountsViewModel(private val walletDao: IdleWalletDao) : BaseViewModel() 
     private fun error() {
         Rate.rate = 63.34
     }
+
+    fun deleteWallet(id: Int) {
+        Completable.fromAction { walletDao.delete(getWallet(wallets[id])) }
+                .subscribeOn(Schedulers.io())
+                .subscribe {}
+    }
+
+    fun updateWallet(id: Int, name: String) {
+        Completable.fromAction {
+            wallets[id].walletName = name
+            walletDao.update(getWallet(wallets[id])) }
+                .subscribeOn(Schedulers.io())
+                .subscribe {}
+    }
+
+    private fun getWallet(idl: IdleWallet): Wallet = Wallet(
+                walletId = idl.IdleWalletId,
+                walletName = idl.walletName,
+                walletValue = idl.walletValue,
+                currencyID = idl.currency.currencyId!!)
 
     override fun onCleared() {
         super.onCleared()
