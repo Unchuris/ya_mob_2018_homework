@@ -3,11 +3,8 @@ package com.kissedcode.finance.accounts.operation
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.kissedcode.finance.R
@@ -109,28 +106,31 @@ class OperationDialog : DrawerFragment() {
     }
 
     private fun buildTransaction() {
-        val c = spinnerTransactionCategory.selectedItem as Category
-        val sTC = spinnerTransactionCurrency.selectedItem as Currency
-        val transaction = createTransaction(c, sTC)
-        operationViewModel.addTransaction(transaction, wallet, operationViewModel.currency.value!!, c.categoryType)
-        if (etTransactionRepeat.text.toString() != "") {
-            val calendar = Calendar.getInstance()
-            calendar.add(Calendar.DAY_OF_MONTH, etTransactionRepeat.text.toString().toInt())
-            val t = IdleDeferTransaction(
-                    null,
-                    idleDeferTransactionDate = Calendar.getInstance().time,
-                    idleDeferTransactionAmount = etTransactionSum.text.toString().toDouble(),
-                    currencyID = sTC.currencyId!!,
-                    categoryID = c.categoryId!!,
-                    walletID = wallet.IdleWalletId!!,
-                    repeatDays = etTransactionRepeat.text.toString().toInt(),
-                    nextRepeatDay = calendar.get(Calendar.DAY_OF_MONTH),
-                    nextRepeatMonth = calendar.get(Calendar.MONTH),
-                    nextRepeatYear = calendar.get(Calendar.YEAR)
-            )
-            //db.getDeferTransactionDao().insert(t)
+        if (!etTransactionSum.text.isEmpty()) {
+            val c = spinnerTransactionCategory.selectedItem as Category
+            val sTC = spinnerTransactionCurrency.selectedItem as Currency
+            val transaction = createTransaction(c, sTC)
+            operationViewModel.addTransaction(transaction, wallet, operationViewModel.currency.value!!, c.categoryType)
+            if (etTransactionRepeat.text.toString() != "") {
+                val calendar = Calendar.getInstance()
+                calendar.add(Calendar.DAY_OF_MONTH, etTransactionRepeat.text.toString().toInt())
+                val t = IdleDeferTransaction(
+                        null,
+                        idleDeferTransactionDate = Calendar.getInstance().time,
+                        idleDeferTransactionAmount = etTransactionSum.text.toString().toDouble(),
+                        currencyID = sTC.currencyId!!,
+                        categoryID = c.categoryId!!,
+                        walletID = wallet.IdleWalletId!!,
+                        repeatDays = etTransactionRepeat.text.toString().toInt(),
+                        nextRepeatDay = calendar.get(Calendar.DAY_OF_MONTH),
+                        nextRepeatMonth = calendar.get(Calendar.MONTH),
+                        nextRepeatYear = calendar.get(Calendar.YEAR)
+                )
+                operationViewModel
+                //db.getDeferTransactionDao().insert(t)
+            }
+            fragmentManager!!.popBackStack()
         }
-        fragmentManager!!.popBackStack()
     }
 
     private fun createTransaction(c: Category, sTC: Currency, template: Boolean = false): MyTransaction {

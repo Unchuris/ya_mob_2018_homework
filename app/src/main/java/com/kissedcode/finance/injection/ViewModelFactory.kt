@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.support.v7.app.AppCompatActivity
 import com.kissedcode.finance.accounts.AccountsViewModel
+import com.kissedcode.finance.accounts.AddAccountViewModel
 import com.kissedcode.finance.accounts.operation.OperationViewModel
 import com.kissedcode.finance.model.database.AppDatabase.Companion.getInstance
 import com.kissedcode.finance.templates.TemplatesListViewModel
@@ -32,6 +33,10 @@ class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvi
                     db.getIdleTransactionDao(),
                     db.walletTransactionDao(),
                     db.transactionDao()) as T
+        }
+        if (modelClass.isAssignableFrom(AddAccountViewModel::class.java)) {
+            val db = getInstance(activity)
+            return AddAccountViewModel(db.currencyDao(), db.walletDao()) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

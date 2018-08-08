@@ -85,6 +85,9 @@ class AccountsFragment : DrawerFragment() {
             accountsAdapter.data = it!!
             accountsAdapter.notifyDataSetChanged()
         }
+        addWallet.setOnClickListener {
+            AddAccountDialogFragment.newInstance().show(childFragmentManager, null)
+        }
     }
 
     fun onNewOperationRequested(account: IdleWallet) {

@@ -21,7 +21,7 @@
     <string name="transaction_currency">Валюта</string>
     <string name="transaction_wallet">Кошелек</string>
     <string name="operation_type">Тип операции</string>
-    <string name="add">Добавить транзакцию</string>
+    <string name="add">Добавить</string>
 
     <string name="main_screen_tab_main">Кошельки</string>
     <string name="main_screen_tab_operations">Операции</string>
@@ -36,4 +36,5 @@
     <string name="wallet_title_edit">Редактирование кошелька</string>
     <string name="edit">Редактировать</string>
     <string name="delete">Удалить</string>
+    <string name="wallet_balance">Начальный баланс</string>
 </resources>
