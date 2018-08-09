@@ -19,6 +19,7 @@ import com.kissedcode.finance.accounts.operation.OperationDialog
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.main_screen.DrawerFragment
 import com.kissedcode.finance.main_screen.MainActivity
+import com.kissedcode.finance.main_screen.Screens.OPERATION_FRAGMENT_SCREEN
 import com.kissedcode.finance.model.entity.IdleWallet
 import kotlinx.android.synthetic.main.dialog_edit_wallet.view.wallet_name
 import kotlinx.android.synthetic.main.fragment_accounts.*
@@ -71,7 +72,7 @@ class AccountsFragment : DrawerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (resources.getBoolean(R.bool.is_tablet)) {
-            (activity as MainActivity).openScreen(R.id.transition_current_scene, false)
+            (activity as MainActivity).openScreen(OPERATION_FRAGMENT_SCREEN, false)
         }
         accountsRv.setHasFixedSize(false)
         accountsAdapter = AccountsAdapter(this, { showDeleteFragmentDialog(it) }, { showEditFragmentDialog(it) })

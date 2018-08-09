@@ -17,6 +17,7 @@ import androidx.work.WorkManager
 import com.facebook.stetho.Stetho
 import com.kissedcode.finance.R
 import com.kissedcode.finance.about.AboutActivity
+import com.kissedcode.finance.main_screen.Screens.ACCOUNT_SCREEN
 import com.kissedcode.finance.model.worker.PeriodicTransactionWorker
 import kotlinx.android.synthetic.main.activity_drawer.*
 import java.util.concurrent.TimeUnit
@@ -59,7 +60,9 @@ abstract class DrawerActivity : AppCompatActivity() {
         if (screenId == 0)
             screenId = getInitialScreenId()
 
-        openScreen(screenId, true)
+        if (savedInstanceState == null) {
+            openScreen(Screens.ACCOUNT_SCREEN, true)
+        }
 
         initPeriodicTransactionManager()
     }
@@ -89,54 +92,31 @@ abstract class DrawerActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawers()
             screenId = it.itemId
-            if (screenId == R.id.menuitem_drawer_about) {
-                val intent = Intent(applicationContext, AboutActivity::class.java)
-                startActivity(intent)
-            } else {
-                openScreen(screenId, true)
-            }
+            openScreen(getScreenName(screenId), true)
             true
         }
         initToggle()
     }
 
-    private fun main(id: Int, fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-                .replace(id, fragment)
-                .commit()
-    }
+    fun openScreen(screen: String, isParent: Boolean) {
+        val fragment: Fragment = getScreenFragment(screen)
 
-    fun openScreen(id: Int, isParent: Boolean) {
-        val fragment: Fragment = getScreenFragment(id)
         val containerId: Int = if (isTablet) {
-            if (isParent) R.id.fragmentContainer
-            else R.id.fragmentContainer_child
+            if (isParent) R.id.fragmentContainer else R.id.fragmentContainer_child
         } else {
-            if (isParent) {
-                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            }
+            if (isParent) fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             R.id.fragmentContainer
         }
-        if (id == R.id.menuitem_drawer_accounts || id == R.id.transition_current_scene) {
-            main(containerId, fragment)
+        if (screen == ACCOUNT_SCREEN) {
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(containerId, fragment)
+                    .commit()
         } else {
             supportFragmentManager
                     .beginTransaction()
                     .replace(containerId, fragment)
                     .addToBackStack(fragment.tag)
-                    .commit()
-        }
-    }
-
-    private fun changeScreenFragment(id: Int) {
-        val containerId: Int = R.id.fragmentContainer
-        val fragment = getScreenFragment(id)
-        if (id == R.id.menuitem_drawer_accounts) {
-            //main(1, fragment)
-        } else {
-            supportFragmentManager.beginTransaction()
-                    .replace(containerId, fragment)
-                    .addToBackStack(null)
                     .commit()
         }
     }
@@ -202,5 +182,7 @@ abstract class DrawerActivity : AppCompatActivity() {
     @IdRes
     abstract fun getInitialScreenId(): Int
 
-    abstract fun getScreenFragment(@IdRes drawerItemId: Int): Fragment
+    abstract fun getScreenFragment(screen: String): Fragment
+
+    abstract fun getScreenName(@IdRes drawerItemId: Int): String
 }

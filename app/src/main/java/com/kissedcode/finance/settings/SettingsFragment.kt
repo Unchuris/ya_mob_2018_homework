@@ -15,4 +15,10 @@ class SettingsFragment : DrawerFragment() {
     override fun getLayoutRes() = R.layout.fragment_settings
 
     override fun getTitleRes() = R.string.screen_title_settings
+
+    companion object {
+        fun newInstance(): SettingsFragment {
+            return SettingsFragment()
+        }
+    }
 }

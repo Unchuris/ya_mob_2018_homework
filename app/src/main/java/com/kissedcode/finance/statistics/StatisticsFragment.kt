@@ -109,4 +109,10 @@ class StatisticsFragment : Fragment() {
         }
     }
 
+    companion object {
+        fun newInstance(): StatisticsFragment {
+            return StatisticsFragment()
+        }
+    }
+
 }
