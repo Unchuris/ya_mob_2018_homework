@@ -17,6 +17,12 @@ interface IdleWalletDao {
     @Update
     fun update(wallet: Wallet)
 
-    @Query("SELECT wallet.walletId as IdleWalletId, walletName, walletValue, Currency.*FROM wallet INNER JOIN CURRENCY ON wallet.currencyID = Currency.currencyId")
+    @Query("""
+        SELECT wallet.walletId as IdleWalletId,
+            walletName,
+            walletValue,
+            Currency.*
+        FROM wallet
+        INNER JOIN CURRENCY ON wallet.currencyID = Currency.currencyId""")
     fun getAll(): Flowable<List<IdleWallet>>
 }

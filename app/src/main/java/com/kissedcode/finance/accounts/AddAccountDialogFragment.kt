@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.dialog_new_wallet.btnCreateWallet
 import kotlinx.android.synthetic.main.dialog_new_wallet.etWalletAmount
 import kotlinx.android.synthetic.main.dialog_new_wallet.etWalletName
 import kotlinx.android.synthetic.main.dialog_new_wallet.spinnerWalletCurrency
-import kotlinx.android.synthetic.main.dialog_operation.spinnerTransactionCurrency
 
 class AddAccountDialogFragment: DialogFragment() {
 
