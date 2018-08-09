@@ -13,4 +13,7 @@ class StatisticsFragment : DrawerFragment() {
     override fun getLayoutRes() = R.layout.fragment_statistics
 
     override fun getTitleRes() = R.string.screen_title_statistics
+
+
+
 }

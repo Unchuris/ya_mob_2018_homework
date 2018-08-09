@@ -3,6 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 android {
+    androidExtensions {
+        experimental = true
+    }
     signingConfigs {
         config {
             keyAlias 'key'
@@ -14,14 +17,14 @@ android {
     lintOptions {
         checkReleaseBuilds false
     }
-    compileSdkVersion 27
+    compileSdkVersion 28
     dataBinding {
         enabled = true
     }
     defaultConfig {
         applicationId 'com.kissedcode.finance'
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName '1.0'
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
@@ -45,6 +48,14 @@ android {
         }
         debug {
         }
+    }
+    buildToolsVersion '28.0.1'
+    dexOptions {
+        incremental false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 apply from: 'dependencies.gradle'

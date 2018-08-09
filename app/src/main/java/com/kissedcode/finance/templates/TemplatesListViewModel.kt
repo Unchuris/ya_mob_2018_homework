@@ -1,5 +1,6 @@
 package com.kissedcode.finance.templates
 
+import android.arch.lifecycle.MutableLiveData
 import com.kissedcode.finance.base.BaseViewModel
 import com.kissedcode.finance.model.IdleTransactionDao
 import com.kissedcode.finance.model.TransactionDao
@@ -17,6 +18,9 @@ class TemplatesListViewModel(idleTransactionDao: IdleTransactionDao,
     : BaseViewModel(), TemplatesListAdapter.RecycleOnClickListenerCallback {
 
     val templatesListAdapter: TemplatesListAdapter = TemplatesListAdapter(this)
+
+    var open: MutableLiveData<IdleTransaction> = MutableLiveData()
+        private set
 
     private var subscription: Disposable
 
@@ -44,6 +48,10 @@ class TemplatesListViewModel(idleTransactionDao: IdleTransactionDao,
                 walletID = transaction.wallet.walletId!!,
                 template = false)
         walletTransactionDao.insertTransactionAndUpdateWallet(t, t.myTransactionAmount)
+    }
+
+    override fun openFragment(transaction: IdleTransaction) {
+        open.value = transaction
     }
 
     override fun onCleared() {

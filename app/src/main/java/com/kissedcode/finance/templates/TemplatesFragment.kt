@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kissedcode.finance.R
+import com.kissedcode.finance.accounts.operation.OperationDialog
 import com.kissedcode.finance.databinding.FragmentTemplatesBinding
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.main_screen.MainActivity
@@ -25,6 +26,7 @@ class TemplatesFragment: Fragment() {
 
     private var binding: FragmentTemplatesBinding by autoCleared()
     private lateinit var viewModel: TemplatesListViewModel
+    private var open: Boolean = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(
@@ -42,5 +44,11 @@ class TemplatesFragment: Fragment() {
         viewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(TemplatesListViewModel::class.java)
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
+        viewModel.open.observe({ lifecycle }) {
+            activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, OperationDialog.newInstance(it!!))
+                    .addToBackStack(null)
+                    .commit()
+        }
     }
 }

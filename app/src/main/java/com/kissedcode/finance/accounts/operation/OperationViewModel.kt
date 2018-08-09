@@ -6,14 +6,17 @@ import android.arch.lifecycle.Transformations
 import com.kissedcode.finance.base.BaseViewModel
 import com.kissedcode.finance.model.CategoryDao
 import com.kissedcode.finance.model.CurrencyDao
+import com.kissedcode.finance.model.DeferTransactionDao
 import com.kissedcode.finance.model.OperationType
 import com.kissedcode.finance.model.TransactionDao
 import com.kissedcode.finance.model.WalletTransactionDao
 import com.kissedcode.finance.model.entity.Category
 import com.kissedcode.finance.model.entity.Currency
+import com.kissedcode.finance.model.entity.IdleDeferTransaction
 import com.kissedcode.finance.model.entity.IdleWallet
 import com.kissedcode.finance.model.entity.MyTransaction
 import com.kissedcode.finance.utils.convert
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -22,7 +25,8 @@ import io.reactivex.disposables.CompositeDisposable
 class OperationViewModel(private val categoryDao: CategoryDao,
                          private val currencyDao: CurrencyDao,
                          private val walletTransactionDao: WalletTransactionDao,
-                         private val transactionDao: TransactionDao) : BaseViewModel() {
+                         private val transactionDao: TransactionDao,
+                         private val deferTransactionDao: DeferTransactionDao) : BaseViewModel() {
 
     private var disposables = CompositeDisposable()
 
@@ -94,6 +98,12 @@ class OperationViewModel(private val categoryDao: CategoryDao,
         val amount = if (transactionCurrency == walletCurrency) transactionAmount
         else convert(transactionAmount, transactionCurrency!!, walletCurrency)
         walletTransactionDao.insertTransactionAndUpdateWallet(transaction, amount)
+    }
+
+    fun getDeferTransactionDao(t: IdleDeferTransaction) {
+        Completable.fromAction { deferTransactionDao.insert(t) }
+                .subscribeOn(Schedulers.io())
+                .subscribe {}
     }
 
     override fun onCleared() {

@@ -15,8 +15,10 @@ import com.kissedcode.finance.model.OperationType
 import com.kissedcode.finance.model.entity.Category
 import com.kissedcode.finance.model.entity.Currency
 import com.kissedcode.finance.model.entity.IdleDeferTransaction
+import com.kissedcode.finance.model.entity.IdleTransaction
 import com.kissedcode.finance.model.entity.IdleWallet
 import com.kissedcode.finance.model.entity.MyTransaction
+import com.kissedcode.finance.model.entity.Wallet
 import kotlinx.android.synthetic.main.dialog_operation.accountNameTv
 import kotlinx.android.synthetic.main.dialog_operation.btnCreateTemplate
 import kotlinx.android.synthetic.main.dialog_operation.btnCreateTransaction
@@ -42,6 +44,8 @@ class OperationDialog : DrawerFragment() {
     private lateinit var operationViewModel: OperationViewModel
 
     private lateinit var wallet: IdleWallet
+
+    private lateinit var idleTransaction: IdleTransaction
 
     private val categoryList: Observer<List<Category>> = Observer { res ->
         if (res != null) {
@@ -71,9 +75,21 @@ class OperationDialog : DrawerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        wallet = arguments?.getSerializable(WALLET_KEY) as IdleWallet
+        val s = arguments?.getSerializable(WALLET_KEY)
+        if (s == null) {
+            idleTransaction = arguments?.getSerializable(TRANSACTION_KEY) as IdleTransaction
+            wallet = IdleWallet(
+                    IdleWalletId = idleTransaction.wallet.walletId,
+                    walletName = idleTransaction.wallet.walletName,
+                    walletValue = idleTransaction.wallet.walletValue,
+                    currency = idleTransaction.currency
+            )
+        } else {
+            wallet = s as IdleWallet
+        }
         title = wallet.walletName
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -96,6 +112,16 @@ class OperationDialog : DrawerFragment() {
         btnCreateTemplate.setOnClickListener{
             buildTemplate()
         }
+        if (::idleTransaction.isInitialized) {
+            initTemplate(idleTransaction)
+        }
+    }
+
+    private fun initTemplate(idleTransaction: IdleTransaction) {
+        operationViewModel.type.value = idleTransaction.category.categoryType
+        //spinnerOperationType.setSelection(idleTransaction.)
+        //spinnerTransactionCategory.setSelection(idle)
+        //spinnerTransactionCurrency.setSelection(idleTransaction.currency.standardName)
     }
 
     private fun buildTemplate() {
@@ -126,8 +152,7 @@ class OperationDialog : DrawerFragment() {
                         nextRepeatMonth = calendar.get(Calendar.MONTH),
                         nextRepeatYear = calendar.get(Calendar.YEAR)
                 )
-                operationViewModel
-                //db.getDeferTransactionDao().insert(t)
+                operationViewModel.getDeferTransactionDao(t)
             }
             fragmentManager!!.popBackStack()
         }
@@ -146,9 +171,19 @@ class OperationDialog : DrawerFragment() {
     companion object {
         private const val WALLET_KEY = "walletKey"
 
+        private const val TRANSACTION_KEY = "transactionKey"
+
         fun newInstance(wallet: IdleWallet): OperationDialog {
             val bundle = Bundle()
             bundle.putSerializable(WALLET_KEY, wallet)
+            val operationDialog = OperationDialog()
+            operationDialog.arguments = bundle
+            return operationDialog
+        }
+
+        fun newInstance(t: IdleTransaction): OperationDialog {
+            val bundle = Bundle()
+            bundle.putSerializable(TRANSACTION_KEY, t)
             val operationDialog = OperationDialog()
             operationDialog.arguments = bundle
             return operationDialog

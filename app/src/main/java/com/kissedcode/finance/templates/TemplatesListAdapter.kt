@@ -15,6 +15,7 @@ class TemplatesListAdapter(private val callback: RecycleOnClickListenerCallback)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: TemplatesItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.templates_item, parent, false)
         val viewHolder = ViewHolder(binding)
+
         binding.btnDeleteTemplate.setOnClickListener {
             val position = viewHolder.adapterPosition
             if (position != RecyclerView.NO_POSITION) {
@@ -43,8 +44,17 @@ class TemplatesListAdapter(private val callback: RecycleOnClickListenerCallback)
         notifyDataSetChanged()
     }
 
-    class ViewHolder(private val binding: TemplatesItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: TemplatesItemBinding) : RecyclerView.ViewHolder(binding.root) {
         private val viewModel = TemplatesViewModel()
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    callback.openFragment(list[position])
+                }
+            }
+        }
 
         fun bind(post: IdleTransaction) {
             viewModel.bind(post)
@@ -55,5 +65,6 @@ class TemplatesListAdapter(private val callback: RecycleOnClickListenerCallback)
     interface RecycleOnClickListenerCallback {
         fun onTemplateDelete(transaction: IdleTransaction)
         fun onApplyTemplate(transaction: IdleTransaction)
+        fun openFragment(transaction: IdleTransaction)
     }
 }

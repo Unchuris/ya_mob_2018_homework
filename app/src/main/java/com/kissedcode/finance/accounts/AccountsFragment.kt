@@ -21,7 +21,7 @@ import com.kissedcode.finance.main_screen.DrawerFragment
 import com.kissedcode.finance.main_screen.MainActivity
 import com.kissedcode.finance.model.entity.IdleWallet
 import kotlinx.android.synthetic.main.dialog_edit_wallet.view.wallet_name
-import kotlinx.android.synthetic.main.fragment_accounts.*
+
 
 class AccountsFragment : DrawerFragment() {
 

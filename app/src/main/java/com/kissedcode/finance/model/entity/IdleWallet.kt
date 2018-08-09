@@ -9,5 +9,5 @@ data class IdleWallet(
         var walletName: String,
         var walletValue: Double,
         @Embedded
-    val currency: Currency
+        val currency: Currency
 ) : Serializable

@@ -48,4 +48,7 @@
     <string name="delete">Delete</string>
     <string name="wallet_balance">Starting balance</string>
 
+    <string name="startDate">Start date</string>
+    <string name="endDate">End date</string>
+
 </resources>
