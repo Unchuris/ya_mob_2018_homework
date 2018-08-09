@@ -15,8 +15,11 @@ import com.kissedcode.finance.model.OperationType
 import com.kissedcode.finance.model.entity.Category
 import com.kissedcode.finance.model.entity.Currency
 import com.kissedcode.finance.model.entity.IdleDeferTransaction
+import com.kissedcode.finance.model.entity.IdleTransaction
 import com.kissedcode.finance.model.entity.IdleWallet
 import com.kissedcode.finance.model.entity.MyTransaction
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_operation.accountNameTv
 import kotlinx.android.synthetic.main.dialog_operation.btnCreateTemplate
 import kotlinx.android.synthetic.main.dialog_operation.btnCreateTransaction
@@ -26,6 +29,9 @@ import kotlinx.android.synthetic.main.dialog_operation.spinnerOperationType
 import kotlinx.android.synthetic.main.dialog_operation.spinnerTransactionCategory
 import kotlinx.android.synthetic.main.dialog_operation.spinnerTransactionCurrency
 import java.util.Calendar
+import android.widget.Spinner
+
+
 
 class OperationDialog : DrawerFragment() {
 
@@ -36,6 +42,8 @@ class OperationDialog : DrawerFragment() {
     override fun getLayoutRes(): Int = R.layout.dialog_operation
 
     override fun getTitleRes(): Int = R.string.transaction_title_add
+
+    private lateinit var idleTransaction: IdleTransaction
 
     lateinit var title: String
 
@@ -67,11 +75,20 @@ class OperationDialog : DrawerFragment() {
         operationViewModel.currency.removeObservers(this)
     }
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        wallet = arguments?.getSerializable(WALLET_KEY) as IdleWallet
+        val s = arguments?.getSerializable(WALLET_KEY)
+        if (s == null) {
+            idleTransaction = arguments?.getSerializable(TRANSACTION_KEY) as IdleTransaction
+            wallet = IdleWallet(
+                    IdleWalletId = idleTransaction.wallet.walletId,
+                    walletName = idleTransaction.wallet.walletName,
+                    walletValue = idleTransaction.wallet.walletValue,
+                    currency = idleTransaction.currency
+            )
+        } else {
+            wallet = s as IdleWallet
+        }
         title = wallet.walletName
     }
 
@@ -96,6 +113,15 @@ class OperationDialog : DrawerFragment() {
         btnCreateTemplate.setOnClickListener{
             buildTemplate()
         }
+        if (::idleTransaction.isInitialized) {
+            initTemplate(idleTransaction)
+        }
+    }
+
+    private fun initTemplate(idleTransaction: IdleTransaction) {
+        etTransactionSum.setText(idleTransaction.idleTransactionAmount.toString())
+        spinnerOperationType.setSelection(idleTransaction.category.categoryType.ordinal)
+        operationViewModel.type.value = spinnerOperationType.selectedItem as OperationType?
     }
 
     private fun buildTemplate() {
@@ -126,8 +152,7 @@ class OperationDialog : DrawerFragment() {
                         nextRepeatMonth = calendar.get(Calendar.MONTH),
                         nextRepeatYear = calendar.get(Calendar.YEAR)
                 )
-                operationViewModel
-                //db.getDeferTransactionDao().insert(t)
+                operationViewModel.getDeferTransactionDao(t)
             }
             fragmentManager!!.popBackStack()
         }
@@ -146,9 +171,19 @@ class OperationDialog : DrawerFragment() {
     companion object {
         private const val WALLET_KEY = "walletKey"
 
+        private const val TRANSACTION_KEY = "transactionKey"
+
         fun newInstance(wallet: IdleWallet): OperationDialog {
             val bundle = Bundle()
             bundle.putSerializable(WALLET_KEY, wallet)
+            val operationDialog = OperationDialog()
+            operationDialog.arguments = bundle
+            return operationDialog
+        }
+
+        fun newInstance(t: IdleTransaction): OperationDialog {
+            val bundle = Bundle()
+            bundle.putSerializable(TRANSACTION_KEY, t)
             val operationDialog = OperationDialog()
             operationDialog.arguments = bundle
             return operationDialog

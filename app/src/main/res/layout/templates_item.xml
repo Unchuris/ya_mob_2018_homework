@@ -1,71 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.kissedcode.finance.templates.TemplatesViewModel" />
-    </data>
-
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/llTemplates"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/llTemplates"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/btnApply"
-                style="@android:style/Widget.Material.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/template_apply"/>
-
-            <TextView
-                android:id="@+id/tvCategoryName"
-                android:layout_width="64dp"
-                android:layout_height="match_parent"
-                android:textColor="@android:color/black"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/TextStyle.Small"
-                app:mutableText="@{viewModel.getCategoryName()}"/>
-
-            <TextView
-                android:id="@+id/tvAmount"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/btnDeleteTemplate"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/TextStyle.Small"
-                android:textColor="@{viewModel.getIncome() ? @color/red : @color/green}"
-                app:mutableText="@{viewModel.getAmount()}"/>
-
-            <ImageButton
-                android:id="@+id/btnDeleteTemplate"
-                style="@android:style/Widget.Material.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/cash"
-                android:contentDescription="" />
-
-        </LinearLayout>
-
-        <View
+        <Button
+            android:id="@+id/btnApply"
+            style="@android:style/Widget.Material.Button.Borderless.Colored"
             android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginStart="16dp"
-            android:background="@color/colorPrimaryDark"
-            app:layout_constraintTop_toBottomOf="@+id/llTemplates"
-            android:paddingBottom="4dp"/>
+            android:layout_height="wrap_content"
+            android:text="@string/template_apply"/>
 
-    </android.support.constraint.ConstraintLayout>
-</layout>
+        <TextView
+            android:id="@+id/tvCategoryName"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/TextStyle.Small"/>
+
+        <TextView
+            android:id="@+id/tvAmount"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnDeleteTemplate"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/TextStyle.Small"/>
+
+        <ImageButton
+            android:id="@+id/btnDeleteTemplate"
+            style="@android:style/Widget.Material.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/cash"
+            android:contentDescription="" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toBottomOf="@+id/llTemplates"
+        android:paddingBottom="4dp"/>
+
+</android.support.constraint.ConstraintLayout>

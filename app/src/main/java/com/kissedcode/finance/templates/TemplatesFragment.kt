@@ -1,21 +1,43 @@
 package com.kissedcode.finance.templates
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.kissedcode.finance.R
-import com.kissedcode.finance.databinding.FragmentTemplatesBinding
+import com.kissedcode.finance.accounts.operation.OperationDialog
 import com.kissedcode.finance.injection.ViewModelFactory
+import com.kissedcode.finance.main_screen.DrawerFragment
 import com.kissedcode.finance.main_screen.MainActivity
-import com.kissedcode.finance.utils.autoCleared
+import com.kissedcode.finance.model.entity.IdleTransaction
+import kotlinx.android.synthetic.main.fragment_templates.templatesList
 
-class TemplatesFragment: Fragment() {
+class TemplatesFragment: DrawerFragment(), TemplatesListAdapter.RecycleOnClickListenerCallback  {
+
+    override fun openFragment(transaction: IdleTransaction) {
+        activity!!.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, OperationDialog.newInstance(transaction))
+                .addToBackStack(null)
+                .commit()
+    }
+
+    override fun onTemplateDelete(transaction: IdleTransaction) {
+        viewModel.onTemplateDelete(transaction)
+    }
+
+    override fun onApplyTemplate(transaction: IdleTransaction) {
+        viewModel.onApplyTemplate(transaction)
+    }
+
+    override fun setUpToolbarTitle(resId: Int) {
+        (activity as MainActivity).updateToolBar(resId)
+    }
+
+    override fun getLayoutRes(): Int = R.layout.fragment_templates
+
+    override fun getTitleRes(): Int = R.string.screen_title_templates
 
     companion object {
         fun newInstance(): TemplatesFragment {
@@ -23,24 +45,37 @@ class TemplatesFragment: Fragment() {
         }
     }
 
-    private var binding: FragmentTemplatesBinding by autoCleared()
-    private lateinit var viewModel: TemplatesListViewModel
+    var templatesAdapter: TemplatesListAdapter? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_templates,
-                container,
+    private val templates = Observer<List<IdleTransaction>> { res ->
+        if (res !== null) {
+            templatesAdapter?.list = res as MutableList
+            templatesAdapter?.notifyDataSetChanged()
+        }
+    }
+
+    private val viewModel by lazy {
+        ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(TemplatesListViewModel::class.java)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        templatesAdapter = TemplatesListAdapter(this)
+        templatesList.layoutManager = LinearLayoutManager(
+                activity!!,
+                LinearLayoutManager.VERTICAL,
                 false)
-        return binding.root
+        templatesList.adapter = templatesAdapter
+
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        (activity as MainActivity).updateToolBar(R.string.screen_title_templates)
-        binding.templatesList.layoutManager = LinearLayoutManager(context)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(TemplatesListViewModel::class.java)
-        binding.viewModel = viewModel
-        binding.setLifecycleOwner(this)
+    override fun onStart() {
+        super.onStart()
+        viewModel.templates.observe(this, this.templates)
     }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.templates.removeObservers(this)
+    }
+
 }

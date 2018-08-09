@@ -1,5 +1,6 @@
 package com.kissedcode.finance.templates
 
+import android.arch.lifecycle.MutableLiveData
 import com.kissedcode.finance.base.BaseViewModel
 import com.kissedcode.finance.model.IdleTransactionDao
 import com.kissedcode.finance.model.TransactionDao
@@ -13,10 +14,10 @@ import java.util.Calendar
 
 class TemplatesListViewModel(idleTransactionDao: IdleTransactionDao,
                              private val walletTransactionDao: WalletTransactionDao,
-                             private val transactionDao: TransactionDao)
-    : BaseViewModel(), TemplatesListAdapter.RecycleOnClickListenerCallback {
+                             private val transactionDao: TransactionDao) : BaseViewModel(){
 
-    val templatesListAdapter: TemplatesListAdapter = TemplatesListAdapter(this)
+    var templates: MutableLiveData<List<IdleTransaction>> = MutableLiveData()
+        private set
 
     private var subscription: Disposable
 
@@ -28,14 +29,14 @@ class TemplatesListViewModel(idleTransactionDao: IdleTransactionDao,
     }
 
     private fun onRetrievePostListSuccess(postList: List<IdleTransaction>) {
-        templatesListAdapter.updatePostList(postList as MutableList<IdleTransaction>)
+        templates.value = postList
     }
 
-    override fun onTemplateDelete(transaction: IdleTransaction) {
+    fun onTemplateDelete(transaction: IdleTransaction) {
         transactionDao.deleteById(transaction.IdleTransactionId!!)
     }
 
-    override fun onApplyTemplate(transaction: IdleTransaction) {
+    fun onApplyTemplate(transaction: IdleTransaction) {
         val t = MyTransaction(null,
                 myTransactionDate = Calendar.getInstance().time,
                 myTransactionAmount = transaction.idleTransactionAmount,

@@ -22,7 +22,8 @@ class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvi
                     db.categoryDao(),
                     db.currencyDao(),
                     db.walletTransactionDao(),
-                    db.transactionDao()) as T
+                    db.transactionDao(),
+                    db.getDeferTransactionDao()) as T
         }
         if (modelClass.isAssignableFrom(TransactionListViewModel::class.java)) {
             return TransactionListViewModel(getInstance(activity).getIdleTransactionDao()) as T
