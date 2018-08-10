@@ -18,8 +18,6 @@ import com.kissedcode.finance.model.entity.IdleDeferTransaction
 import com.kissedcode.finance.model.entity.IdleTransaction
 import com.kissedcode.finance.model.entity.IdleWallet
 import com.kissedcode.finance.model.entity.MyTransaction
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_operation.accountNameTv
 import kotlinx.android.synthetic.main.dialog_operation.btnCreateTemplate
 import kotlinx.android.synthetic.main.dialog_operation.btnCreateTransaction
@@ -29,14 +27,13 @@ import kotlinx.android.synthetic.main.dialog_operation.spinnerOperationType
 import kotlinx.android.synthetic.main.dialog_operation.spinnerTransactionCategory
 import kotlinx.android.synthetic.main.dialog_operation.spinnerTransactionCurrency
 import java.util.Calendar
-import android.widget.Spinner
-
-
 
 class OperationDialog : DrawerFragment() {
 
     override fun setUpToolbarTitle(resId: Int) {
-        (activity as MainActivity).updateToolBar(resId)
+        if (resources.getBoolean(R.bool.is_tablet)) {
+            (activity as MainActivity).updateToolBar(resId, true)
+        }
     }
 
     override fun getLayoutRes(): Int = R.layout.dialog_operation

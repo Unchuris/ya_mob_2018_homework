@@ -83,19 +83,28 @@ class AccountsFragment : DrawerFragment() {
                 false)
 
         viewModel.accounts.observe({ lifecycle }) {
-            accountsAdapter.data = it!!
-            accountsAdapter.notifyDataSetChanged()
+            if(accountsAdapter.data.size != it!!.size) {
+                accountsAdapter.data = it
+                accountsAdapter.notifyDataSetChanged()
+            }
         }
+
         addWallet.setOnClickListener {
             AddAccountDialogFragment.newInstance().show(childFragmentManager, null)
         }
     }
 
     fun onNewOperationRequested(account: IdleWallet) {
-        activity!!.supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, OperationDialog.newInstance(account))
-                .addToBackStack(null)
-                .commit()
+        if (resources.getBoolean(R.bool.is_tablet)) {
+            activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer_child, OperationDialog.newInstance(account))
+                    .commit()
+        } else {
+            activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, OperationDialog.newInstance(account))
+                    .addToBackStack(null)
+                    .commit()
+        }
     }
 
     class AccountsAdapter(private val accountsFragment: AccountsFragment,

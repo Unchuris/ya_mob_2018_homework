@@ -7,49 +7,53 @@
             name="chartModel"
             type="com.kissedcode.finance.statistics.StatisticsViewModel" />
     </data>
-
-    <LinearLayout android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="0.7">
-
-        <EditText
-            android:id="@+id/etStartDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cursorVisible="false"
-            android:focusableInTouchMode="false"
-            android:paddingStart="6dp"
-            android:inputType="date"
-            android:hint="@string/startDate"
-            android:textColor="@android:color/black" />
-
-        <EditText
-            android:id="@+id/edEndDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cursorVisible="false"
-            android:focusableInTouchMode="false"
-            android:hint="@string/endDate"
-            android:inputType="date"
-            android:paddingStart="6dp"
-            android:textColor="@android:color/black" />
-
-        <Button
-            android:id="@+id/createButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/item_input_margin"
-            android:background="@color/colorAccent"
-            android:elevation="@dimen/item_elevation"
-            android:text="@string/ok"
-            android:textColor="@android:color/black" />
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pieChart"
+        android:layout_marginBottom="16dp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:data="@{chartModel.getChartData()}"/>
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/etStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusableInTouchMode="false"
+                android:paddingStart="6dp"
+                android:inputType="date"
+                android:hint="@string/startDate"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/edEndDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusableInTouchMode="false"
+                android:hint="@string/endDate"
+                android:inputType="date"
+                android:paddingStart="6dp"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/createButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/item_input_margin"
+                android:background="@color/colorAccent"
+                android:elevation="@dimen/item_elevation"
+                android:text="@string/ok"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="16dp"/>
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:data="@{chartModel.getChartData()}"/>
+        </LinearLayout>
+    </ScrollView>
 </layout>

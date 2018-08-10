@@ -37,6 +37,7 @@
     <string name="icon">Icon</string>
 
     <string name="template_apply">Apply</string>
+    <string name="description">Icon</string>
 
     <string name="transaction_repeat">Repeat days: </string>
     <string name="ok">OK</string>

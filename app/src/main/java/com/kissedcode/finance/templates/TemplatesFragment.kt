@@ -17,10 +17,16 @@ import kotlinx.android.synthetic.main.fragment_templates.templatesList
 class TemplatesFragment: DrawerFragment(), TemplatesListAdapter.RecycleOnClickListenerCallback  {
 
     override fun openFragment(transaction: IdleTransaction) {
-        activity!!.supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, OperationDialog.newInstance(transaction))
-                .addToBackStack(null)
-                .commit()
+        if (resources.getBoolean(R.bool.is_tablet)) {
+            activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer_child, OperationDialog.newInstance(transaction))
+                    .commit()
+        } else {
+            activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, OperationDialog.newInstance(transaction))
+                    .addToBackStack(null)
+                    .commit()
+        }
     }
 
     override fun onTemplateDelete(transaction: IdleTransaction) {

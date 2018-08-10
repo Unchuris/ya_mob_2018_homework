@@ -18,6 +18,7 @@ import com.facebook.stetho.Stetho
 import com.kissedcode.finance.R
 import com.kissedcode.finance.about.AboutActivity
 import com.kissedcode.finance.main_screen.Screens.ACCOUNT_SCREEN
+import com.kissedcode.finance.main_screen.Screens.OPERATION_FRAGMENT_SCREEN
 import com.kissedcode.finance.model.worker.PeriodicTransactionWorker
 import kotlinx.android.synthetic.main.activity_drawer.*
 import java.util.concurrent.TimeUnit
@@ -92,7 +93,11 @@ abstract class DrawerActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener {
             drawerLayout.closeDrawers()
             screenId = it.itemId
-            openScreen(getScreenName(screenId), true)
+            if (isTablet && screenId == R.id.menuitem_drawer_statistics) {
+                openScreen(getScreenName(screenId), false)
+            } else {
+                openScreen(getScreenName(screenId), true)
+            }
             true
         }
         initToggle()
@@ -107,7 +112,7 @@ abstract class DrawerActivity : AppCompatActivity() {
             if (isParent) fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             R.id.fragmentContainer
         }
-        if (screen == ACCOUNT_SCREEN) {
+        if (screen == ACCOUNT_SCREEN || screen == OPERATION_FRAGMENT_SCREEN) {
             supportFragmentManager
                     .beginTransaction()
                     .replace(containerId, fragment)
@@ -127,7 +132,8 @@ abstract class DrawerActivity : AppCompatActivity() {
         outState.putInt(STATE_SCREEN_ID, screenId)
     }
 
-    fun updateToolBar(titleResId: Int) {
+    fun updateToolBar(titleResId: Int, children: Boolean = false) {
+        if (children) return
         toolbar.title = getString(titleResId)
         toolbar.setNavigationOnClickListener { onBackPressed() }
         if (supportFragmentManager.backStackEntryCount == 0) {

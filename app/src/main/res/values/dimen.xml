@@ -2,4 +2,6 @@
 <resources>
     <dimen name="item_elevation">4dp</dimen>
     <dimen name="item_input_margin">16dp</dimen>
+    <dimen name="item_view_margin">8dp</dimen>
+    <dimen name="view_line_height">1dp</dimen>
 </resources>
