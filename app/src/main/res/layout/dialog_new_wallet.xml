@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        style="@style/TextStyle.Large"/>
 
     <EditText
         android:id="@+id/etWalletName"
@@ -20,7 +21,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvWalletNameTitle"
-        android:inputType="text"/>
+        android:inputType="text"
+        style="@style/TextStyle.Large"/>
 
     <TextView
         android:id="@+id/tvWalletAmount"
@@ -29,7 +31,8 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etWalletName" />
+        app:layout_constraintTop_toBottomOf="@id/etWalletName"
+        style="@style/TextStyle.Large"/>
 
     <EditText
         android:id="@+id/etWalletAmount"
@@ -38,7 +41,8 @@
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
         android:gravity="start"
-        app:layout_constraintTop_toBottomOf="@id/tvWalletAmount"/>
+        app:layout_constraintTop_toBottomOf="@id/tvWalletAmount"
+        style="@style/TextStyle.Large"/>
 
     <Spinner
         android:id="@+id/spinnerWalletCurrency"
@@ -52,7 +56,7 @@
         style="@android:style/Widget.Material.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/item_view_margin"
         android:text="@string/add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etWalletAmount" />

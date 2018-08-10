@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="@dimen/item_view_margin">
 
     <TextView
         android:text="@string/wallet_name"
@@ -12,12 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        style="@style/TextStyle.Large"/>
 
     <EditText
         android:id="@+id/wallet_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text" />
+        android:inputType="text"
+        style="@style/TextStyle.Large"/>
 
 </LinearLayout>

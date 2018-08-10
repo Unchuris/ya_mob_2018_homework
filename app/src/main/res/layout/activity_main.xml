@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/item_input_margin"
         android:layout_marginStart="32dp"
         android:gravity="end"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -23,12 +23,12 @@
         tools:text="1000" />
 
     <Spinner
-        android:padding="8dp"
+        android:padding="@dimen/item_view_margin"
         android:id="@+id/currencySpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/item_view_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -112,7 +112,7 @@ abstract class DrawerActivity : AppCompatActivity() {
             if (isParent) fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             R.id.fragmentContainer
         }
-        if (screen == ACCOUNT_SCREEN || screen == OPERATION_FRAGMENT_SCREEN) {
+        if (screen == ACCOUNT_SCREEN || (screen == OPERATION_FRAGMENT_SCREEN && isTablet)) {
             supportFragmentManager
                     .beginTransaction()
                     .replace(containerId, fragment)
