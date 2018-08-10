@@ -41,4 +41,5 @@
     <string name="startDate">С какого времени</string>
     <string name="endDate">По какое</string>
     <string name="description">Иконка</string>
+    <string name="createChart">Создать отчёт</string>
 </resources>

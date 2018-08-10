@@ -67,16 +67,20 @@ class StatisticsFragment : Fragment() {
 
         etStartDate.setOnClickListener { v ->
             dateInput = CalendarRange.Start
-            DatePickerDialog(v.context, date, calendar
-                    .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)).show()
+            DatePickerDialog(v.context, R.style.AppTheme, date,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH))
+                    .show()
         }
 
         edEndDate.setOnClickListener { v ->
             dateInput = CalendarRange.End
-            DatePickerDialog(v.context, date, calendar
-                    .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)).show()
+            DatePickerDialog(v.context, R.style.AppTheme, date,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH))
+                    .show()
         }
 
         createButton.setOnClickListener {

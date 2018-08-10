@@ -10,11 +10,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="@dimen/item_input_margin">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/item_input_margin">
 
             <EditText
                 android:id="@+id/etStartDate"
@@ -22,10 +23,11 @@
                 android:layout_height="wrap_content"
                 android:cursorVisible="false"
                 android:focusableInTouchMode="false"
-                android:paddingStart="6dp"
+                android:paddingStart="@dimen/item_view_margin"
+                android:paddingEnd="@dimen/item_input_margin"
                 android:inputType="date"
                 android:hint="@string/startDate"
-                android:textColor="@android:color/black" />
+                style="@style/TextStyle.Large" />
 
             <EditText
                 android:id="@+id/edEndDate"
@@ -35,19 +37,19 @@
                 android:focusableInTouchMode="false"
                 android:hint="@string/endDate"
                 android:inputType="date"
-                android:paddingStart="6dp"
-                android:textColor="@android:color/black" />
+                android:paddingStart="@dimen/item_view_margin"
+                android:paddingEnd="@dimen/item_input_margin"
+                style="@style/TextStyle.Large" />
 
             <Button
                 android:id="@+id/createButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_margin="@dimen/item_input_margin"
-                android:background="@color/colorAccent"
                 android:elevation="@dimen/item_elevation"
-                android:text="@string/ok"
-                android:textColor="@android:color/black"
-                android:layout_marginBottom="16dp"/>
+                android:text="@string/createChart"
+                android:layout_marginBottom="@dimen/item_input_margin"/>
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChart"
