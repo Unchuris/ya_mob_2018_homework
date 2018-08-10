@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.kissedcode.finance.R
+import com.kissedcode.finance.about.DefaultChildFragment
 import com.kissedcode.finance.accounts.operation.OperationDialog
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.main_screen.DrawerFragment
@@ -20,6 +21,7 @@ class TemplatesFragment: DrawerFragment(), TemplatesListAdapter.RecycleOnClickLi
         if (resources.getBoolean(R.bool.is_tablet)) {
             activity!!.supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer_child, OperationDialog.newInstance(transaction))
+                    .addToBackStack(null)
                     .commit()
         } else {
             activity!!.supportFragmentManager.beginTransaction()
@@ -71,7 +73,11 @@ class TemplatesFragment: DrawerFragment(), TemplatesListAdapter.RecycleOnClickLi
                 LinearLayoutManager.VERTICAL,
                 false)
         templatesList.adapter = templatesAdapter
-
+        if (resources.getBoolean(R.bool.is_tablet)) {
+            activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer_child, DefaultChildFragment.newInstance())
+                    .commit()
+        }
     }
 
     override fun onStart() {

@@ -93,7 +93,7 @@ class StatisticsViewModel(private val idleTransactionDao: IdleTransactionDao,
         return getChart(yEntrys)
     }
 
-    fun getWallet(id: Int) = wallets.find { it -> it.IdleWalletId == id }
+    private fun getWallet(id: Int) = wallets.find { it -> it.IdleWalletId == id }
 
     override fun onCleared() {
         super.onCleared()

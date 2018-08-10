@@ -37,6 +37,8 @@
     <string name="edit">Редактировать</string>
     <string name="delete">Удалить</string>
     <string name="wallet_balance">Начальный баланс</string>
+    <string name="year">2018</string>
+    <string name="descriptionApp">Это приложение для учета финансов</string>
 
     <string name="startDate">С какого времени</string>
     <string name="endDate">По какое</string>

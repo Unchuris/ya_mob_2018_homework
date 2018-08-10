@@ -19,6 +19,7 @@ import com.kissedcode.finance.accounts.operation.OperationDialog
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.main_screen.DrawerFragment
 import com.kissedcode.finance.main_screen.MainActivity
+import com.kissedcode.finance.main_screen.Screens.ACCOUNT_SCREEN
 import com.kissedcode.finance.main_screen.Screens.OPERATION_FRAGMENT_SCREEN
 import com.kissedcode.finance.model.entity.IdleWallet
 import kotlinx.android.synthetic.main.dialog_edit_wallet.view.wallet_name
@@ -96,6 +97,7 @@ class AccountsFragment : DrawerFragment() {
         if (resources.getBoolean(R.bool.is_tablet)) {
             activity!!.supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer_child, OperationDialog.newInstance(account))
+                    .addToBackStack(null)
                     .commit()
         } else {
             activity!!.supportFragmentManager.beginTransaction()

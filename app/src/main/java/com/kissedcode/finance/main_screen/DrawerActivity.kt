@@ -1,6 +1,5 @@
 package com.kissedcode.finance.main_screen
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
@@ -16,9 +15,10 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.facebook.stetho.Stetho
 import com.kissedcode.finance.R
-import com.kissedcode.finance.about.AboutActivity
+import com.kissedcode.finance.accounts.AccountsFragment
 import com.kissedcode.finance.main_screen.Screens.ACCOUNT_SCREEN
 import com.kissedcode.finance.main_screen.Screens.OPERATION_FRAGMENT_SCREEN
+import com.kissedcode.finance.main_screen.Screens.STATISTICS_SCREEN
 import com.kissedcode.finance.model.worker.PeriodicTransactionWorker
 import kotlinx.android.synthetic.main.activity_drawer.*
 import java.util.concurrent.TimeUnit
@@ -112,7 +112,8 @@ abstract class DrawerActivity : AppCompatActivity() {
             if (isParent) fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             R.id.fragmentContainer
         }
-        if (screen == ACCOUNT_SCREEN || (screen == OPERATION_FRAGMENT_SCREEN && isTablet)) {
+        if (screen == ACCOUNT_SCREEN || (screen == OPERATION_FRAGMENT_SCREEN && isTablet)
+                || (screen == STATISTICS_SCREEN && isTablet) ) {
             supportFragmentManager
                     .beginTransaction()
                     .replace(containerId, fragment)
@@ -146,6 +147,15 @@ abstract class DrawerActivity : AppCompatActivity() {
             setBackArrow(true)
         }
     }
+
+    fun setToolBar(titleResId: Int) {
+        toolbar.title = getString(titleResId)
+        toolbar.setNavigationOnClickListener { openScreen(ACCOUNT_SCREEN, true) }
+        onHideMenuItem(R.id.graphics)
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        setBackArrow(true)
+    }
+
 
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {

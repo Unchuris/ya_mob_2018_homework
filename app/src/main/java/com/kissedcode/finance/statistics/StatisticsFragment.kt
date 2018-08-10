@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kissedcode.finance.R
+import com.kissedcode.finance.about.DefaultChildFragment
 import com.kissedcode.finance.databinding.FragmentStatisticsBinding
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.main_screen.MainActivity
@@ -56,7 +57,11 @@ class StatisticsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (activity as MainActivity).updateToolBar(R.string.screen_title_statistics)
+        if (resources.getBoolean(R.bool.is_tablet)) {
+            (activity as MainActivity).setToolBar(R.string.screen_title_statistics)
+        } else {
+            (activity as MainActivity).updateToolBar(R.string.screen_title_statistics)
+        }
         viewModel = ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(StatisticsViewModel::class.java)
         binding.chartModel = viewModel
         binding.setLifecycleOwner(this)
@@ -64,7 +69,11 @@ class StatisticsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        if (resources.getBoolean(R.bool.is_tablet)) {
+            activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, DefaultChildFragment.newInstance())
+                    .commit()
+        }
         etStartDate.setOnClickListener { v ->
             dateInput = CalendarRange.Start
             DatePickerDialog(v.context, R.style.AppTheme, date,

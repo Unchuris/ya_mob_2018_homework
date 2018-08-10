@@ -1,11 +1,69 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="About"/>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_input_margin"
+            android:layout_marginTop="@dimen/item_input_margin"
+            android:layout_marginEnd="@dimen/item_input_margin"
+            android:contentDescription="@string/description"
+            android:src="@mipmap/ic_launcher_foreground"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/constrain_padding"
+            android:layout_marginTop="@dimen/item_input_margin"
+            android:layout_marginEnd="@dimen/constrain_padding"
+            android:layout_marginBottom="@dimen/item_input_margin"
+            android:paddingStart="@dimen/constrain_padding"
+            android:paddingEnd="@dimen/constrain_padding"
+            android:text="@string/descriptionApp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/year"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/TextStyle.Small"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_view_margin"
+            android:layout_marginEnd="@dimen/item_view_margin"
+            android:layout_marginBottom="@dimen/constrain_padding"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/app_name"
+            app:layout_constraintBottom_toTopOf="@+id/description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/TextStyle.Large"/>
+
+        <TextView
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_input_margin"
+            android:layout_marginEnd="@dimen/item_input_margin"
+            android:layout_marginBottom="@dimen/item_input_margin_big"
+            android:text="@string/year"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/TextStyle.Large"/>
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>
