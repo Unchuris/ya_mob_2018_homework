@@ -18,9 +18,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.util.Date
 
-class StatisticsViewModel(private val idleTransactionDao: IdleTransactionDao,
-                          private val categoryDao: CategoryDao,
-                          private val walletDao: IdleWalletDao) : BaseViewModel() {
+class StatisticsViewModel(
+    private val idleTransactionDao: IdleTransactionDao,
+    private val categoryDao: CategoryDao,
+    private val walletDao: IdleWalletDao
+) : BaseViewModel() {
 
     private var disposables = CompositeDisposable()
 

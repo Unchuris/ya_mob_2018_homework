@@ -15,7 +15,7 @@ import com.kissedcode.finance.main_screen.MainActivity
 import com.kissedcode.finance.model.entity.IdleTransaction
 import kotlinx.android.synthetic.main.fragment_templates.templatesList
 
-class TemplatesFragment: DrawerFragment(), TemplatesListAdapter.RecycleOnClickListenerCallback  {
+class TemplatesFragment : DrawerFragment(), TemplatesListAdapter.RecycleOnClickListenerCallback {
 
     override fun openFragment(transaction: IdleTransaction) {
         if (resources.getBoolean(R.bool.is_tablet)) {
@@ -89,5 +89,4 @@ class TemplatesFragment: DrawerFragment(), TemplatesListAdapter.RecycleOnClickLi
         super.onStop()
         viewModel.templates.removeObservers(this)
     }
-
 }

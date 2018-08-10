@@ -104,7 +104,6 @@ class StatisticsFragment : Fragment() {
         if (!dateStart.isBlank() && !dateFinish.isBlank()) {
             viewModel.createDiagram(startDate, endDate, OperationType.SPEND)
         }
-
     }
 
     private fun update() {
@@ -127,5 +126,4 @@ class StatisticsFragment : Fragment() {
             return StatisticsFragment()
         }
     }
-
 }

@@ -12,9 +12,11 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.Calendar
 
-class TemplatesListViewModel(idleTransactionDao: IdleTransactionDao,
-                             private val walletTransactionDao: WalletTransactionDao,
-                             private val transactionDao: TransactionDao) : BaseViewModel(){
+class TemplatesListViewModel(
+    idleTransactionDao: IdleTransactionDao,
+    private val walletTransactionDao: WalletTransactionDao,
+    private val transactionDao: TransactionDao
+) : BaseViewModel() {
 
     var templates: MutableLiveData<List<IdleTransaction>> = MutableLiveData()
         private set
@@ -51,5 +53,4 @@ class TemplatesListViewModel(idleTransactionDao: IdleTransactionDao,
         super.onCleared()
         subscription.dispose()
     }
-
 }

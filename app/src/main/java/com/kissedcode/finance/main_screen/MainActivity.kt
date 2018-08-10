@@ -44,5 +44,4 @@ class MainActivity : DrawerActivity() {
             else -> ""
         }
     }
-
 }

@@ -1,6 +1,5 @@
 package com.kissedcode.finance.templates
 
-import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +25,7 @@ class TemplatesListAdapter(private val callback: RecycleOnClickListenerCallback)
                 callback.onTemplateDelete(list[position])
             }
         }
-        view.btnApply.setOnClickListener{
+        view.btnApply.setOnClickListener {
             val position = viewHolder.adapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 callback.onApplyTemplate(list[position])
@@ -48,7 +47,6 @@ class TemplatesListAdapter(private val callback: RecycleOnClickListenerCallback)
     override fun getItemCount(): Int {
         return list.size
     }
-
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

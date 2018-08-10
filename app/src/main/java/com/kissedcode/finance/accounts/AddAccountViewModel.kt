@@ -12,14 +12,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class AddAccountViewModel(private val currencyDao: CurrencyDao,
-                          private val walletDao: WalletDao) : BaseViewModel() {
+class AddAccountViewModel(
+    private val currencyDao: CurrencyDao,
+    private val walletDao: WalletDao
+) : BaseViewModel() {
     private var subscription: Disposable
 
     var currency: MutableLiveData<List<Currency>> = MutableLiveData()
         private set
 
-    init{
+    init {
         subscription = (Observable.fromCallable { currencyDao.all }
                 .concatMap { dbPostList -> Observable.just(dbPostList) }
                 .subscribeOn(Schedulers.io())
@@ -32,7 +34,7 @@ class AddAccountViewModel(private val currencyDao: CurrencyDao,
     }
 
     fun insert(wallet: Wallet) {
-        Completable.fromAction { walletDao.insertAll(wallet)}
+        Completable.fromAction { walletDao.insertAll(wallet) }
                 .subscribeOn(Schedulers.io())
                 .subscribe {}
     }

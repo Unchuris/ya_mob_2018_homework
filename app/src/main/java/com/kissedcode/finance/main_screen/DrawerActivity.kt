@@ -15,7 +15,6 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.facebook.stetho.Stetho
 import com.kissedcode.finance.R
-import com.kissedcode.finance.accounts.AccountsFragment
 import com.kissedcode.finance.main_screen.Screens.ACCOUNT_SCREEN
 import com.kissedcode.finance.main_screen.Screens.OPERATION_FRAGMENT_SCREEN
 import com.kissedcode.finance.main_screen.Screens.STATISTICS_SCREEN
@@ -112,8 +111,8 @@ abstract class DrawerActivity : AppCompatActivity() {
             if (isParent) fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             R.id.fragmentContainer
         }
-        if (screen == ACCOUNT_SCREEN || (screen == OPERATION_FRAGMENT_SCREEN && isTablet)
-                || (screen == STATISTICS_SCREEN && isTablet) ) {
+        if (screen == ACCOUNT_SCREEN || (screen == OPERATION_FRAGMENT_SCREEN && isTablet) ||
+                (screen == STATISTICS_SCREEN && isTablet) ) {
             supportFragmentManager
                     .beginTransaction()
                     .replace(containerId, fragment)
@@ -155,7 +154,6 @@ abstract class DrawerActivity : AppCompatActivity() {
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         setBackArrow(true)
     }
-
 
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {

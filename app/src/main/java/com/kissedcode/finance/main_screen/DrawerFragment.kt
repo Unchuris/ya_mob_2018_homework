@@ -24,7 +24,7 @@ abstract class DrawerFragment : Fragment() {
         setUpToolbarTitle(getTitleRes())
     }
 
-    abstract fun setUpToolbarTitle(resId : Int)
+    abstract fun setUpToolbarTitle(resId: Int)
 
     @LayoutRes
     abstract fun getLayoutRes(): Int

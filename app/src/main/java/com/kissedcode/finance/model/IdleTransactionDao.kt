@@ -3,7 +3,6 @@ package com.kissedcode.finance.model
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Query
-import com.kissedcode.finance.model.entity.Category
 import com.kissedcode.finance.model.entity.IdleTransaction
 import com.kissedcode.finance.model.entity.MyTransaction
 import io.reactivex.Flowable

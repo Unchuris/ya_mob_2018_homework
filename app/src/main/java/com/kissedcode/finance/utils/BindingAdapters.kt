@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.kissedcode.finance.utils.extension.getParentActivity

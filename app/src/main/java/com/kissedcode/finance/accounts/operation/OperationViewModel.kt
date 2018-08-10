@@ -22,11 +22,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.disposables.CompositeDisposable
 
-class OperationViewModel(private val categoryDao: CategoryDao,
-                         private val currencyDao: CurrencyDao,
-                         private val walletTransactionDao: WalletTransactionDao,
-                         private val transactionDao: TransactionDao,
-                         private val deferTransactionDao: DeferTransactionDao) : BaseViewModel() {
+class OperationViewModel(
+    private val categoryDao: CategoryDao,
+    private val currencyDao: CurrencyDao,
+    private val walletTransactionDao: WalletTransactionDao,
+    private val transactionDao: TransactionDao,
+    private val deferTransactionDao: DeferTransactionDao
+) : BaseViewModel() {
 
     private var disposables = CompositeDisposable()
 

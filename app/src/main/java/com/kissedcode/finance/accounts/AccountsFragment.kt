@@ -19,7 +19,6 @@ import com.kissedcode.finance.accounts.operation.OperationDialog
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.main_screen.DrawerFragment
 import com.kissedcode.finance.main_screen.MainActivity
-import com.kissedcode.finance.main_screen.Screens.ACCOUNT_SCREEN
 import com.kissedcode.finance.main_screen.Screens.OPERATION_FRAGMENT_SCREEN
 import com.kissedcode.finance.model.entity.IdleWallet
 import kotlinx.android.synthetic.main.dialog_edit_wallet.view.wallet_name
@@ -48,10 +47,10 @@ class AccountsFragment : DrawerFragment() {
     private fun showDeleteFragmentDialog(id: Int) {
         AlertDialog.Builder(requireContext())
                 .setTitle(R.string.delete_wallet)
-                .setPositiveButton(R.string.ok) {_, _ ->
+                .setPositiveButton(R.string.ok) { _, _ ->
                     viewModel.deleteWallet(id)
                 }
-                .setNegativeButton(R.string.cancel){ _, _ -> }
+                .setNegativeButton(R.string.cancel) { _, _ -> }
                 .create()
                 .show()
     }
@@ -107,9 +106,11 @@ class AccountsFragment : DrawerFragment() {
         }
     }
 
-    class AccountsAdapter(private val accountsFragment: AccountsFragment,
-                          private val onDeleteAction: (position: Int) -> Unit,
-                          private val onEditAction: (position: Int) -> Unit) : RecyclerView.Adapter<AccountsAdapter.AccountVH>() {
+    class AccountsAdapter(
+        private val accountsFragment: AccountsFragment,
+        private val onDeleteAction: (position: Int) -> Unit,
+        private val onEditAction: (position: Int) -> Unit
+    ) : RecyclerView.Adapter<AccountsAdapter.AccountVH>() {
 
         var data: List<IdleWallet> = listOf()
 
@@ -133,7 +134,7 @@ class AccountsFragment : DrawerFragment() {
 
             override fun onCreateContextMenu(contextMenu: ContextMenu, selectedView: View, menuInfo: ContextMenu.ContextMenuInfo?) {
                 contextMenu.add(0, selectedView.id, 0, R.string.edit).setOnMenuItemClickListener(this)
-                contextMenu.add(0, selectedView.id, 1,  R.string.delete).setOnMenuItemClickListener(this)
+                contextMenu.add(0, selectedView.id, 1, R.string.delete).setOnMenuItemClickListener(this)
             }
 
             override fun onMenuItemClick(menuItem: MenuItem): Boolean {
@@ -156,7 +157,6 @@ class AccountsFragment : DrawerFragment() {
             init {
                 itemView.setOnCreateContextMenuListener(this)
             }
-
         }
 
         override fun getItemCount() = data.size
