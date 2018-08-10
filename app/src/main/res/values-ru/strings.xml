@@ -26,7 +26,7 @@
     <string name="main_screen_tab_main">Кошельки</string>
     <string name="main_screen_tab_operations">Операции</string>
     <string name="icon">Иконка</string>
-    <string name="transaction_repeat">Повторять дней: </string>
+    <string name="transaction_repeat">Дней для повторения: </string>
     <string name="add_template">Добавить в шаблон</string>
     <string name="template_apply">Применить</string>
     <string name="ok">Да</string>

@@ -83,10 +83,8 @@ class AccountsFragment : DrawerFragment() {
                 false)
 
         viewModel.accounts.observe({ lifecycle }) {
-            if(accountsAdapter.data.size != it!!.size) {
-                accountsAdapter.data = it
-                accountsAdapter.notifyDataSetChanged()
-            }
+            accountsAdapter.data = it!!
+            accountsAdapter.notifyDataSetChanged()
         }
 
         addWallet.setOnClickListener {

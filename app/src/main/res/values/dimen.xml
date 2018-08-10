@@ -3,7 +3,9 @@
     <dimen name="item_elevation">4dp</dimen>
     <dimen name="item_input_margin">16dp</dimen>
     <dimen name="item_view_margin">8dp</dimen>
+    <dimen name="item_top_margin">4dp</dimen>
     <dimen name="view_line_height">1dp</dimen>
     <dimen name="item_input_margin_big">24dp</dimen>
+    <dimen name="constrain_padding">32dp</dimen>
     <dimen name="image_size">24dp</dimen>
 </resources>
