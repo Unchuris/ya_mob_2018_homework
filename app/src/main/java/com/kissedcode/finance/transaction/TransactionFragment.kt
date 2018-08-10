@@ -23,6 +23,7 @@ class TransactionFragment : Fragment() {
     }
 
     private var binding: FragmentTransactionBinding by autoCleared()
+
     private lateinit var viewModel: TransactionListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

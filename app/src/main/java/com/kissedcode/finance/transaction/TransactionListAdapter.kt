@@ -25,13 +25,17 @@ class TransactionListAdapter : RecyclerView.Adapter<TransactionListAdapter.ViewH
     }
 
     fun updatePostList(postList: MutableList<IdleTransaction>) {
-        list = postList
-        notifyDataSetChanged()
+        if (list.size + 1 == postList.size) {
+            add(postList[postList.size - 1])
+        } else {
+            list = postList
+            notifyDataSetChanged()
+        }
     }
 
-    fun addTransaction(transaction: IdleTransaction) {
-        list.add(transaction)
-        notifyDataSetChanged()
+    fun add(postList: IdleTransaction) {
+        list.add(postList)
+        notifyItemInserted(list.size - 1)
     }
 
     class ViewHolder(private val binding: TransactionItemBinding) : RecyclerView.ViewHolder(binding.root) {

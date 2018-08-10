@@ -11,8 +11,6 @@ class TransactionListViewModel(idleTransactionDao: IdleTransactionDao) : BaseVie
 
     private var subscription: Disposable
 
-    private lateinit var subscriptionRate: Disposable
-
     val transactionListAdapter: TransactionListAdapter = TransactionListAdapter()
 
     init {

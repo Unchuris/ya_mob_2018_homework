@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvWalletNameTitle"
+        android:text="@string/wallet_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/TextStyle.Large"/>
+
+    <EditText
+        android:id="@+id/etWalletName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvWalletNameTitle"
+        android:inputType="text"
+        style="@style/TextStyle.Large"/>
+
+    <TextView
+        android:id="@+id/tvWalletAmount"
+        android:text="@string/wallet_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etWalletName"
+        style="@style/TextStyle.Large"/>
+
+    <EditText
+        android:id="@+id/etWalletAmount"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="start"
+        app:layout_constraintTop_toBottomOf="@id/tvWalletAmount"
+        style="@style/TextStyle.Large"/>
+
+    <Spinner
+        android:id="@+id/spinnerWalletCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvWalletAmount"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/btnCreateWallet"
+        style="@android:style/Widget.Material.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/item_view_margin"
+        android:text="@string/add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etWalletAmount" />
+
+</android.support.constraint.ConstraintLayout>

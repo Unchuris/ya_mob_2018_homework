@@ -6,8 +6,8 @@ import java.io.Serializable
 
 data class IdleWallet(
     @PrimaryKey(autoGenerate = true) var IdleWalletId: Int? = null,
-    val walletName: String,
+    var walletName: String,
     var walletValue: Double,
     @Embedded
-    val currency: Currency
+val currency: Currency
 ) : Serializable

@@ -16,8 +16,8 @@ abstract class WalletTransactionDao {
     abstract fun updateWallets(id: Int, value: Double)
 
     @Transaction
-    open fun insertTransactionAndUpdateWallet(transaction: MyTransaction, walletID: Int, value: Double) {
+    open fun insertTransactionAndUpdateWallet(transaction: MyTransaction, value: Double) {
         insertFinanceOperation(transaction)
-        updateWallets(walletID, value)
+        updateWallets(transaction.walletID, value)
     }
 }

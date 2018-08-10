@@ -3,11 +3,11 @@
     <item android:id="@+id/menuitem_drawer_accounts"
         android:title="@string/screen_title_accounts"/>
 
+    <item android:id="@+id/menuitem_drawer_templates"
+        android:title="@string/screen_title_templates"/>
+
     <item android:id="@+id/menuitem_drawer_statistics"
         android:title="@string/screen_title_statistics"/>
-
-    <item android:id="@+id/menuitem_drawer_settings"
-        android:title="@string/screen_title_settings"/>
 
     <item android:id="@+id/menuitem_drawer_about"
         android:title="@string/screen_title_about"/>

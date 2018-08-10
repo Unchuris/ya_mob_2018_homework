@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/accountNameTv"
+        style="@style/TextStyle.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingTop="@dimen/item_view_margin"
+        tools:text="Account name" />
+
+    <TextView
+        android:id="@+id/tvTransactionAmount"
+        style="@style/TextStyle.Large"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/constrain_padding"
+        android:layout_marginStart="@dimen/constrain_padding"
+        android:text="@string/transaction_amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountNameTv" />
+
+    <EditText
+        android:id="@+id/etTransactionSum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/constrain_padding"
+        android:layout_marginStart="@dimen/constrain_padding"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTransactionAmount"
+        style="@style/TextStyle.Large"/>
+
+    <TextView
+        android:id="@+id/tvOperationType"
+        style="@style/TextStyle.Large"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/constrain_padding"
+        android:layout_marginStart="@dimen/constrain_padding"
+        android:layout_marginTop="24dp"
+        android:text="@string/operation_type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTransactionSum" />
+
+    <Spinner
+        android:id="@+id/spinnerOperationType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/constrain_padding"
+        android:layout_marginStart="@dimen/constrain_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvOperationType" />
+
+    <TextView
+        android:id="@+id/tvTransactionCategory"
+        style="@style/TextStyle.Large"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/constrain_padding"
+        android:layout_marginStart="@dimen/constrain_padding"
+        android:layout_marginTop="24dp"
+        android:text="@string/transaction_category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerOperationType" />
+
+    <Spinner
+        android:id="@+id/spinnerTransactionCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/constrain_padding"
+        android:layout_marginStart="@dimen/constrain_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTransactionCategory" />
+
+    <TextView
+        android:id="@+id/tvTransactionCurrency"
+        style="@style/TextStyle.Large"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/constrain_padding"
+        android:layout_marginStart="@dimen/constrain_padding"
+        android:layout_marginTop="24dp"
+        android:text="@string/transaction_currency"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTransactionCategory" />
+
+    <Spinner
+        android:id="@+id/spinnerTransactionCurrency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/constrain_padding"
+        android:layout_marginStart="@dimen/constrain_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTransactionCurrency" />
+
+    <TextView
+        android:id="@+id/tvTransactionRepeat"
+        style="@style/TextStyle.Large"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/constrain_padding"
+        android:layout_marginStart="@dimen/constrain_padding"
+        android:layout_marginTop="24dp"
+        android:text="@string/transaction_repeat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTransactionCurrency" />
+
+    <EditText
+        android:id="@+id/etTransactionRepeat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/constrain_padding"
+        android:layout_marginStart="@dimen/constrain_padding"
+        android:ems="10"
+        android:hint="0"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTransactionRepeat" />
+
+    <CheckBox
+        android:id="@+id/btnCreateTemplate"
+        style="@android:style/Widget.Material.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/add_template"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTransactionRepeat" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/btnCreateTemplate"
+        android:layout_margin="@dimen/item_view_margin"
+        android:layout_marginBottom="@dimen/item_view_margin"
+        >
+
+        <Button
+            android:id="@+id/btnCancelTransaction"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:id="@+id/btnCreateTransaction"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

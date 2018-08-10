@@ -11,32 +11,32 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:paddingLeft="@dimen/item_input_margin"
+        android:paddingRight="@dimen/item_input_margin">
 
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@android:color/black"
+            android:layout_marginBottom="@dimen/item_view_margin"
+            android:layout_marginEnd="@dimen/item_view_margin"
+            android:layout_marginStart="@dimen/item_view_margin"
+            android:layout_marginTop="@dimen/item_view_margin"
+            style="@style/TextStyle.Small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_group_name"
-            app:mutableText="@{viewModel.getDate()}"/>
+            app:mutableText="@{viewModel.getDate()}" />
 
         <TextView
             android:id="@+id/tv_group_name"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@android:color/black"
+            android:layout_marginBottom="@dimen/item_view_margin"
+            android:layout_marginEnd="@dimen/item_view_margin"
+            android:layout_marginStart="@dimen/item_view_margin"
+            android:layout_marginTop="@dimen/item_view_margin"
+            style="@style/TextStyle.Small"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:mutableText="@{viewModel.getImageCategory()}"/>
@@ -45,41 +45,40 @@
             android:id="@+id/tv_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/item_view_margin"
+            android:layout_marginEnd="@dimen/item_view_margin"
+            android:layout_marginTop="@dimen/item_view_margin"
             android:layout_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_currency"
             app:layout_constraintTop_toTopOf="parent"
-            android:textColor="@{viewModel.getIncome() ? @color/red : @color/green}"
+            android:textColor="@{viewModel.getIncome() ? @color/red : @color/yandex_blue}"
             style="@style/TextStyle.Large"
             app:mutableText="@{viewModel.getAmount()}"/>
 
         <ImageView
             android:id="@+id/tv_transaction_category"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="@dimen/image_size"
+            android:layout_height="@dimen/image_size"
+            android:layout_marginBottom="@dimen/item_view_margin"
+            android:layout_marginEnd="@dimen/item_view_margin"
+            android:layout_marginTop="@dimen/item_view_margin"
             android:layout_weight="1"
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/tv_date"
             app:layout_constraintTop_toTopOf="parent"
-
             android:contentDescription="@string/icon" />
 
         <TextView
             android:id="@+id/tv_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/item_view_margin"
+            android:layout_marginEnd="@dimen/item_view_margin"
+            android:layout_marginTop="@dimen/item_view_margin"
             android:layout_weight="1"
-            android:textColor="@{viewModel.getIncome() ? @color/red : @color/green}"
+            android:textColor="@{viewModel.getIncome() ? @color/red : @color/yandex_blue}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -88,9 +87,9 @@
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_height="@dimen/view_line_height"
+            android:layout_marginStart="@dimen/item_input_margin"
+            android:layout_marginTop="@dimen/item_input_margin_big"
             android:background="@color/colorPrimaryDark"
             app:layout_constraintTop_toBottomOf="@+id/tv_amount"
             android:paddingBottom="4dp"/>

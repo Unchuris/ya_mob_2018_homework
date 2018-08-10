@@ -1,4 +1,5 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/menuitem_settings"
@@ -9,4 +10,9 @@
         android:id="@+id/menuitem_about"
         android:icon="@mipmap/ic_launcher_round"
         android:title="@string/main_options_menuitem_about" />
+
+    <item
+        android:id="@+id/graphics"
+        android:title="sdsdsdsds"
+        app:showAsAction="ifRoom" />
 </menu>
