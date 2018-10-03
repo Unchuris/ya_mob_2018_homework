@@ -90,7 +90,9 @@ class OperationViewModel(
     }
 
     fun addToTemplate(transaction: MyTransaction) {
-        transactionDao.insertAll(transaction)
+        disposables.add(Completable.fromAction { transactionDao.insertAll(transaction) }
+                .subscribeOn(Schedulers.io())
+                .subscribe {})
     }
 
     fun addTransaction(transaction: MyTransaction, wallet: IdleWallet, currency: List<Currency>, type: OperationType) {
@@ -103,9 +105,9 @@ class OperationViewModel(
     }
 
     fun getDeferTransactionDao(t: IdleDeferTransaction) {
-        Completable.fromAction { deferTransactionDao.insert(t) }
+        disposables.add(Completable.fromAction { deferTransactionDao.insert(t) }
                 .subscribeOn(Schedulers.io())
-                .subscribe {}
+                .subscribe {})
     }
 
     override fun onCleared() {

@@ -20,24 +20,31 @@ class TemplatesListAdapter(private val callback: RecycleOnClickListenerCallback)
         val view = LayoutInflater.from(parent.context).inflate(R.layout.templates_item, parent, false)
         val viewHolder = ViewHolder(view)
         view.btnDeleteTemplate.setOnClickListener {
-            val position = viewHolder.adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                callback.onTemplateDelete(list[position])
-            }
+            callback(viewHolder.adapterPosition, "onTemplateDelete")
         }
         view.btnApply.setOnClickListener {
-            val position = viewHolder.adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                callback.onApplyTemplate(list[position])
-            }
+            callback(viewHolder.adapterPosition, "onApplyTemplate")
         }
         view.setOnClickListener {
-            val position = viewHolder.adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                callback.openFragment(list[position])
-            }
+            callback(viewHolder.adapterPosition, "openFragment")
         }
         return viewHolder
+    }
+
+    private fun callback(position: Int, action: String) {
+        if (position != RecyclerView.NO_POSITION) {
+            when (action) {
+                "openFragment" -> {
+                    callback.openFragment(list[position])
+                }
+                "onApplyTemplate" -> {
+                    callback.onApplyTemplate(list[position])
+                }
+                "onTemplateDelete" -> {
+                    callback.onTemplateDelete(list[position])
+                }
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

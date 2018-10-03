@@ -51,13 +51,13 @@ class OperationDialog : DrawerFragment() {
 
     private val categoryList: Observer<List<Category>> = Observer { res ->
         if (res != null) {
-            spinnerTransactionCategory.adapter = CategorySpinnerAdapter(context, res)
+            spinnerTransactionCategory.adapter = ItemSpinnerAdapter(context, res)
         }
     }
 
     private val currencyList: Observer<List<Currency>> = Observer { res ->
         if (res != null) {
-            spinnerTransactionCurrency.adapter = CurrencySpinnerAdapter(context, res)
+            spinnerTransactionCurrency.adapter = ItemSpinnerAdapter(context, res)
         }
     }
 
@@ -75,7 +75,7 @@ class OperationDialog : DrawerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val s = arguments?.getSerializable(WALLET_KEY)
+        val s = arguments?.getParcelable<IdleWallet>(WALLET_KEY)
         if (s == null) {
             idleTransaction = arguments?.getSerializable(TRANSACTION_KEY) as IdleTransaction
             wallet = IdleWallet(
@@ -176,7 +176,7 @@ class OperationDialog : DrawerFragment() {
 
         fun newInstance(wallet: IdleWallet): OperationDialog {
             val bundle = Bundle()
-            bundle.putSerializable(WALLET_KEY, wallet)
+            bundle.putParcelable(WALLET_KEY, wallet)
             val operationDialog = OperationDialog()
             operationDialog.arguments = bundle
             return operationDialog

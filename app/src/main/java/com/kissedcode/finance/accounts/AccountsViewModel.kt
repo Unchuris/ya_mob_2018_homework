@@ -62,17 +62,17 @@ class AccountsViewModel(private val walletDao: IdleWalletDao) : BaseViewModel() 
     }
 
     fun deleteWallet(id: Int) {
-        Completable.fromAction { walletDao.delete(getWallet(wallets[id])) }
+        disposables.add(Completable.fromAction { walletDao.delete(getWallet(wallets[id])) }
                 .subscribeOn(Schedulers.io())
-                .subscribe {}
+                .subscribe {})
     }
 
     fun updateWallet(id: Int, name: String) {
-        Completable.fromAction {
+        disposables.add(Completable.fromAction {
             wallets[id].walletName = name
             walletDao.update(getWallet(wallets[id])) }
                 .subscribeOn(Schedulers.io())
-                .subscribe {}
+                .subscribe {})
     }
 
     private fun getWallet(idl: IdleWallet): Wallet = Wallet(

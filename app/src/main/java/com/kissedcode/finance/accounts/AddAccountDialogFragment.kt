@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kissedcode.finance.R
-import com.kissedcode.finance.accounts.operation.CurrencySpinnerAdapter
+import com.kissedcode.finance.accounts.operation.ItemSpinnerAdapter
 import com.kissedcode.finance.injection.ViewModelFactory
 import com.kissedcode.finance.model.entity.Currency
 import com.kissedcode.finance.model.entity.Wallet
@@ -30,7 +30,7 @@ class AddAccountDialogFragment : DialogFragment() {
 
     private val currencyList: Observer<List<Currency>> = Observer { res ->
         if (res != null) {
-            spinnerWalletCurrency.adapter = CurrencySpinnerAdapter(context, res)
+            spinnerWalletCurrency.adapter = ItemSpinnerAdapter(context, res)
         }
     }
 

@@ -25,9 +25,8 @@ class AboutFragment : DrawerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (resources.getBoolean(R.bool.is_tablet)) {
-            activity!!.supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer_child, DefaultChildFragment.newInstance())
-                    .commit()
+            replace(R.id.fragmentContainer_child, DefaultChildFragment.newInstance(), false)
         }
     }
+
 }

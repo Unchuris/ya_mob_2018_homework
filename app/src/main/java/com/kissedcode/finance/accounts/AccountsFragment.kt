@@ -12,7 +12,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import com.kissedcode.finance.R
 import com.kissedcode.finance.accounts.operation.OperationDialog
@@ -75,7 +74,7 @@ class AccountsFragment : DrawerFragment() {
             (activity as MainActivity).openScreen(OPERATION_FRAGMENT_SCREEN, false)
         }
         accountsRv.setHasFixedSize(false)
-        accountsAdapter = AccountsAdapter(this, { showDeleteFragmentDialog(it) }, { showEditFragmentDialog(it) })
+        accountsAdapter = AccountsAdapter( { onNewOperationRequested(it)}, { showDeleteFragmentDialog(it) }, { showEditFragmentDialog(it) })
         accountsRv.adapter = accountsAdapter
         accountsRv.layoutManager = LinearLayoutManager(
                 activity!!,
@@ -92,22 +91,16 @@ class AccountsFragment : DrawerFragment() {
         }
     }
 
-    fun onNewOperationRequested(account: IdleWallet) {
-        if (resources.getBoolean(R.bool.is_tablet)) {
-            activity!!.supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer_child, OperationDialog.newInstance(account))
-                    .addToBackStack(null)
-                    .commit()
-        } else {
-            activity!!.supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, OperationDialog.newInstance(account))
-                    .addToBackStack(null)
-                    .commit()
-        }
+    private fun onNewOperationRequested(account: IdleWallet) {
+        replace(
+                container = if (resources.getBoolean(R.bool.is_tablet)) R.id.fragmentContainer_child else R.id.fragmentContainer,
+                fragment = OperationDialog.newInstance(account),
+                addToBackStack = true
+        )
     }
 
     class AccountsAdapter(
-        private val accountsFragment: AccountsFragment,
+        private val onNewOperationRequested: (account: IdleWallet) -> Unit,
         private val onDeleteAction: (position: Int) -> Unit,
         private val onEditAction: (position: Int) -> Unit
     ) : RecyclerView.Adapter<AccountsAdapter.AccountVH>() {
@@ -118,12 +111,10 @@ class AccountsFragment : DrawerFragment() {
             val viewHolder = AccountVH(LayoutInflater.from(parent.context)
                     .inflate(R.layout.viewholder_account, parent, false))
 
-            viewHolder.accountsFragment = accountsFragment
-
             viewHolder.newOperationBtn.setOnClickListener {
                 val position = viewHolder.adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    accountsFragment.onNewOperationRequested(data[position])
+                    onNewOperationRequested.invoke(data[position])
                 }
             }
 
@@ -148,11 +139,9 @@ class AccountsFragment : DrawerFragment() {
                 return true
             }
 
-            val nameTv = itemView.findViewById<TextView>(R.id.accountNameTv)
-            val balanceTv = itemView.findViewById<TextView>(R.id.accountBalanceTv)
-            val iconIv = itemView.findViewById<ImageView>(R.id.accountIconIv)
-            val newOperationBtn = itemView.findViewById<ImageButton>(R.id.accountNewOperationIb)
-            lateinit var accountsFragment: AccountsFragment
+            val nameTv = itemView.findViewById<TextView>(R.id.accountNameTv)!!
+            val balanceTv = itemView.findViewById<TextView>(R.id.accountBalanceTv)!!
+            val newOperationBtn = itemView.findViewById<ImageButton>(R.id.accountNewOperationIb)!!
 
             init {
                 itemView.setOnCreateContextMenuListener(this)

@@ -18,17 +18,11 @@ import kotlinx.android.synthetic.main.fragment_templates.templatesList
 class TemplatesFragment : DrawerFragment(), TemplatesListAdapter.RecycleOnClickListenerCallback {
 
     override fun openFragment(transaction: IdleTransaction) {
-        if (resources.getBoolean(R.bool.is_tablet)) {
-            activity!!.supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer_child, OperationDialog.newInstance(transaction))
-                    .addToBackStack(null)
-                    .commit()
-        } else {
-            activity!!.supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, OperationDialog.newInstance(transaction))
-                    .addToBackStack(null)
-                    .commit()
-        }
+        replace(
+                container = if (resources.getBoolean(R.bool.is_tablet)) { R.id.fragmentContainer_child } else { R.id.fragmentContainer },
+                fragment = OperationDialog.newInstance(transaction),
+                addToBackStack = true
+        )
     }
 
     override fun onTemplateDelete(transaction: IdleTransaction) {
@@ -74,9 +68,7 @@ class TemplatesFragment : DrawerFragment(), TemplatesListAdapter.RecycleOnClickL
                 false)
         templatesList.adapter = templatesAdapter
         if (resources.getBoolean(R.bool.is_tablet)) {
-            activity!!.supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer_child, DefaultChildFragment.newInstance())
-                    .commit()
+            replace(R.id.fragmentContainer_child, DefaultChildFragment.newInstance(), false)
         }
     }
 

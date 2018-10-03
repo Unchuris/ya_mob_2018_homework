@@ -5,7 +5,6 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import com.kissedcode.finance.model.WalletDao
 import com.kissedcode.finance.model.database.AppDatabase
-import com.kissedcode.finance.model.database.initCategory
 import com.kissedcode.finance.model.database.initCurrency
 import com.kissedcode.finance.model.database.initWallet
 import com.kissedcode.finance.model.entity.Wallet

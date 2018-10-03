@@ -7,8 +7,9 @@ import com.kissedcode.finance.model.TransactionDao
 import com.kissedcode.finance.model.WalletTransactionDao
 import com.kissedcode.finance.model.entity.IdleTransaction
 import com.kissedcode.finance.model.entity.MyTransaction
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.util.Calendar
 
@@ -21,13 +22,13 @@ class TemplatesListViewModel(
     var templates: MutableLiveData<List<IdleTransaction>> = MutableLiveData()
         private set
 
-    private var subscription: Disposable
+    private var disposables = CompositeDisposable()
 
     init {
-        subscription = idleTransactionDao.getAllTemplates()
+        disposables.add(idleTransactionDao.getAllTemplates()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { result -> onRetrievePostListSuccess(result) }
+                .subscribe { result -> onRetrievePostListSuccess(result) })
     }
 
     private fun onRetrievePostListSuccess(postList: List<IdleTransaction>) {
@@ -35,7 +36,9 @@ class TemplatesListViewModel(
     }
 
     fun onTemplateDelete(transaction: IdleTransaction) {
-        transactionDao.deleteById(transaction.IdleTransactionId!!)
+        disposables.add(Completable.fromAction { transactionDao.deleteById(transaction.IdleTransactionId!!) }
+                .subscribeOn(Schedulers.io())
+                .subscribe {})
     }
 
     fun onApplyTemplate(transaction: IdleTransaction) {
@@ -46,11 +49,14 @@ class TemplatesListViewModel(
                 currencyID = transaction.currency.currencyId!!,
                 walletID = transaction.wallet.walletId!!,
                 template = false)
-        walletTransactionDao.insertTransactionAndUpdateWallet(t, t.myTransactionAmount)
+        disposables.add(Completable.fromAction { walletTransactionDao.insertTransactionAndUpdateWallet(t, t.myTransactionAmount) }
+                .subscribeOn(Schedulers.io())
+                .subscribe {})
+
     }
 
     override fun onCleared() {
         super.onCleared()
-        subscription.dispose()
+        disposables.dispose()
     }
 }

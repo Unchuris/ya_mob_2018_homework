@@ -2,6 +2,7 @@ package com.kissedcode.finance.statistics
 
 import android.app.DatePickerDialog
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -37,13 +38,6 @@ class StatisticsFragment : Fragment() {
     private var startDate = Date()
     private var endDate = Date()
 
-    var date: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-        calendar.set(Calendar.YEAR, year)
-        calendar.set(Calendar.MONTH, monthOfYear)
-        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        update()
-    }
-
     private var binding: FragmentStatisticsBinding by autoCleared()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -76,25 +70,32 @@ class StatisticsFragment : Fragment() {
         }
         etStartDate.setOnClickListener { v ->
             dateInput = CalendarRange.Start
-            DatePickerDialog(v.context, R.style.AppTheme, date,
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH))
-                    .show()
+            datePickerDialogShow(v.context)
         }
 
         edEndDate.setOnClickListener { v ->
             dateInput = CalendarRange.End
-            DatePickerDialog(v.context, R.style.AppTheme, date,
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH))
-                    .show()
+            datePickerDialogShow(v.context)
         }
 
         createButton.setOnClickListener {
             loadStatistics()
         }
+    }
+
+    private fun datePickerDialogShow(context: Context) {
+        DatePickerDialog(context, R.style.AppTheme, date,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH))
+                .show()
+    }
+
+    var date: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, monthOfYear)
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        update()
     }
 
     private fun loadStatistics() {

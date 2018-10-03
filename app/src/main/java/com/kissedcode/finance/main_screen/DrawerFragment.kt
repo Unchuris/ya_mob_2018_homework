@@ -31,4 +31,14 @@ abstract class DrawerFragment : Fragment() {
 
     @StringRes
     abstract fun getTitleRes(): Int
+
+    protected fun replace(container: Int, fragment: Fragment, addToBackStack: Boolean) {
+        val transaction = activity!!.supportFragmentManager.beginTransaction()
+                .replace(container, fragment)
+        if (addToBackStack) {
+            transaction.addToBackStack(fragment.tag)
+        }
+        transaction.commit()
+    }
+
 }

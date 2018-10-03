@@ -44,10 +44,6 @@ abstract class DrawerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isTablet = resources.getBoolean(R.bool.is_tablet)
-        Stetho.initialize(Stetho.newInitializerBuilder(this)
-                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-                .build())
 
         setContentView(R.layout.activity_drawer)
 
@@ -57,8 +53,9 @@ abstract class DrawerActivity : AppCompatActivity() {
 
         setupUi()
 
-        if (screenId == 0)
+        if (screenId == 0) {
             screenId = getInitialScreenId()
+        }
 
         if (savedInstanceState == null) {
             openScreen(Screens.ACCOUNT_SCREEN, true)
@@ -111,24 +108,16 @@ abstract class DrawerActivity : AppCompatActivity() {
             if (isParent) fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             R.id.fragmentContainer
         }
-        if (screen == ACCOUNT_SCREEN || (screen == OPERATION_FRAGMENT_SCREEN && isTablet) ||
-                (screen == STATISTICS_SCREEN && isTablet) ) {
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(containerId, fragment)
-                    .commit()
-        } else {
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(containerId, fragment)
-                    .addToBackStack(fragment.tag)
-                    .commit()
+        val transaction = supportFragmentManager.beginTransaction()
+                .replace(containerId, fragment)
+        if (screen != ACCOUNT_SCREEN && (screen != OPERATION_FRAGMENT_SCREEN || isTablet) && (screen != STATISTICS_SCREEN || isTablet) ) {
+            transaction.addToBackStack(fragment.tag)
         }
+        transaction.commit()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
         outState.putInt(STATE_SCREEN_ID, screenId)
     }
 
